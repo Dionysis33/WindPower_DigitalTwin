@@ -179,3 +179,29 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+# ---------------------------------------------------------
+# ΠΡΟΣΘΗΚΕΣ ΓΙΑ ΤΗΝ ΠΤΥΧΙΑΚΗ (WIND POWER DIGITAL TWIN)
+# ---------------------------------------------------------
+
+# 1. Αγνοούμε τον φάκελο με τα βαριά Δεδομένα
+data/
+
+# 2. Αγνοούμε μεγάλα αρχεία αν βρεθούν εκτός φακέλου
+*.csv
+*.xlsx
+*.xls
+*.json
+
+# 3. Αγνοούμε τα εκπαιδευμένα μοντέλα (είναι πολύ μεγάλα για το GitHub)
+models/*.h5
+models/*.pkl
+models/*.keras
+models/*.joblib
+models/*.pt
+
+# 4. Αγνοούμε προσωπικές ρυθμίσεις του VS Code
+.vscode/
+
+# 5. Αγνοούμε προσωρινά αρχεία από τα Notebooks
+.ipynb_checkpoints/
