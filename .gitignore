@@ -205,3 +205,5 @@ models/*.pt
 
 # 5. Αγνοούμε προσωρινά αρχεία από τα Notebooks
 .ipynb_checkpoints/
+
+venv/
