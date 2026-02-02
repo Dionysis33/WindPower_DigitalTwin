@@ -29,25 +29,17 @@
 5. **Εγκατάσταση Τεχνολογικού Stack:**
    - **Data Science:** `pandas`, `numpy`, `scikit-learn`.
    - **Visualization:** `matplotlib`, `seaborn`.
-   - **Connectivity:** `entsoe-py`, `requests`, `sqlalchemy` (για MySQL).
-   - **Utilities:** `openpyxl` (για Excel αρχεία).
+   - **Connectivity:** `entsoe-py`, `requests`, `sqlalchemy`.
+   - **Utilities:** `openpyxl`.
    - **Environment:** Πλήρης εγκατάσταση του `jupyterlab` για χρήση Notebooks.
-
----
-
-## Επόμενα Βήματα:
-- [ ] Δημιουργία του πρώτου Notebook (`01_data_acquisition.ipynb`).
-- [ ] Αίτηση για API Key στην πλατφόρμα ENTSO-E Transparency.
-- [ ] Έρευνα για εναλλακτικές open-source πηγές δεδομένων αιολικής ενέργειας.
 
 ---
 
 ## [31/01/2026] - Φάση 2: Συλλογή Δεδομένων & Βελτιστοποίηση
 
 ### Ολοκληρωμένες Ενέργειες:
-
 1. **Διαδικασία API:**
-   - Αποστολή αιτήματος για API Token στην πλατφόρμα ENTSO-E (Ticket #9442809) για λήψη δεδομένων από ποικίλες ευρωπαϊκές ζώνες.
+   - Αποστολή αιτήματος για API Token στην πλατφόρμα ENTSO-E (Ticket #9442809) για λήψη δεδομένων από ποικίλες διεθνείς ζώνες.
 
 2. **Version Control & Maintenance:**
    - Βελτιστοποίηση του αρχείου `.gitignore` με αφαίρεση περιττών εγγραφών (redundant venv entry).
@@ -60,27 +52,31 @@
    - Δημιουργία αρχείου `.env` για την ασφαλή αποθήκευση των API Tokens.
    - Εγκατάσταση και παραμετροποίηση της βιβλιοθήκης `python-dotenv` για την ασφαλή ανάκτηση των κλειδιών.
 
-5. **Υλοποίηση Data Pipeline (`01_data_acquisition.ipynb`):**
-   - Ανάπτυξη κώδικα για την επικοινωνία με το REST API του Renewables.ninja.
-   - **Επίλυση Σφάλματος:** Αντιμετώπιση του `OverflowError` στον index των ημερομηνιών με χρήση της συνάρτησης `pd.to_numeric` και μετατροπή σε milliseconds (`unit='ms'`).
-   - **Data Extraction:** Επιτυχής λήψη και κανονικοποίηση (normalization) ωριαίων δεδομένων αιολικής ισχύος για την περιοχή της **Εύβοιας** για το 2024.
-   - **Αποθήκευση:** Εξαγωγή των δεδομένων σε αρχείο `data/wind_evia_2024_raw.csv`.
-
 ---
 
-## Επόμενα Βήματα:
-- [ ] Έναρξη του Notebook `02_exploratory_data_analysis.ipynb` για τον εντοπισμό outliers.
-- [ ] Οπτικοποίηση των χρονοσειρών (Time-series Visualization).
-
----
-## [02/02/2026] - Φάση 2: Συλλογή Δεδομένων (ENTSO-E Integration)
+## [02/02/2026] - Φάση 2: Αναδιάρθρωση & Στρατηγική Δεδομένων
 
 ### 1. **Διαδικασία API:**
-   - **ENTSO-E Approval:** Επιτυχής έγκριση του αιτήματος πρόσβασης (Ticket #9442809) και ενεργοποίηση του Web API Access.
-   - **Token Management:** Δημιουργία και ασφαλής αποθήκευση του ENTSOE_API_TOKEN στο αρχείο `.env`.
+- **ENTSO-E Approval:** Επιτυχής έγκριση του αιτήματος πρόσβασης (Ticket #9442809) και ενεργοποίηση του Web API Access.
+- **Token Management:** Δημιουργία και ασφαλής αποθήκευση του `ENTSOE_API_TOKEN` στο αρχείο `.env`.
+
+### 2. **Τεχνική Αναδιοργάνωση (Refactoring):**
+- **Εφαρμογή Προτύπου "Cookiecutter Data Science":** Πραγματοποιήθηκε ριζική αναβάθμιση της οργανωτικής δομής για την υποστήριξη επαγγελματικού workflow:
+    - **Υποδιαίρεση Δεδομένων:** Δημιουργία των φακέλων `data/raw/`, `data/interim/` και `data/processed/` για τον έλεγχο της ποιότητας των δεδομένων.
+    - **Modular Code Structure:** Δημιουργία του φακέλου `src/` για τη μεταφορά επαναχρησιμοποιήσιμων Python modules όπως το `features.py`.
+    - **Documentation & Figures:** Δημιουργία του `reports/figures/` για την αποθήκευση γραφημάτων υψηλής ποιότητας.
+
+### 3. **Στρατηγική Feature Engineering & Δεδομένων:**
+- **Σχεδιασμός Προηγμένων Χαρακτηριστικών:** Καθορίστηκε η υλοποίηση των εξής τεχνικών:
+    - **Cyclical Encoding:** Μετασχηματισμός ώρας/μήνα σε ημιτονοειδείς συνιστώσες (sin/cos).
+    - **Wind Shear Scaling:** Προσαρμογή ταχύτητας ανέμου στο ύψος της πλήμνης (hub height) μέσω του Power Law.
+    - **Empirical Mode Decomposition (EMD):** Αποσύνθεση σήματος για μείωση του σφάλματος RMSE.
+- **Υβριδική Προσέγγιση Πηγών:**
+    - **ENTSO-E Transparency:** Λήψη διεθνών δεδομένων για το σκέλος της πρόβλεψης (Forecasting).
+    - **CARE to Compare (Benchmark):** Χρήση του διεθνούς dataset για το σκέλος της ανίχνευσης ανωμαλιών (Anomaly Detection) λόγω των επισημειωμένων πραγματικών βλαβών.
 
 ---
 
 ## Επόμενα Βήματα:
-- [ ] Δοκιμαστική κλήση στο ENTSO-E API για λήψη δεδομένων πραγματικής παραγωγής (Actual Generation).
-- [ ] Σχεδιασμός σύγκρισης μεταξύ Renewables.ninja και ENTSO-E δεδομένων.
+- [ ] Μετακίνηση των υπαρχόντων CSV αρχείων στον φάκελο `data/raw/`.
+- [ ] Δημιουργία του πρώτου module `src/features.py` με τις συναρτήσεις μετασχηματισμού.
