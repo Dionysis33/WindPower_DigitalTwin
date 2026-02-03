@@ -80,3 +80,38 @@
 ## Επόμενα Βήματα:
 - [ ] Μετακίνηση των υπαρχόντων CSV αρχείων στον φάκελο `data/raw/`.
 - [ ] Δημιουργία του πρώτου module `src/features.py` με τις συναρτήσεις μετασχηματισμού.
+
+
+---
+
+## [03/02/2026] - Φάση 2: Αναδιοργάνωση, Debugging & Στρατηγική Δεδομένων
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Αναδιάρθρωση Φακέλων (Project Refactoring):**
+   - Εφαρμογή επαγγελματικής δομής φακέλων: `data/raw/`, `data/interim/`, `data/processed/`, `src/`, και `notebooks/`.
+   - Μεταφορά των notebooks και των αρχείων ρυθμίσεων στις σωστές τοποθεσίες για βελτιωμένη διαχειρισιμότητα.
+
+2. **Επίλυση Τεχνικών Σφαλμάτων (Bug Fixing):**
+   - Διόρθωση του `NameError: name 'ninja_token' is not defined` στο Renewables.ninja notebook.
+   - Επαναφορά της σωστής σειράς εκτέλεσης (cells sequence) για τη φόρτωση των περιβαλλοντικών μεταβλητών από το αρχείο `.env`.
+
+3. **Βελτιστοποίηση Διαδρομών (Path Optimization):**
+   - Ενημέρωση των scripts αποθήκευσης δεδομένων. Πλέον όλα τα πρωτογενή αρχεία (Raw Data) αποθηκεύονται αυτόματα στη διαδρομή `../data/raw/` με σωστή ονοματολογία (π.χ. `ninja_evia_2024_raw.csv`).
+
+4. **Επικαιροποίηση Τεκμηρίωσης (Documentation):**
+   - Πλήρης αναθεώρηση του `README.md` με την προσθήκη του **Google Colab** στο Tech Stack και την ανάλυση της "Triple Data Strategy".
+   - Καθορισμός των τριών πυλώνων δεδομένων:
+     - **Renewables.ninja:** Simulated Power (Theoretical Baseline).
+     - **ENTSO-E:** Real Grid Generation (Actual Production).
+     - **CARE to Compare:** SCADA Fault Data (Anomaly Labels).
+
+5. **Έλεγχος Εκδόσεων (Git Workflow):**
+   - Επιτυχής συγχρονισμός (Push) όλων των τοπικών αλλαγών στο GitHub repository.
+   - Επίλυση θεμάτων στον Git editor (`COMMIT_EDITMSG`) και ολοκλήρωση του κύκλου commit/sync.
+
+---
+
+## Επόμενα Βήματα:
+- [ ] Υλοποίηση του API Script για τη μαζική λήψη δεδομένων **ENTSO-E (2020-2025)**.
+- [ ] Χειροκίνητη λήψη και οργάνωση του **CARE to Compare** dataset στο φάκελο `data/raw/`.
+- [ ] Έναρξη διαδικασίας συγχρονισμού χρονοσειρών (Time-series Alignment).
