@@ -1,30 +1,34 @@
-# WindPower_DigitalTwin
-## Συγκριτική Αξιολόγηση Μοντέλων Μηχανικής Μάθησης για Πρόβλεψη και Ανίχνευση Ανωμαλιών
+# WindPower_DigitalTwin 
+### Ολοκληρωμένη Προσέγγιση Ψηφιακού Διδύμου με Factory Pattern & Pydantic
+
+![Python Version](https://img.shields.io/badge/python-3.12-blue.svg)
+![License](https://img.shields.io/badge/license-AGPL--v3-green.svg)
+![Status](https://img.shields.io/badge/status-active-brightgreen.svg)
 
 ---
 
-### ### Περιγραφή Έργου
-Ανάπτυξη ενός **Ψηφιακού Διδύμου (Digital Twin)** για αιολικά συστήματα, με στόχο την ωριαία πρόβλεψη ισχύος και την έγκαιρη ανίχνευση λειτουργικών ανωμαλιών. 
+##  Περιγραφή Έργου
+Το **WindPower_DigitalTwin** αποτελεί τη μετάβαση ενός ακαδημαϊκού έργου σε ένα ισχυρό, επεκτάσιμο οικοσύστημα ανοιχτού κώδικα. Στόχος είναι η δημιουργία ενός Ψηφιακού Διδύμου για αιολικά πάρκα που εκτελεί ωριαία πρόβλεψη ισχύος και ανίχνευση ανωμαλιών με βιομηχανική ακρίβεια.
 
-### ### Τεχνολογικό Stack & Εργαλεία
-- **Γλώσσα:** `Python 3.12`.
-- **Βιβλιοθήκες:** `pandas`, `scikit-learn`, `XGBoost`, `PyTorch/TensorFlow`.
-- **Εργαλεία Ανάπτυξης:** - `VS Code`: Τοπική ανάπτυξη, modular coding και feature engineering.
-    - `Google Colab`: Εκπαίδευση μοντέλων βαθιάς μάθησης (LSTM/CNN) με χρήση GPU.
-    - `MLflow`: Καταγραφή πειραμάτων και σύγκριση metrics.
-    - `Streamlit`: Δημιουργία διαδραστικού dashboard για το Digital Twin.
+##  Αρχιτεκτονική Συστήματος
+Το έργο υιοθετεί τη δομή **src-layout** για τον διαχωρισμό της βασικής λογικής από τα σενάρια χρήστη. Η εισαγωγή δεδομένων βασίζεται στο **Factory Design Pattern**, επιτρέποντας την προσθήκη νέων πηγών χωρίς αλλαγές στον κεντρικό κώδικα.
 
----
+```mermaid
+architecture-beta
+    group source(cloud)
+    service ninja(logos:aws-lambda) in source
+    service kassel(logos:aws-ec2) in source
 
-### ### Δομή Έργου (Project Structure)
-- `data/` : Διαχωρισμός σε `raw/`, `interim/` και `processed/`.
-- `notebooks/` : Jupyter Notebooks για τη ροή εργασίας.
-- `src/` : Modular κώδικας (`data_loader.py`, `features.py`).
-- `models/` : Αποθηκευμένα μοντέλα και logs.
+    group ingestion(server) [Επίπεδο Εισαγωγής]
+    service factory(server) in ingestion
+    service pydantic(logos:pydantic) in ingestion
 
----
+    group twin(cloud)
+    service storage(database) in twin
+    service model(logos:tensorflow) in twin
 
-### ### Πηγές Δεδομένων (Updated Strategy)
-1. **University of Kassel (DaKS):** Κύρια πηγή για το Digital Twin. Περιλαμβάνει δεδομένα από 273 τοποθεσίες με χαρακτηριστικά ανεμογεννητριών Enercon και μετεωρολογικά δεδομένα ICON-EU.
-2. **CARE to Compare (Fraunhofer IEE):** Benchmark dataset για την εκπαίδευση του μοντέλου στην ανίχνευση ανωμαλιών (Anomaly Detection).
-3. **Renewables.ninja:** Χρησιμοποιείται ως εργαλείο εξωτερικής επαλήθευσης (Validation) για συγκεκριμένα case studies.
+    ninja:R -- L:factory
+    kassel:R -- L:factory
+    factory:R -- L:pydantic
+    pydantic:R -- L:storage
+    storage:B -- T:model
