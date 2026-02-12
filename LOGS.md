@@ -208,3 +208,31 @@
 * **Επικοινωνία:** Αποστολή του τίτλου και του abstract στον Καθηγητή κ. Εμεξίδη για έγκριση υποβολής στο περιοδικό.
 * **Coding Phase:** Έναρξη υλοποίησης του `physics.py` στην Python (μεταφέρεται λόγω ολοκλήρωσης της θεωρητικής τεκμηρίωσης).
 * **Integration:** Σύνδεση του KasselLoader με το Physics Engine για noise-resilient εκπαίδευση.
+
+---
+
+## [12/02/2026] - Υλοποίηση Physics Engine & Προετοιμασία Submission
+
+### **Πρόοδος Submission:**
+* **Finalizing Abstract:** Ολοκληρώθηκε η σύνταξη του ακαδημαϊκού abstract και του τίτλου της έρευνας για υποβολή σε περιοδικό.
+* **Research Focus:** Επιβεβαίωση της αρχιτεκτονικής **Graph-Mamba PINN** με στόχο την υπέρβαση του baseline nRMSE (0.125).
+
+### **Τεχνική Υλοποίηση Physics Engine:**
+* **Physics Module:** Ανάπτυξη του `src/features/physics.py` με ενσωμάτωση των φυσικών περιορισμών.
+* **Power Law Scaling:** Υλοποίηση συνάρτησης για την προσαρμογή της ταχύτητας ανέμου στο hub height της τουρμπίνας.
+* **Betz Limit Enforcement:** Καθορισμός του $P_{max}$ βάσει του θεωρητικού ορίου απόδοσης (59.3%).
+* **Physics Loss Terms:** Προγραμματισμός των όρων $L_{efficiency}$ και $L_{cutoff}$ για την ενίσχυση της ανθεκτικότητας στον θόρυβο (noise resilience).
+
+### **Προετοιμασία Περιβάλλοντος:**
+* **Library Setup:** Επιτυχής εγκατάσταση των `torch`, `xgboost`, `lightgbm` και `pyyaml` στο τοπικό περιβάλλον (venv).
+* **Environment Note:** Λόγω σφάλματος build-wheel του `mamba-ssm` στα Windows, η εκπαίδευση του χρονικού σκέλους μεταφέρεται στο Google Colab.
+
+### **Εξίσωση Loss Function:**
+$$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L_{sim} + \alpha_4L_{dist} + \alpha_5L_{freq}$$
+
+---
+
+### **Επόμενα Βήματα (Milestones):**
+* **Data Integration:** Σύνδεση του `KasselLoader` με τα raw CSV δεδομένα από τα 273 πάρκα του DaKS dataset.
+* **Baseline Execution:** Εκτέλεση και καταγραφή αποτελεσμάτων για τις 5 παραδοσιακές μεθόδους (Linear Regression, Random Forest, XGBoost κ.α.).
+* **Commit Reference:** `feat: implement physics engine with power law scaling and Betz limit constraints`.
