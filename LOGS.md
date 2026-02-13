@@ -236,3 +236,35 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 * **Data Integration:** Σύνδεση του `KasselLoader` με τα raw CSV δεδομένα από τα 273 πάρκα του DaKS dataset.
 * **Baseline Execution:** Εκτέλεση και καταγραφή αποτελεσμάτων για τις 5 παραδοσιακές μεθόδους (Linear Regression, Random Forest, XGBoost κ.α.).
 * **Commit Reference:** `feat: implement physics engine with power law scaling and Betz limit constraints`.
+
+---
+
+## [13/02/2026] - DaKS Dataset Architecture, Physics Integration & Time-Series Merge
+
+### **Context & Feedback Καθηγητή:**
+* **Στόχος:** Διεξοδικός έλεγχος φόρτωσης του DaKS dataset, εντοπισμός outliers και επιβεβαίωση της δομής των δεδομένων.
+* **Δράση:** Εκκίνηση Exploratory Data Analysis (EDA) στο `02_kassel_exploration.ipynb`.
+
+### **Τεχνικά Επιτεύγματα (Technical Milestones):**
+
+1. **Αποκρυπτογράφηση Δομής DaKS Dataset:**
+   * Επιλύθηκε το ζήτημα των 545 αρχείων: Ανακαλύφθηκε ο διαχωρισμός μεταξύ Μετεωρολογικών Δεδομένων (`data_input_*.csv` με διαχωριστικό `;`) και Μετρήσεων Παραγωγής (`data_target_*.csv` με διαχωριστικό `,`).
+   * Αυτοματοποιήθηκε η αντιστοίχιση Inputs/Targets μέσω του μοναδικού Park ID (π.χ., `00011`).
+
+2. **Εφαρμογή Φυσικής Μοντελοποίησης (Physics-Informed Preprocessing):**
+   * Υπολογισμός πραγματικής ταχύτητας ανέμου (Wind Magnitude) μέσω των διανυσμάτων U και V ($WS = \sqrt{U^2 + V^2}$).
+   * Επιτυχής εφαρμογή του **Power Law Scaling** (`physics.py`) στα raw δεδομένα για την αναγωγή του ανέμου στο ύψος της πλήμνης (Hub Height - 100m). Οπτική επιβεβαίωση (Visual Validation) μέσω διαγραμμάτων.
+
+3. **Ενοποίηση Χρονοσειρών (Time-Series Alignment):**
+   * Υλοποίηση `pd.merge()` (Inner Join) για τον απόλυτο χρονικό συγχρονισμό του καιρού (X) με την παραγωγή (y).
+   * Επίλυση προβλημάτων μορφοποίησης ημερομηνιών (European Datetime format - `dayfirst=True`) που προκαλούσαν `ValueError`.
+
+4. **Data Insights & Outliers:**
+   * Διαπιστώθηκε ότι η παραγωγή ενέργειας (στήλη `pw`) είναι **κανονικοποιημένη [0, 1]**, αντιπροσωπεύοντας το Capacity Factor. Ιδανικό για εκπαίδευση Νευρωνικών Δικτύων.
+   * Εντοπίστηκε έτοιμη baseline πρόβλεψη (`icon_eu_daf_pc_baseline`) εντός του dataset, η οποία θα αποτελέσει το benchmark για το μοντέλο.
+
+### **Επόμενα Βήματα (Next Steps):**
+* **Refactoring:** Μεταφορά της λογικής φόρτωσης, καθαρισμού και ένωσης (Merge Pipeline) από το Notebook στον αντικειμενοστρεφή `KasselLoader`.
+* **Κλιμάκωση (Scaling):** Εφαρμογή του ενοποιημένου Data Pipeline και στα 273 αιολικά πάρκα.
+
+**Commit Reference:** `feat: fix CSV separators, apply Power Law physics, and merge weather inputs with power targets.`
