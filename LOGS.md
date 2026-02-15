@@ -268,3 +268,33 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 * **Κλιμάκωση (Scaling):** Εφαρμογή του ενοποιημένου Data Pipeline και στα 273 αιολικά πάρκα.
 
 **Commit Reference:** `feat: fix CSV separators, apply Power Law physics, and merge weather inputs with power targets.`
+
+---
+
+## [15/02/2026] - Data Decoding, Unit Scaling & Final Validation
+
+### **Context:**
+* **Πρόβλημα:** Κατά τον έλεγχο των ενοποιημένων δεδομένων, παρατηρήθηκαν τιμές ανέμου εκτός φυσικής κλίμακας (π.χ. ~12.000) και κρυπτογραφημένα ονόματα στηλών (π.χ. `ws_hub_100m`).
+* **Στόχος:** "Αποκωδικοποίηση" των μονάδων μέτρησης και παραγωγή ενός καθαρού δείγματος για επαλήθευση.
+
+### **Τεχνικά Επιτεύγματα (Technical Milestones):**
+
+1. **Διόρθωση Κλίμακας (Unit Scaling Correction):**
+   * Ανακαλύφθηκε ότι το DaKS dataset αποθηκεύει τα δεδομένα πολλαπλασιασμένα επί 1000 (για εξοικονόμηση χώρου/integers).
+   * Εφαρμόστηκε διορθωτικός παράγοντας (division by 1000) στις στήλες του ανέμου, επαναφέροντας τις τιμές σε φυσιολογικά επίπεδα (m/s).
+
+2. **Σημασιολογική Μετονομασία (Semantic Renaming):**
+   * Μετονομασία των τεχνικών μεταβλητών σε αναγνώσιμη μορφή για ευκολότερη χρήση από το Mamba-GNN:
+     * `ws_hub_100m` -> **`Wind_Speed_100m_ms`**
+     * `pw` -> **`Power_Output_Normalized`**
+     * `icon_eu_daf_pc_baseline` -> **`Baseline_Prediction`**
+
+3. **Εξαγωγή Δείγματος Επαλήθευσης (Validation Artifact):**
+   * Δημιουργία και αποθήκευση του αρχείου `park_00011_CLEAN.csv`.
+   * **Git Policy:** Το αρχείο `.csv` εξαιρέθηκε από το version control (μέσω `.gitignore`) για να διατηρηθεί το αποθετήριο ελαφρύ, καθώς μπορεί να αναπαραχθεί ανά πάσα στιγμή από τον κώδικα.
+
+### **Επόμενα Βήματα (Next Steps):**
+* Ενσωμάτωση της λογικής scaling και renaming στο script `kassel_loader.py`.
+* Έναρξη της φάσης εκπαίδευσης (Training Phase) με το καθαρό dataset.
+
+**Commit Reference:** `feat: add data decoding logic (units scaling) and export clean sample for validation`
