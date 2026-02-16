@@ -298,3 +298,28 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 * Έναρξη της φάσης εκπαίδευσης (Training Phase) με το καθαρό dataset.
 
 **Commit Reference:** `feat: add data decoding logic (units scaling) and export clean sample for validation`
+
+---
+
+## [16/02/2026] - Robust Loader & Master Dataset EDA
+
+### **Τεχνικά Επιτεύγματα (Technical Milestones):**
+1. **Αναβάθμιση KasselLoader (Robustness):**
+   * Υλοποίηση **Smart Indexing** για άμεσο εντοπισμό ζευγών αρχείων (Input/Target).
+   * Επίλυση του προβλήματος `list index out of range`: Ο Loader πλέον ανιχνεύει αυτόματα τον διαχωριστή (separator) του CSV (είτε `;` είτε `,`).
+   * **Αποτέλεσμα:** Επιτυχής φόρτωση για **271 από τα 272 πάρκα (99.6%)**.
+
+2. **Δημιουργία Master Dataset (Big Data):**
+   * Μαζική φόρτωση και ενοποίηση όλων των πάρκων σε ένα ενιαίο DataFrame.
+   * Συνολικός όγκος δεδομένων: **3.355.233 εγγραφές**.
+
+3. **Εξερευνητική Ανάλυση (EDA) & Καθαρισμός:**
+   * **Power Curve Analysis:** Εντοπισμός και αφαίρεση θορύβου (Negative Power, "Magical Power" σε άπνοια).
+   * **Time Series Inspection:** Επιβεβαίωση χρονικού συγχρονισμού μεταξύ Μετεωρολογικών Δεδομένων (Input) και Πραγματικής Παραγωγής (Target).
+   * Διαπίστωση ότι η διασπορά στο Power Curve οφείλεται στη μεταβλητότητα του πραγματικού ανέμου vs την ομαλότητα του μοντέλου πρόβλεψης.
+
+### **Επόμενα Βήματα (Next Steps):**
+* **Feature Engineering:** Δημιουργία νέων μεταβλητών για να βοηθήσουμε το μοντέλο να μάθει τη συμπεριφορά του ανέμου.
+* Προετοιμασία Dataset για εκπαίδευση (Train/Test Split).
+
+**Commit Reference:** `docs: completed EDA and power curve analysis`
