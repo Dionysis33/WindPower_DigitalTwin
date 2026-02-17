@@ -323,3 +323,21 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 * Προετοιμασία Dataset για εκπαίδευση (Train/Test Split).
 
 **Commit Reference:** `docs: completed EDA and power curve analysis`
+
+---
+
+## [17/02/2026] - Επιστημονική Θεμελίωση & Massive Literature Review
+
+### **Βιβλιογραφική Υποδομή (Scientific Haul):**
+* **Συγκρότηση Βιβλιοθήκης:** Ολοκλήρωση συλλογής και οργάνωσης 39+ εξειδικευμένων επιστημονικών άρθρων (State-of-the-Art 2022-2026).
+* **Κατηγοριοποίηση Πηγών:** Συστηματική ταξινόμηση βάσει έτους, συγγραφέα και τεχνικού αντικειμένου (Scaling, Turbulence, ML Architectures).
+* **Θεματολογία Αιχμής:** Η βιβλιογραφία καλύπτει πλέον όλο το φάσμα της έρευνας:
+    * **Physics-Guided AI:** Χρήση PINNs και Physics-Constrained μοντέλων.
+    * **Advanced Architectures:** Μελέτη Graph Neural Networks (GNN), Transformers και Mamba για πρόβλεψη χρονοσειρών.
+    * **Domain Specifics:** Τεκμηρίωση για Wind Shear Exponents, Turbulence Impact και SCADA Anomaly Detection.
+
+### **Τεχνική Ετοιμότητα (Technical Readiness):**
+* **Ευθυγράμμιση Κώδικα-Θεωρίας:** Η υλοποιημένη λογική του KasselLoader (Power Law Scaling) είναι πλήρως εναρμονισμένη με τις βέλτιστες πρακτικές της σύγχρονης βιβλιογραφίας.
+* **Feature Strategy:** Ο σχεδιασμός των επόμενων βημάτων (Feature Engineering) βασίζεται πλέον σε αποδεδειγμένα μοντέλα χρονικών υστερήσεων (Lags) και ατμοσφαιρικής ευστάθειας.
+
+**Commit Reference:** `docs: finalize massive literature review (39+ papers organized)`
