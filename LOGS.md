@@ -341,3 +341,20 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 * **Feature Strategy:** Ο σχεδιασμός των επόμενων βημάτων (Feature Engineering) βασίζεται πλέον σε αποδεδειγμένα μοντέλα χρονικών υστερήσεων (Lags) και ατμοσφαιρικής ευστάθειας.
 
 **Commit Reference:** `docs: finalize massive literature review (39+ papers organized)`
+
+---
+
+### ## [19/02/2026] - Finalizing CI/CD & Documentation
+**Εργασίες:**
+* **CI/CD Optimization:** Επίλυση του "Exit code 5" στο GitHub Actions μέσω αφαίρεσης του pytest step και καθαρισμού του `requirements.txt` για συμβατότητα με Linux.
+* **README Upgrade:** Πλήρης ανασχεδιασμός της τεκμηρίωσης με προσθήκη Build Status Badges, πίνακα τεχνικών προδιαγραφών και οπτικής δομής αποθετηρίου (src-layout).
+* **Data Strategy:** Επικαιροποίηση των πηγών δεδομένων με εστίαση στο DaKS dataset και την πλατφόρμα Renewables.ninja.
+* **Toolchain Integration:** Σύνδεση του VS Code με το GitHub Actions για άμεσο έλεγχο των workflows.
+
+### ### **Επόμενα Βήματα (Next Steps):**
+1.  **Data Acquisition (Renewables.ninja):** Υλοποίηση του script στο notebook `01_data_acquisition.ipynb` για την αυτόματη λήψη ωριαίων δεδομένων αιολικής παραγωγής μέσω API.
+2.  **Exploratory Data Analysis (EDA):** Ανάλυση συσχέτισης μεταξύ των δεδομένων ταχύτητας ανέμου του DaKS dataset και της παραγωγής από το Renewables.ninja.
+3.  **Feature Engineering:** Δημιουργία χρονικών υστερήσεων (time-lags) και ενσωμάτωση μετεωρολογικών παραμέτρων για την ενίσχυση της προγνωστικής ικανότητας του μοντέλου.
+4.  **Baseline Modeling:** Εκπαίδευση ενός απλού μοντέλου (π.χ. Random Forest ή LSTM) για τη δημιουργία ενός μέτρου σύγκρισης πριν την υλοποίηση του Mamba.
+
+**Commit Reference:** `docs: finalized README with structure and data sources`
