@@ -1,38 +1,64 @@
-# 🌬️ WindPower_DigitalTwin
-> **Industrial-Grade Digital Twin for Wind Energy Forecasting & Anomaly Detection**
+#  WindPower_DigitalTwin
+
+![Build Status](https://github.com/Dionysis33/WindPower_DigitalTwin/actions/workflows/python-app.yml/badge.svg)
+![License](https://img.shields.io/badge/license-AGPL--v3-green.svg)
+![Python](https://img.shields.io/badge/python-3.12-blue.svg)
+
+**Industrial-Grade Digital Twin for Wind Energy Forecasting & Anomaly Detection**
 
 ---
 
-### 📊 Σύνοψη Τεχνικών Προδιαγραφών
+##  Σύνοψη Τεχνικών Προδιαγραφών
+
 | Κατηγορία | Περιγραφή |
 | :--- | :--- |
 | **Engine** | Python 3.12 |
-| **Architecture** | Modular src-layout (Standard Industry Practice) |
+| **Architecture** | Modular src-layout |
 | **Patterns** | Factory Design Pattern & Pydantic Data Contracts |
+| **CI/CD** | GitHub Actions (Automated Testing & Linting) |
 | **License** | AGPL-v3 / Open Source |
 
 ---
 
-## 📝 Περιγραφή Έργου
-[cite_start]Το **WindPower_DigitalTwin** αποτελεί μια ολοκληρωμένη προσέγγιση για τη μετάβαση ακαδημαϊκών ερευνών σε λογισμικό επιπέδου παραγωγής[cite: 3, 293]. Το σύστημα έχει σχεδιαστεί για να εκτελεί:
-* **Ωριαία Πρόβλεψη Ισχύος** με υψηλή πιστότητα χρησιμοποιώντας το DaKS dataset.
-* [cite_start]**Έγκαιρη Ανίχνευση Ανωμαλιών** βασισμένη σε πραγματικά δεδομένα SCADA από το CARE to Compare[cite: 74, 313].
+##  Πηγές Δεδομένων
+
+Το Digital Twin τροφοδοτείται από συνδυασμό ιστορικών και προσομοιωμένων δεδομένων υψηλής πιστότητας:
+
+* **DaKS Dataset:** Χρήση δεδομένων υψηλής ανάλυσης για την κίνηση του ανέμου και την απόδοση ανεμογεννητριών (High-fidelity wind speed & SCADA data).
+* **Renewables.ninja:** Χρήση της πλατφόρμας για την παραγωγή ωριαίων χρονοσειρών αιολικής ενέργειας, βασισμένων σε δορυφορικά δεδομένα (MERRA-2) και τεχνικά χαρακτηριστικά ανεμογεννητριών.
 
 ---
 
-## 🏗️ Αρχιτεκτονική Συστήματος
-[cite_start]Για τη διασφάλιση της μακροπρόθεσμης συντηρησιμότητας, το έργο υιοθετεί τη δομή **src-layout**, απομονώνοντας τη βασική λογική από τα σενάρια χρήστη.
+##  Μεθοδολογία & Εργαλεία
 
-### ⚙️ Σχεδιαστικά Πρότυπα
-* **Factory Design Pattern:** Επιτρέπει τη δυναμική εισαγωγή δεδομένων από πολλαπλές πηγές (Multi-source Strategy) χωρίς αλλαγές στον κεντρικό κώδικα[cite: 16, 305].
-* [cite_start]**Pydantic Validation:** Χρήση δηλωτικών σχημάτων για την επιβολή αυστηρών φυσικών περιορισμών (Data Quality Gates)[cite: 47, 340].
+1. **Data Acquisition:** Σύνδεση με το API του Renewables.ninja για λήψη δεδομένων παραγωγής.
+2. **Preprocessing:** Καθαρισμός και ευθυγράμμιση των δεδομένων DaKS.
+3. **Forecasting:** Ανάπτυξη μοντέλου βασισμένου στην αρχιτεκτονική **Mamba (Selective State Spaces)** για πρόβλεψη παραγωγής σε μεγάλο χρονικό ορίζοντα.
 
-### 📊 Διάγραμμα Ροής Δεδομένων
-```mermaid
-graph LR
-    A[Data Sources] --> B{Factory Loader}
-    B --> C[Validation Layer]
-    C --> D[Digital Twin Core]
-    
-    style B fill:#f4f4f4,stroke:#333
-    style C fill:#e1f5fe,stroke:#01579b
+---
+
+##  Δομή Αποθετηρίου
+
+```text
+├── data/               # Τοπικά δεδομένα (DaKS, Renewables.ninja exports)
+├── notebooks/          # Jupyter Notebooks για EDA & πειραματισμό
+├── src/                # Ο βασικός κώδικας του Digital Twin
+│   ├── data_loaders/   # Modules για σύνδεση με API (Renewables.ninja)
+│   ├── models/         # Υλοποίηση αρχιτεκτονικής Mamba
+│   └── utils/          # Βοηθητικές συναρτήσεις
+├── .github/workflows/  # CI/CD automation (GitHub Actions)
+├── requirements.txt    # Λίστα βιβλιοθηκών
+└── LOGS.md             # Ημερολόγιο προόδου
+
+---
+
+##  Εγκατάσταση & Χρήση (Για νέους χρήστες)
+
+1. **Κλωνοποίηση του αποθετηρίου:**
+ git clone https://github.com/Dionysis33/WindPower_DigitalTwin.git
+
+---
+
+##  Daily Logs
+Η καθημερινή πρόοδος και οι τεχνικές αποφάσεις καταγράφονται αναλυτικά στο: 
+ [LOGS.md](./LOGS.md)
