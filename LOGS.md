@@ -358,3 +358,20 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 4.  **Baseline Modeling:** Εκπαίδευση ενός απλού μοντέλου (π.χ. Random Forest ή LSTM) για τη δημιουργία ενός μέτρου σύγκρισης πριν την υλοποίηση του Mamba.
 
 **Commit Reference:** `docs: finalized README with structure and data sources`
+
+---
+
+## [20/02/2026] - Feature Engineering Completion & Graph Construction
+
+**Ολοκλήρωση του Notebook 04 με επιτυχή δημιουργία χαρακτηριστικών και κατασκευή χωρικού γράφου για τα 269 αιολικά πάρκα.**
+
+* **Temporal Encoding:** Υλοποίηση κυκλικής κωδικοποίησης (sin/cos) για την ώρα και τον μήνα, επιτρέποντας στο μοντέλο να αντιλαμβάνεται την περιοδικότητα του χρόνου.
+* **Lag & Rolling Engineering:** Δημιουργία χρονικών υστερήσεων (1h, 3h, 6h) και κινητών στατιστικών δεικτών (rolling mean/std) για την παροχή «μνήμης» στις Sequential αρχιτεκτονικές (Mamba, Transformers).
+* **Spatial Metadata Integration:** Επιτυχής αναζήτηση και ενσωμάτωση πραγματικών γεωγραφικών συντεταγμένων από το αρχείο `meta.csv` μετά από επίλυση προβλημάτων σε separators και mapping.
+* **Graph Construction:** Κατασκευή του Adjacency Matrix (269x269) βάσει Ευκλείδειας απόστασης (threshold: 0.5°) και οπτική επαλήθευση της συνδεσιμότητας του δικτύου.
+* **Data Export:** Εξαγωγή του τελικού επεξεργασμένου dataset με **1.655.885 δείγματα** και **41 χαρακτηριστικά**, έτοιμο για την εκπαιδευτική διαδικασία.
+
+**Επόμενα Βήματα (Next Steps):**
+1. **Notebook 05 - Baseline Modeling:** Διαχωρισμός δεδομένων σε Train/Test (Temporal Split) και εκπαίδευση παραδοσιακών μοντέλων (XGBoost, Random Forest) ως μέτρο σύγκρισης για το Mamba.
+
+**Commit Reference:** `feat: complete feature engineering with 1.6M samples and verified spatial graph (269 nodes)`
