@@ -375,3 +375,21 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 1. **Notebook 05 - Baseline Modeling:** Διαχωρισμός δεδομένων σε Train/Test (Temporal Split) και εκπαίδευση παραδοσιακών μοντέλων (XGBoost, Random Forest) ως μέτρο σύγκρισης για το Mamba.
 
 **Commit Reference:** `feat: complete feature engineering with 1.6M samples and verified spatial graph (269 nodes)`
+
+---
+
+## ## [21/02/2026] - Statistical Outlier Mitigation & Temporal Data Splitting
+
+* **Z-Score Outlier Detection:** Εφαρμογή στατιστικού ελέγχου Z-score (threshold=3.0) στη στήλη `Power_Output_Normalized`. Εντοπίστηκαν **3.111 ακραίες τιμές** (0.1879% του συνόλου των 1.655.885 δειγμάτων).
+* **Outlier Clipping:** Αντικατάσταση των ακραίων τιμών (clipping) στα όρια **[-0.0467, 0.0721]** για τη διατήρηση της συνέχειας της χρονοσειράς χωρίς απώλεια δειγμάτων.
+* **Temporal Splitting Strategy:** Αυστηρός χρονικός διαχωρισμός του dataset σε τρία ανεξάρτητα σύνολα:
+    * **Train:** 1.244.004 δείγματα (έως 2019-12-31).
+    * **Validation:** 329.084 δείγματα (έως 2020-06-30).
+    * **Test:** 82.797 δείγματα (από 2020-07-01).
+* **Data Integrity Verification:** Επιτυχής έλεγχος για **μηδενικές null τιμές** και στα τρία σύνολα. Επιβεβαίωση απουσίας temporal leakage μέσω `assert` statements.
+* **Data Export:** Εξαγωγή των τελικών αρχείων `train_final.csv`, `val_final.csv` και `test_final.csv` στο φάκελο `data/processed/`.
+
+**Επόμενα Βήματα (Next Steps):**
+1. **Notebook 06 - Baseline Modeling:** Ανάπτυξη του Persistence Model και Linear Regression ως μέτρα σύγκρισης για την απόδοση του Digital Twin.
+
+**Commit Reference:** `feat: complete phase 05 with professional split and clipping`
