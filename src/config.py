@@ -18,5 +18,5 @@ VAL_END_DATE = "2020-06-30 23:00:00"
 Z_SCORE_THRESHOLD = 3.0 # Τυπικές αποκλίσεις για τον εντοπισμό ακραίων τιμών
 
 # Γενικές Ρυθμίσεις
-TARGET_COLUMN = "power"
+TARGET_COLUMN = "Power_Output_Normalized"
 RANDOM_SEED = 42
