@@ -393,3 +393,22 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 1. **Notebook 06 - Baseline Modeling:** Ανάπτυξη του Persistence Model και Linear Regression ως μέτρα σύγκρισης για την απόδοση του Digital Twin.
 
 **Commit Reference:** `feat: complete phase 05 with professional split and clipping`
+
+---
+
+## [22/02/2026] - Baseline Modeling & Performance Benchmarking
+
+* **Persistence Model (Naive Forecast):** Υλοποίηση του μοντέλου αναφοράς με την παραδοχή ότι η ισχύς τη στιγμή t+1 θα είναι ίδια με τη στιγμή t. Χρησιμοποιήθηκε ως το ελάχιστο κριτήριο αποδοχής για την αξιολόγηση των επόμενων μοντέλων.
+* **Linear Regression Training:** Εκπαίδευση γραμμικού μοντέλου παλινδρόμησης χρησιμοποιώντας αριθμητικά χαρακτηριστικά: NWP forecasts, lag features (1h, 3h, 6h), και rolling statistics.
+* **Feature Engineering & Robustness:** Επιτυχής διαχείριση σφαλμάτων τύπου ValueError μέσω αυτόματου φιλτραρίσματος των μη-αριθμητικών στηλών (timestamps) κατά τη διαδικασία της εκπαίδευσης.
+* **Comparative Performance Evaluation:** Αξιολόγηση των μοντέλων στο Test Set (82.796 δείγματα):
+    * **Persistence:** MAE = 0.013840, RMSE = 0.019180, R-squared = -0.7967.
+    * **Linear Regression:** MAE = 0.008278, RMSE = 0.010841, R-squared = 0.4259.
+* **Performance Insight:** Το Linear Regression πέτυχε μείωση σφάλματος (MAE) κατά περίπου **40%** σε σχέση με το Persistence, επιβεβαιώνοντας την προγνωστική ισχύ των καιρικών δεδομένων.
+* **Data Export:** Αποθήκευση των τελικών metrics στο αρχείο `baseline_metrics.csv` για τη σύγκριση με τα επερχόμενα μοντέλα Deep Learning.
+
+**Επόμενα Βήματα (Next Steps - Notebook 06):**
+1. **Residual Analysis:** Ανάλυση των σφαλμάτων του Linear Regression για τον εντοπισμό μοτίβων (π.χ. μεγαλύτερα σφάλματα σε υψηλές ταχύτητες ανέμου).
+2. **Visualization:** Δημιουργία συγκριτικών γραφημάτων (Actual vs Predicted) για επιλεγμένα χρονικά παράθυρα του Test Set.
+
+**Commit Reference:** `feat: implement persistence and linear regression baselines`
