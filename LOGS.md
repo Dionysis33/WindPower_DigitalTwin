@@ -412,3 +412,31 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 2. **Visualization:** Δημιουργία συγκριτικών γραφημάτων (Actual vs Predicted) για επιλεγμένα χρονικά παράθυρα του Test Set.
 
 **Commit Reference:** `feat: implement persistence and linear regression baselines`
+
+---
+
+## [23/02/2026] - Finalizing Notebook 06 & Error Diagnostics
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Residual Analysis & Diagnostics:**
+   - Πραγματοποιήθηκε αναλυτικός έλεγχος των καταλοίπων (residuals) του Linear Regression.
+   - Δημιουργήθηκε γράφημα συσχέτισης σφάλματος και ταχύτητας ανέμου (Residuals vs Wind Speed).
+   - **Εύρημα:** Το σφάλμα (MAE) παρουσιάζει κορύφωση στις μεσαίες ταχύτητες ανέμου (8-12 m/s), επιβεβαιώνοντας τη μη-γραμμική φύση της καμπύλης ισχύος.
+
+2. **Προηγμένη Οπτικοποίηση:**
+   - Υλοποίηση Distribution Plot για τα σφάλματα (Normal Distribution check).
+   - Δημιουργία Actual vs Predicted Scatter Plot με γραμμή ταυτότητας (identity line) για τον εντοπισμό αποκλίσεων.
+
+3. **Στρατηγική Κλιμάκωσης (Baselines):**
+   - Επαναπροσδιορισμός της στρατηγικής για το Notebook 07. Αντί για άμεση μετάβαση σε SOTA μοντέλα, αποφασίστηκε η συμπλήρωση μιας **"ισχυρής πεντάδας" (5 Baselines)**:
+     - *Persistence* (Ολοκληρώθηκε)
+     - *Linear Regression* (Ολοκληρώθηκε)
+     - *Random Forest* (Εκκρεμεί)
+     - *XGBoost* (Εκκρεμεί)
+     - *Simple MLP* (Εκκρεμεί)
+
+### Τελικά Metrics (Notebook 06):
+- **Linear Regression:** MAE: 0.008278, R²: 0.4259.
+- **Βελτίωση:** ~40% έναντι του Persistence (MAE: 0.013840).
+
+**Commit Reference:** `feat: complete notebook 06 with error analysis and 5-baseline strategy`
