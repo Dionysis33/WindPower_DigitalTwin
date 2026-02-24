@@ -440,3 +440,29 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 - **Βελτίωση:** ~40% έναντι του Persistence (MAE: 0.013840).
 
 **Commit Reference:** `feat: complete notebook 06 with error analysis and 5-baseline strategy`
+
+
+---
+
+## [24/02/2026] - CI/CD Optimization & Environment Harmonization
+
+### **Τεχνικά Επιτεύγματα (Technical Milestones):**
+
+1.  **Επίλυση Συγκρούσεων GitHub Actions (CI/CD Debugging):**
+    * Εντοπισμός και διόρθωση του σφάλματος **"Checks have failed"** που οφειλόταν σε αναντιστοιχία εκδόσεων Python (3.10 στον server έναντι 3.12 τοπικά).
+    * Αναβάθμιση του αρχείου ρυθμίσεων `.github/workflows/python-app.yml` στην έκδοση **Python 3.12** για πλήρη συμβατότητα με τις σύγχρονες βιβλιοθήκες του project.
+
+2.  **Εξορθολογισμός Εξαρτήσεων (Requirements Cleanup):**
+    * Εντοπισμός ασυμβατότητας της βιβλιοθήκης `pywinpty` με το περιβάλλον Linux των GitHub Runners.
+    * Αφαίρεση του πακέτου `pywinpty` από το `requirements.txt`, καθώς αποτελεί εξάρτηση αποκλειστικά για Windows και δεν επηρεάζει τη λειτουργία του μοντέλου.
+    * **Αποτέλεσμα:** Επιτυχής ολοκλήρωση του build (**Green Checkmark**) στο GitHub για το commit `48d9947`.
+
+3.  **Ετοιμότητα Deep Learning Stack:**
+    * Επιβεβαίωση εγκατάστασης του **`torch-geometric==2.7.0`** στο τοπικό περιβάλλον και συγχρονισμός με το απομακρυσμένο repository.
+    * Προετοιμασία του workflow για την εισαγωγή των **Graph Neural Networks (GNN)** και της αρχιτεκτονικής **Mamba** βάσει της βιβλιογραφίας (Martin 2024, Hong 2025).
+
+### **Επόμενα Βήματα (Next Steps):**
+* **Notebook 08 - Graph Construction:** Μετατροπή του Adjacency Matrix σε μορφή `edge_index` (Sparse format).
+* **Data Preparation:** Κατασκευή των Graph Data Objects (Nodes, Edges, Features) για τα 271 αιολικά πάρκα.
+
+**Commit Reference:** `fix: remove windows-specific package pywinpty from requirements`
