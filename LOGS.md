@@ -466,3 +466,33 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 * **Data Preparation:** Κατασκευή των Graph Data Objects (Nodes, Edges, Features) για τα 271 αιολικά πάρκα.
 
 **Commit Reference:** `fix: remove windows-specific package pywinpty from requirements`
+
+---
+
+## [10/03/2026] - Data Synchronization & Baseline Consolidation
+
+### **Τεχνικά Επιτεύγματα (Technical Milestones):**
+
+1. **Οριστική Ευθυγράμμιση Γράφου & Δεδομένων (Notebook 04):**
+    * **Node Alignment:** Επίλυση του κρίσιμου προβλήματος αναντιστοιχίας (mismatch) μεταξύ του Adjacency Matrix και του Master Dataset.
+    * **Categorical Sorting:** Εφαρμογή εξαναγκασμένης ταξινόμησης στα **269 αιολικά πάρκα**. Διασφαλίστηκε ότι η σειρά των κόμβων στον γράφο ταυτίζεται απόλυτα με τη σειρά των δειγμάτων στον πίνακα χαρακτηριστικών $X \in \mathbb{R}^{N \times F}$.
+    * **Verification:** Επιτυχής έλεγχος (Success Flag) που επιβεβαιώνει τον συγχρονισμό των IDs πριν την παραγωγή του `.npy` αρχείου.
+
+
+2. **Ολοκλήρωση Advanced Baselines & UI Fixes (Notebook 07):**
+    * **Benchmarking:** Εκπαίδευση μοντέλων **XGBoost** και **MLP**, θέτοντας το State-of-the-Art benchmark στο **$R^2 \approx 0.61$**.
+    * **Optimization:** Εφαρμογή **Random Sampling (20%)** για τη σταθεροποίηση της εκτέλεσης και την αποφυγή Memory Overflow (RAM usage optimization).
+    * **Visualization Clean-up:** Διόρθωση των `Seaborn FutureWarnings` μέσω ορθού ορισμού των παραμέτρων `hue` και `palette`, εξασφαλίζοντας "καθαρό" output στο GitHub.
+
+3. **Διαχείριση Version Control:**
+    * Επιτυχές Push των κρίσιμων διορθώσεων (Commit: `9351bdf`).
+    * Πλήρης συγχρονισμός του τοπικού περιβάλλοντος με το απομακρυσμένο repository για τα Notebooks 04 έως 07.
+
+---
+
+### **Επόμενα Βήματα (Next Steps):**
+* **Notebook 08 - GNN Implementation:** Εκκίνηση της αρχιτεκτονικής **Graph Convolutional Network (GCN)** χρησιμοποιώντας τη βιβλιοθήκη `PyTorch Geometric`.
+* **Sparse Matrix Conversion:** Μετατροπή του Adjacency Matrix σε μορφή `edge_index` (COO format).
+* **Graph Data Loader:** Κατασκευή του custom Dataset object που θα τροφοδοτεί το μοντέλο με την πληροφορία των 269 κόμβων ανά χρονική στιγμή.
+
+**Commit Reference:** `fix: ensure strict park ID alignment and graph consistency in NB04`
