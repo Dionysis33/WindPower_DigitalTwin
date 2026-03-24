@@ -1,8 +1,10 @@
 # WindPower_DigitalTwin
 
-![Build Status](https://github.com/Dionysis33/WindPower_DigitalTwin/actions/workflows/python-app.yml/badge.svg)
-![License](https://img.shields.io/badge/license-AGPL--v3-green.svg)
-![Python](https://img.shields.io/badge/python-3.12-blue.svg)
+[![Build Status](https://github.com/Dionysis33/WindPower_DigitalTwin/actions/workflows/python-app.yml/badge.svg)](https://github.com/Dionysis33/WindPower_DigitalTwin/actions/workflows/python-app.yml)
+
+[![License](https://img.shields.io/badge/license-AGPL--v3-green.svg)](./LICENSE)
+
+[![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
 
 Research repository for **spatio-temporal wind power forecasting** on the **DaKS dataset**, with a pipeline that combines:
 - physics-aware preprocessing,
