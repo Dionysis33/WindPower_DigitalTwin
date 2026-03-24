@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Research scope
+    url: https://github.com/Dionysis33/WindPower_DigitalTwin/blob/main/docs/RESEARCH_SCOPE.md
+    about: Διάβασε πρώτα την ερευνητική κατεύθυνση του project.
+  - name: Baseline protocol
+    url: https://github.com/Dionysis33/WindPower_DigitalTwin/blob/main/docs/BASELINE_PROTOCOL.md
+    about: Διάβασε το baseline/evaluation protocol πριν ανοίξεις issue.
+  - name: Data documentation
+    url: https://github.com/Dionysis33/WindPower_DigitalTwin/blob/main/docs/DATA.md
+    about: Διάβασε πρώτα τη documentation του dataset και των constraints.

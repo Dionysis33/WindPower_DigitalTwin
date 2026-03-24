@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+title: "WindPower_DigitalTwin"
+message: "If you use this repository in academic work, please cite it using the metadata below."
+type: software
+
+authors:
+  - family-names: "Alexopoulos"
+    given-names: "Dionysis"
+
+repository-code: "https://github.com/Dionysis33/WindPower_DigitalTwin"
+license: "AGPL-3.0"
+abstract: >
+  Research repository for spatio-temporal wind power forecasting on the DaKS / Kassel dataset,
+  with emphasis on reproducible preprocessing, graph-ready feature engineering, strong tabular baselines,
+  leakage-aware evaluation, and future extension toward prognostics-aware digital twin experimentation.
+
+keywords:
+  - wind power forecasting
+  - digital twin
+  - prognostics
+  - health management
+  - spatio-temporal modeling
+  - baseline models
+  - leakage-aware evaluation
+  - DaKS dataset
