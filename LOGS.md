@@ -496,3 +496,76 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 * **Graph Data Loader:** Κατασκευή του custom Dataset object που θα τροφοδοτεί το μοντέλο με την πληροφορία των 269 κόμβων ανά χρονική στιγμή.
 
 **Commit Reference:** `fix: ensure strict park ID alignment and graph consistency in NB04`
+
+
+---
+
+
+## [24/03/2026] - Notebook 05/06 Finalization, CI Validation & Baseline Stabilization
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+
+1. **Οριστικοποίηση Notebook 05 - Outlier Handling & Temporal Validation**
+   * Αναθεωρήθηκε η μεθοδολογία του outlier handling ώστε τα **Z-score thresholds** να υπολογίζονται αποκλειστικά από το **Train Set** και στη συνέχεια να εφαρμόζονται στα Validation/Test splits.
+   * Η αλλαγή αυτή ενίσχυσε τη μεθοδολογική αυστηρότητα του pipeline και εξάλειψε πιθανό **data leakage** από τη φάση preprocessing.
+   * Επιβεβαιώθηκε η απουσία χρονικής επικάλυψης μεταξύ Train / Validation / Test μέσω validation protocol με `assert` checks.
+   * Ολοκληρώθηκε η εξαγωγή των τελικών split artifacts:
+     - `train_final.csv`
+     - `val_final.csv`
+     - `test_final.csv`
+
+2. **Οριστικοποίηση Notebook 06 - Baseline Benchmarking & Diagnostics**
+   * Πραγματοποιήθηκε πλήρης τελική εκτέλεση του Notebook 06 με:
+     - **Persistence baseline**
+     - **Linear Regression baseline**
+     - συγκριτική αξιολόγηση σε Validation και Test set
+     - residual diagnostics
+     - actual-vs-predicted visualization
+     - ανάλυση residuals ως προς wind-related feature
+   * Το **Linear Regression** επιβεβαιώθηκε ως σαφώς ανώτερο baseline σε σχέση με το Persistence.
+   * Τα τελικά metrics αποθηκεύτηκαν εκ νέου στο αρχείο:
+     - `data/processed/baseline_metrics.csv`
+
+3. **Residual Diagnostics & Error Interpretation**
+   * Προστέθηκε έλεγχος διαθεσιμότητας wind-related features (`Wind_Speed_100m_ms`, `ws_ref`) πριν από την ανάλυση residuals.
+   * Επιλέχθηκε δυναμικά το διαθέσιμο feature για diagnostic plotting, με ρητή σημείωση ότι η μεταβλητή ερμηνεύεται ως **scaled / engineered wind-related feature** και όχι ως ωμή φυσική μέτρηση.
+   * Η ανάλυση residuals έδειξε ότι το σφάλμα του γραμμικού baseline παραμένει δομημένο, επιβεβαιώνοντας ότι το πρόβλημα πρόβλεψης περιέχει σημαντική **μη-γραμμικότητα**.
+
+4. **Documentation & Markdown Refinement**
+   * Βελτιώθηκε το explanatory markdown στα notebooks, με καθαρότερη επιστημονική τεκμηρίωση για:
+     - train-based clipping,
+     - leakage-safe preprocessing,
+     - validation protocol,
+     - baseline interpretation,
+     - και diagnostic analysis.
+   * Το conclusion του Notebook 06 αναδιατυπώθηκε ώστε να περιγράφει με σαφήνεια:
+     - την ανωτερότητα της Linear Regression έναντι του Persistence,
+     - τον ρόλο των baselines ως benchmark ladder,
+     - και τη μετάβαση στο Notebook 07.
+
+5. **CI/CD & Repository Validation**
+   * Επαληθεύτηκε ότι τα πρόσφατα pushes ολοκληρώθηκαν επιτυχώς στο GitHub.
+   * Τα workflows του **GitHub Actions** εκτελέστηκαν επιτυχώς (green status), επιβεβαιώνοντας ότι το repository βρίσκεται σε συγχρονισμένη και σταθερή κατάσταση.
+   * Ολοκληρώθηκε ο τελικός συγχρονισμός του local environment με το απομακρυσμένο `main` branch.
+
+### Τρέχουσα Κατάσταση Έργου:
+* Το pipeline έως και το **Notebook 06** θεωρείται πλέον **σταθεροποιημένο και αναπαραγώγιμο**.
+* Υπάρχει πλέον:
+  - καθαρό preprocessing pipeline,
+  - leakage-safe split strategy,
+  - βασική baseline ladder,
+  - exportable benchmark metrics,
+  - και ώριμη τεκμηρίωση για τη μετάβαση στα advanced baselines.
+
+### Επόμενα Βήματα (Next Steps):
+1. **Notebook 07 - Advanced Baselines & Feature Importance**
+   - Random Forest
+   - XGBoost
+   - MLP
+2. Συγκριτική αξιολόγηση όλων των baselines σε κοινό benchmark framework.
+3. Οριστικοποίηση της baseline πεντάδας πριν τη μετάβαση σε **GNN / Graph-Mamba** αρχιτεκτονικές.
+
+**Commit References:**
+- `fix: finalize train-based clipping and validation protocol in notebook 05`
+- `feat: finalize notebook 06 baseline benchmarking and diagnostics`
+- `chore: update baseline metrics after notebook 06 rerun`
