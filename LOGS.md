@@ -592,3 +592,37 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 
 ### Μεθοδολογική Σημείωση:
 Η παρούσα υλοποίηση αποφεύγει τη χρήση helper / identifier columns και διατηρεί το test split αποκλειστικά για final reporting.
+
+
+---
+
+
+## [25/03/2026] - Notebook 07 XGBoost Baseline with Train / Validation / Test Protocol
+
+### Ολοκληρωμένες Ενέργειες:
+1. Υλοποιήθηκε `XGBoost` baseline στο `07_advanced_baselines_and_importance.ipynb`.
+2. Χρησιμοποιήθηκε το ίδιο clean feature space με το `Random Forest` baseline.
+3. Διατηρήθηκε strict `train / validation / test` protocol.
+4. Η επιλογή υπερπαραμέτρων έγινε μόνο με χρήση του validation split.
+5. Το test split χρησιμοποιήθηκε αποκλειστικά για final reporting.
+6. Υπολογίστηκαν τα τελικά test metrics:
+   - **MAE:** 0.006178
+   - **RMSE:** 0.008952
+   - **R²:** 0.608583
+7. Ενημερώθηκε το κοινό benchmark artifact `data/processed/baseline_metrics.csv`.
+8. Προστέθηκαν:
+   - residual diagnostics,
+   - XGBoost feature-importance analysis.
+
+### Validation-best configuration:
+- `n_estimators = 500`
+- `max_depth = 8`
+- `learning_rate = 0.05`
+- `subsample = 0.8`
+- `colsample_bytree = 0.8`
+
+### Scientific Interpretation:
+Το `XGBoost` αποτελεί πλέον το ισχυρότερο current tabular baseline του Notebook 07 και υπερτερεί του `Random Forest`, της `Linear Regression` και του `Persistence` στο current exported benchmark.
+
+### Note on benchmark provenance:
+Το `baseline_metrics.csv` αντιμετωπίζεται πλέον ως το current benchmark artifact αναφοράς. Αν historical τιμές σε παλαιότερα log entries διαφέρουν, αυτές πρέπει να θεωρούνται παλαιότερα notebook outputs και όχι κατ’ ανάγκη το τελικό standardized benchmark state.
