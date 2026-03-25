@@ -653,3 +653,26 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 
 ### Scientific Interpretation:
 Το `MLP` λειτουργεί επιτυχώς ως bridge baseline ανάμεσα στα classical tabular ML models και στα επόμενα deep-learning-oriented στάδια. Στο current benchmark βελτιώνει το `Random Forest` ως προς το **MAE**, αλλά το `Random Forest` παραμένει οριακά καλύτερο σε **RMSE** και **R²**. Το `XGBoost` συνεχίζει να αποτελεί το ισχυρότερο current tabular baseline αναφοράς.
+
+
+---
+
+## [25/03/2026] - Unified Baseline Benchmark Table Standardization
+
+### Ολοκληρωμένες Ενέργειες:
+1. Ορίστηκε το `data/processed/baseline_metrics.csv` ως το **canonical baseline benchmark artifact** του project.
+2. Ενοποιήθηκαν σε κοινό benchmark table τα αποτελέσματα των:
+   - Persistence
+   - Linear Regression
+   - Random Forest
+   - XGBoost
+   - MLP
+3. Καθορίστηκε ότι ο τελικός benchmark ranking πίνακας αφορά αποκλειστικά το **test split**.
+4. Καθορίστηκε ότι το **primary ranking criterion** είναι το **MAE (ascending)**, ενώ τα **RMSE** και **R²** παραμένουν συμπληρωματικά metrics ερμηνείας.
+5. Συγχρονίστηκαν το `README.md`, το `BASELINE_PROTOCOL.md` και το `LOGS.md` ώστε να αντανακλούν την πλήρως υλοποιημένη baseline ladder.
+
+### Scientific Interpretation:
+Η baseline πεντάδα θεωρείται πλέον ολοκληρωμένη και λειτουργεί ως κοινό σημείο αναφοράς για τα επόμενα forecasting experiments. Το `XGBoost` αποτελεί το ισχυρότερο current tabular baseline, ενώ το `MLP` και το `Random Forest` προσφέρουν ισχυρές non-linear συγκρίσεις απέναντι στα απλούστερα baselines.
+
+### Clarification:
+Historical metric values σε παλαιότερα log entries πρέπει να ερμηνεύονται ως notebook-run history. Για thesis reporting, canonical σημείο αναφοράς είναι το τρέχον `data/processed/baseline_metrics.csv`.
