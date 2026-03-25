@@ -16,12 +16,15 @@
 
 ## Current baselines
 
-Στην παρούσα φάση έχουν υλοποιηθεί τα εξής baseline models:
+Στην παρούσα φάση το baseline benchmark set περιλαμβάνει τα εξής models:
 
 1. **Persistence**
 2. **Linear Regression**
+3. **Random Forest**
+4. **XGBoost**
+5. **MLP**
 
-Αυτά αποτελούν το πρώτο benchmark επίπεδο του project.
+Αυτά αποτελούν την τρέχουσα baseline ladder του project και λειτουργούν ως κοινό reference suite πριν τη μετάβαση σε graph-based ή sequence-based αρχιτεκτονικές.
 
 ## Data splitting protocol
 
@@ -111,6 +114,25 @@
 
 Αυτά αποθηκεύονται σε structured μορφή ώστε να μπορούν να χρησιμοποιηθούν αργότερα σε συγκρίσεις με πιο σύνθετα μοντέλα.
 
+## Unified benchmark reporting rule
+
+Για cross-model benchmark reporting, το canonical comparison artifact του project είναι το:
+
+`data/processed/baseline_metrics.csv`
+
+Ο πίνακας αυτός πρέπει να ερμηνεύεται ως:
+
+- **test-set benchmark table**
+- με consistent metric naming:
+  - **MAE**
+  - **RMSE**
+  - **R²**
+- και με ρητά δηλωμένο primary ranking rule.
+
+Στην παρούσα φάση, το **primary ranking criterion** είναι το **MAE (ascending)**.
+
+Τα validation results χρησιμοποιούνται μόνο για model selection στα advanced baselines όπου απαιτείται, αλλά **δεν** χρησιμοποιούνται για final cross-model ranking.
+
 ## Diagnostic analysis
 
 Πέρα από τα aggregate metrics, η baseline φάση περιλαμβάνει και **diagnostic analysis**, όπως:
@@ -145,10 +167,10 @@
 
 ## Next benchmarking step
 
-Το επόμενο βήμα είναι η επέκταση του baseline benchmark set με μη γραμμικά μοντέλα, όπως:
+Αφού ολοκληρώθηκε η baseline πεντάδα, το επόμενο βήμα δεν είναι πλέον η προσθήκη νέων tabular baselines, αλλά η αξιοποίηση του unified benchmark table ως reference point για:
 
-- **Random Forest**
-- **XGBoost**
-- **MLP**
+- graph-based forecasting models,
+- sequence-based models,
+- και μελλοντικές GNN / Graph-Mamba αρχιτεκτονικές.
 
-ώστε να υπάρχει πιο πλήρης σύγκριση πριν τη μετάβαση σε graph-based ή sequence-based αρχιτεκτονικές.
+Ο ρόλος της baseline ladder είναι πλέον να προσφέρει σταθερό και μεθοδολογικά συνεπές σημείο αναφοράς για κάθε επόμενη πιο σύνθετη μοντελοποίηση.
