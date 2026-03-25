@@ -569,3 +569,26 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 - `fix: finalize train-based clipping and validation protocol in notebook 05`
 - `feat: finalize notebook 06 baseline benchmarking and diagnostics`
 - `chore: update baseline metrics after notebook 06 rerun`
+
+
+---
+
+## [25/03/2026] - Notebook 07 Random Forest Baseline with Train / Validation / Test Protocol
+
+### Ολοκληρωμένες Ενέργειες:
+1. Υλοποιήθηκε ο πρώτος καθαρός `Random Forest` baseline στο `07_advanced_baselines_and_importance.ipynb`.
+2. Χρησιμοποιήθηκε strict `train / validation / test` protocol.
+3. Πραγματοποιήθηκε explicit feature audit πριν από την εκπαίδευση.
+4. Εξαιρέθηκαν από το πρώτο clean baseline τα:
+   - `test_flag`
+   - `park_id`
+   - `Baseline_Prediction`
+5. Έγινε validation-based επιλογή υπερπαραμέτρων.
+6. Το τελικό test αποτέλεσμα του `Random Forest` ήταν:
+   - **MAE:** 0.007260
+   - **RMSE:** 0.009845
+   - **R²:** 0.526639
+7. Ενημερώθηκε το κοινό benchmark artifact `data/processed/baseline_metrics.csv`.
+
+### Μεθοδολογική Σημείωση:
+Η παρούσα υλοποίηση αποφεύγει τη χρήση helper / identifier columns και διατηρεί το test split αποκλειστικά για final reporting.
