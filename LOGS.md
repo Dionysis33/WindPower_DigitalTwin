@@ -626,3 +626,30 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 
 ### Note on benchmark provenance:
 Το `baseline_metrics.csv` αντιμετωπίζεται πλέον ως το current benchmark artifact αναφοράς. Αν historical τιμές σε παλαιότερα log entries διαφέρουν, αυτές πρέπει να θεωρούνται παλαιότερα notebook outputs και όχι κατ’ ανάγκη το τελικό standardized benchmark state.
+
+
+---
+
+## [25/03/2026] - Notebook 07 MLP Baseline as Bridge to Deep Learning Models
+
+### Ολοκληρωμένες Ενέργειες:
+1. Υλοποιήθηκε `MLP` baseline στο `07_advanced_baselines_and_importance.ipynb` με χρήση `PyTorch`.
+2. Χρησιμοποιήθηκε το ίδιο clean feature space με τα `Random Forest` και `XGBoost` baselines.
+3. Εφαρμόστηκε `StandardScaler` fitted μόνο στο `train` split και transform στα `validation` / `test` splits.
+4. Πραγματοποιήθηκε explicit validation-based επιλογή βασικών hyperparameters.
+5. Το test split χρησιμοποιήθηκε αποκλειστικά για final reporting.
+6. Τα τελικά test metrics του `MLP` ήταν:
+   - **MAE:** 0.006917
+   - **RMSE:** 0.009870
+   - **R²:** 0.524226
+7. Ενημερώθηκε το κοινό benchmark artifact `data/processed/baseline_metrics.csv`.
+8. Προστέθηκε residual diagnostic plot για το `MLP`.
+
+### Best validation configuration:
+- `hidden_dims = (128, 64)`
+- `dropout = 0.0`
+- `lr = 0.001`
+- `weight_decay = 1e-5`
+
+### Scientific Interpretation:
+Το `MLP` λειτουργεί επιτυχώς ως bridge baseline ανάμεσα στα classical tabular ML models και στα επόμενα deep-learning-oriented στάδια. Στο current benchmark βελτιώνει το `Random Forest` ως προς το **MAE**, αλλά το `Random Forest` παραμένει οριακά καλύτερο σε **RMSE** και **R²**. Το `XGBoost` συνεχίζει να αποτελεί το ισχυρότερο current tabular baseline αναφοράς.
