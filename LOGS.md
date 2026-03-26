@@ -676,3 +676,54 @@ $$L_{total} = L_{data} + \alpha_1L_{efficiency} + \alpha_2L_{cutoff} + \alpha_3L
 
 ### Clarification:
 Historical metric values σε παλαιότερα log entries πρέπει να ερμηνεύονται ως notebook-run history. Για thesis reporting, canonical σημείο αναφοράς είναι το τρέχον `data/processed/baseline_metrics.csv`.
+
+
+---
+
+## [27/03/2026] - NB02 Raw Timestamp Validation Stabilization
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Μεθοδολογικός καθαρισμός του `02_kassel_exploration.ipynb`:**
+   - Το notebook επαναδιατυπώθηκε ως καθαρό raw decoding / timestamp integrity validation στάδιο.
+   - Αφαιρέθηκαν legacy debug sections, monkey-patching λογική και ad hoc exploratory fragments που δεν ανήκαν στο canonical forecasting pipeline.
+
+2. **Ρητός χειρισμός raw input / target αρχείων του DaKS dataset:**
+   - Εφαρμόστηκε strict input-target pairing ανά `park_id`.
+   - Προστέθηκε explicit CSV separator handling με fallback ανά αρχείο.
+   - Προστέθηκε explicit timestamp-column detection για input και target files.
+
+3. **Σταθεροποίηση timestamp parsing:**
+   - Αντικαταστάθηκε το ambiguous datetime parsing με explicit allowed timestamp formats ανά file type.
+   - Το parsing πλέον δεν βασίζεται σε `format='mixed'` ή άλλες χαλαρές heuristics.
+   - Η χρονική σειρά ελέγχεται ρητά πριν από το merge.
+
+4. **Validation του input-target synchronization:**
+   - Υλοποιήθηκε deterministic single-park validation.
+   - Υλοποιήθηκε all-parks raw audit με interpretable failure logging.
+   - Επιβεβαιώθηκε explicit merge validation πάνω στο timestamp backbone πριν από τα downstream notebooks.
+
+### Scientific Interpretation:
+Το NB02 θεωρείται πλέον methodologically acceptable ως canonical raw validation στάδιο του forecasting pipeline.
+Ο ρόλος του περιορίζεται σε:
+- raw decoding,
+- timestamp parsing verification,
+- temporal ordering checks,
+- και input-target timestamp alignment.
+
+Άρα το notebook παραμένει επιστημονικά καθαρό:
+- χωρίς modeling,
+- χωρίς splitting,
+- χωρίς feature engineering,
+- και χωρίς claims πέρα από raw data integrity validation.
+
+### Practical Note:
+Το τρέχον local raw directory αποδίδει 272 πλήρως ζευγοποιημένα input-target park pairs.
+Η λεπτομέρεια αυτή καταγράφεται ως local-data note και μπορεί να ελεγχθεί αργότερα έναντι της ευρύτερης DaKS documentation, όπου η δημοσίευση αναφέρει 273 wind plants.
+
+### Next Step:
+Επόμενο βήμα είναι το methodological audit του `04_feature_engineering_and_graph_construction.ipynb` με έμφαση σε:
+- leakage-safe rolling / lag feature construction,
+- consistency του engineered feature space,
+- και readiness για τα downstream split / benchmark notebooks.
+
+**Commit Reference:** `fix(nb02): stabilize DaKS timestamp parsing and raw validation flow`
