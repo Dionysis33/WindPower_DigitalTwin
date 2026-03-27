@@ -727,3 +727,53 @@ Historical metric values σε παλαιότερα log entries πρέπει να
 - και readiness για τα downstream split / benchmark notebooks.
 
 **Commit Reference:** `fix(nb02): stabilize DaKS timestamp parsing and raw validation flow`
+
+
+---
+
+
+## [27/03/2026] - Canonicalization of NB02 and NB03, Documentation Realignment
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Οριστικοποίηση του `02_kassel_exploration.ipynb` ως canonical raw validation gate**
+   - Το NB02 σταθεροποιήθηκε ως strict raw validation / timestamp integrity notebook.
+   - Εφαρμόζεται strict input-target pairing ανά `park_id`.
+   - Υπάρχει explicit separator handling, strict timestamp parsing, duplicate timestamp detection και exact input-target timestamp alignment.
+   - Το notebook παράγει τα canonical raw audit artifacts του NB02.
+
+2. **Οριστικοποίηση του `03_eda_master.ipynb` ως validated-only EDA stage**
+   - Το NB03 διαβάζει τα `nb02_*.csv` ως upstream validation contract.
+   - Συνεχίζει μόνο με parks όπου `status in {"ok", "warning"}`.
+   - Το failed park `06238` αποκλείεται ρητά από downstream processing.
+   - Το notebook λειτουργεί ως validated-only master EDA stage και όχι ως raw validation / cleaning notebook.
+
+3. **Καθαρός downstream contract ορισμός**
+   - Το canonical progression του pipeline είναι πλέον:
+     `NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering`.
+   - Το `park_id` αντιμετωπίζεται ως string στα downstream notebooks.
+   - Δεν επιτρέπεται loose reparsing raw timestamps μετά το NB02.
+
+4. **Documentation realignment**
+   - Επιβεβαιώθηκε ότι το active repository scope είναι το DaKS / Kassel forecasting pipeline.
+   - Τα legacy exploratory directions (π.χ. ENTSO-E / Renewables.ninja / older triple-source framing) πρέπει να αντιμετωπίζονται ως historical context και όχι ως current canonical pipeline.
+   - Προτείνεται διάκριση μεταξύ active log και archive log για να μειωθεί η documentation ambiguity.
+
+### Scientific Interpretation:
+Το forecasting pipeline είναι πλέον σαφέστερα οργανωμένο σε validation-first μορφή.
+Το NB02 αποτελεί τη μοναδική canonical authority για raw integrity,
+ενώ το NB03 αποτελεί το canonical validated-only EDA layer.
+Η αρχιτεκτονική αυτή βελτιώνει reproducibility, leakage control και downstream benchmark clarity.
+
+### Practical Note:
+Ο `KasselLoader` παραμένει operational helper για loading / feature preparation,
+αλλά όχι canonical strict validation authority.
+Η canonical raw integrity authority του project είναι πλέον το NB02.
+
+### Next Step:
+Methodological audit και rewrite planning για το
+`04_feature_engineering_and_graph_construction.ipynb`
+με έμφαση σε:
+- leakage-safe lag / rolling construction,
+- stable feature-space definition,
+- spatial metadata integration,
+- graph artifact consistency.
