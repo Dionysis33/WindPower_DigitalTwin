@@ -103,6 +103,46 @@ If a notebook change affects results, update the relevant interpretation text as
 
 ---
 
+### Canonical Notebook Contract
+
+Για το current forecasting pipeline, ισχύουν οι παρακάτω canonical notebook roles:
+
+- `02_kassel_exploration.ipynb` είναι η **canonical raw validation authority** του repository.
+- `03_eda_master.ipynb` είναι το **canonical validated-only EDA stage**.
+- Το canonical progression του pipeline είναι:
+  `NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering`.
+- Μετά το `NB02`, δεν επιτρέπεται **loose reparsing** raw timestamps στα downstream notebooks.
+- Τα downstream στάδια πρέπει να καταναλώνουν validated outputs και όχι να επαναορίζουν raw-validation logic.
+
+### Operational Helper Clarification
+
+Operational helper modules μπορούν να χρησιμοποιούνται για loading, feature preparation ή downstream convenience, αλλά δεν πρέπει να τεκμηριώνονται ως canonical methodological authorities χωρίς ρητό redesign του pipeline.
+
+Ειδικά ο `KasselLoader` πρέπει να αντιμετωπίζεται ως **operational helper** και όχι ως **canonical strict raw validation layer**.
+
+### Documentation Consistency
+
+Όταν αλλάζει το notebook-stage contract, η τεκμηρίωση πρέπει να ενημερώνεται συντονισμένα στα εξής σημεία, όπου είναι relevant:
+
+- `README.md`
+- `LOGS.md`
+- `LOGS_ARCHIVE.md`
+- `docs/INDEX.md`
+- notebook markdown cells που περιγράφουν methodological role ή pipeline order
+
+### Additional Review Requirement
+
+Αν μια αλλαγή επηρεάζει:
+- raw validation,
+- timestamp parsing,
+- split semantics,
+- feature-space definition,
+- ή benchmark interpretation,
+
+τότε πρέπει να ελέγχεται ρητά αν επηρεάζεται η canonical περιγραφή του pipeline και αν χρειάζεται documentation realignment.
+
+---
+
 ## Data Policy
 
 This repository uses the **DaKS synthetic wind power dataset** from the University of Kassel research data repository.
