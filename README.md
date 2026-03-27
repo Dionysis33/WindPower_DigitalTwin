@@ -4,32 +4,32 @@
 [![License](https://img.shields.io/badge/license-AGPL--v3-green.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
 
-Research repository for **spatio-temporal wind power forecasting** on the **DaKS / Kassel synthetic wind power dataset**, with a pipeline that combines:
+Research repository για **spatio-temporal wind power forecasting** πάνω στο **DaKS / Kassel synthetic wind power dataset**, με pipeline που συνδυάζει:
 
 - physics-aware preprocessing,
 - graph-ready feature engineering,
 - leakage-aware baseline benchmarking,
 - residual diagnostics,
-- and a roadmap toward **graph-based** and **sequence-based** forecasting models.
+- και roadmap προς **graph-based** και **sequence-based** forecasting models.
 
-> Current focus: build a clean, reproducible forecasting benchmark first, then extend it toward diagnostics-aware and prognostics-aware research directions.
+> Current focus: πρώτα ένα καθαρό, reproducible forecasting benchmark και μετά προσεκτική επέκταση προς diagnostics-aware και prognostics-aware research directions.
 
 ---
 
 ## Project Status
 
-The repository currently contains a working forecasting pipeline for:
+Το repository υποστηρίζει ένα **forecasting-first, thesis-ready research pipeline** πάνω στο **DaKS / Kassel synthetic wind power dataset**.
 
-- loading and validating raw DaKS CSV files,
-- merging weather inputs with power targets,
-- reconstructing wind magnitude from U/V components,
-- scaling wind speed to hub height via **Power Law scaling**,
-- engineering temporal and spatial features,
-- building graph-ready spatial artifacts,
-- creating strict temporal **train / validation / test** splits,
-- and benchmarking both simple and advanced tabular baselines.
+Στην current canonical μορφή του, το pipeline περιλαμβάνει:
 
-The current implemented baseline ladder includes:
+- strict raw validation του DaKS dataset,
+- validated-only exploratory data analysis,
+- feature engineering με temporal και spatial πληροφορία,
+- leakage-aware temporal splitting,
+- baseline benchmarking,
+- και residual diagnostics.
+
+Η current implemented baseline ladder περιλαμβάνει:
 
 - **Persistence**
 - **Linear Regression**
@@ -37,8 +37,8 @@ The current implemented baseline ladder includes:
 - **XGBoost**
 - **MLP**
 
-At the current stage, forecasting is the implemented core of the repository.  
-Graph-based, sequence-based, and PHM-oriented extensions remain future work built on top of this benchmarked forecasting stack.
+Στο παρόν στάδιο, το **forecasting** αποτελεί τον implemented core άξονα του repository.  
+Τα **graph-based**, **sequence-based** και **PHM-oriented** extensions παραμένουν planned / future work πάνω σε αυτό το benchmarked forecasting stack.
 
 ---
 
@@ -46,102 +46,135 @@ Graph-based, sequence-based, and PHM-oriented extensions remain future work buil
 
 ### DaKS Dataset (primary source)
 
-This project is centered on the **DaKS / Kassel wind power dataset**.
+Το project βασίζεται στο **DaKS / Kassel synthetic wind power dataset**.
 
-The active forecasting pipeline uses raw per-park CSV pairs of the form:
+Το current active pipeline χρησιμοποιεί raw per-park CSV pairs της μορφής:
 
-- `data_input_<park_id>.csv` for weather / NWP variables
-- `data_target_<park_id>.csv` for power targets
-- `meta.csv` for park metadata and spatial information
+- `data_input_<park_id>.csv` για weather / NWP variables
+- `data_target_<park_id>.csv` για power targets
+- `meta.csv` για park metadata και spatial information
 
-During loading:
+### Canonical raw validation note
 
-- input and target files are matched by **park ID**,
-- separators are detected automatically,
-- wind speed is reconstructed from **U/V components**,
-- wind speed is scaled to **100 m hub height**,
-- target power is mapped to `Power_Output_Normalized`,
-- and the built-in dataset forecast is mapped to `Baseline_Prediction`.
+Η **canonical authority** για:
+
+- raw decoding,
+- timestamp parsing verification,
+- temporal ordering checks,
+- duplicate timestamp inspection,
+- και input-target alignment
+
+είναι το:
+
+- `02_kassel_exploration.ipynb`
+
+Το notebook αυτό λειτουργεί ως **canonical raw validation gate** του repository.
+
+### Operational helper note
+
+Ο `KasselLoader` χρησιμοποιείται ως **operational helper** για loading / feature-preparation convenience σε downstream στάδια.
+
+Δεν πρέπει να αντιμετωπίζεται ως η **canonical strict raw validation authority** του project.
 
 ### Renewables.ninja
 
-`Renewables.ninja` appears only in the early exploratory stage of the project.  
-It is **not** the main active data source of the current forecasting benchmark pipeline.
+Το `Renewables.ninja` ανήκει στην πρώιμη exploratory φάση του project και διατηρείται μόνο ως historical context.
+
+Δεν αποτελεί active primary data source του current canonical forecasting pipeline.
 
 ---
 
 ## Implemented Pipeline
 
-### 1. Raw data loading
+### 1. Canonical raw validation (`NB02`)
+Το `02_kassel_exploration.ipynb` αποτελεί το **canonical raw validation stage** του pipeline.
 
-The repository includes a `KasselLoader` that:
+Ο ρόλος του περιορίζεται σε:
 
-- scans the raw CSV directory,
-- matches `input` and `target` files by park ID,
-- loads files with automatic separator fallback,
-- merges them on timestamp,
-- and returns park-level time series aligned in time.
+- raw decoding,
+- timestamp parsing verification,
+- temporal ordering checks,
+- duplicate timestamp inspection,
+- και strict input-target alignment ανά `park_id`.
 
-### 2. Physics-aware preprocessing
+### 2. Canonical validated-only EDA (`NB03`)
+Το `03_eda_master.ipynb` αποτελεί το **canonical validated-only EDA stage**.
 
-The current preprocessing includes:
+Διαβάζει τα upstream validation artifacts του `NB02` και συνεχίζει μόνο με validated parks.  
+Δεν λειτουργεί ως raw validation / cleaning notebook.
 
-- wind magnitude reconstruction from U/V wind components,
-- **Power Law scaling** to hub height,
-- a theoretical power upper-bound utility based on the **Betz limit**,
-- and helper functions for physics-loss experimentation.
+### 3. Feature engineering (`NB04`)
+Το `04_feature_engineering_and_graph_construction.ipynb` καλύπτει:
 
-### 3. Feature engineering
-
-The feature pipeline includes:
-
+- temporal feature engineering,
 - cyclical time encoding,
-- lag features,
-- rolling statistics,
+- lag / rolling features,
 - spatial metadata integration,
-- and graph construction from park coordinates.
+- graph-ready artifact construction,
+- και export του engineered dataset.
 
-### 4. Dataset splitting and quality control
+### 4. Outlier handling and temporal splitting (`NB05`)
+Το `05_outliers_and_split.ipynb` εφαρμόζει:
 
-The active split strategy is a **strict temporal split**:
+- leakage-aware outlier handling,
+- strict temporal split,
+- και export των:
+  - `train_final.csv`
+  - `val_final.csv`
+  - `test_final.csv`
+
+### 5. Baseline modeling and diagnostics (`NB06`)
+Το `06_baseline_modeling.ipynb` καλύπτει:
+
+- Persistence
+- Linear Regression
+- baseline comparison
+- residual diagnostics
+- actual-vs-predicted analysis
+
+### 6. Advanced tabular baselines (`NB07`)
+Το `07_advanced_baselines_and_importance.ipynb` καλύπτει:
+
+- Random Forest
+- XGBoost
+- MLP
+- residual plots
+- feature-importance analysis
+- benchmark artifact update
+
+### Split protocol note
+
+Η active split strategy είναι strict temporal split:
 
 - **Train:** up to `2019-12-31 23:00:00`
 - **Validation:** up to `2020-06-30 23:00:00`
 - **Test:** from `2020-07-01` onward
 
-The preprocessing notebooks also include z-score-based outlier handling and train-first preprocessing logic to preserve temporal integrity and avoid leakage.
-
-### 5. Baseline benchmarking
-
-The current tabular benchmark suite includes:
-
-- Persistence
-- Linear Regression
-- Random Forest
-- XGBoost
-- MLP
-
-This baseline ladder provides the current reference point for all future graph-based, sequence-based, and deeper forecasting models.
-
----
-
-## Canonical Baseline Benchmark Artifact
-
-The current cross-model benchmark table is stored in:
+Το current cross-model benchmark artifact είναι το:
 
 ```text
 data/processed/baseline_metrics.csv
 ```
 
-This artifact should be interpreted as the **canonical final test-set benchmark table** for the implemented baseline ladder.
+---
 
-For standardized thesis reporting:
+## Canonical Baseline Benchmark Artifact
 
-- the final comparison is based on the **test split**,
-- the primary ranking criterion is **MAE (ascending)**,
-- while **RMSE** and **R²** are retained as complementary evaluation metrics.
+Το current cross-model benchmark table αποθηκεύεται στο:
 
-Validation results are used for model selection where applicable, but they are **not** used as the final cross-model ranking basis.
+```text
+data/processed/baseline_metrics.csv
+```
+
+Το artifact αυτό πρέπει να αντιμετωπίζεται ως το **canonical final test-set benchmark table** για την implemented baseline ladder.
+
+Για standardized thesis reporting:
+
+- η τελική σύγκριση βασίζεται στο **test split**,
+- το primary ranking criterion είναι το **MAE (ascending)**,
+- ενώ τα **RMSE** και **R²** διατηρούνται ως complementary evaluation metrics.
+
+Τα validation results χρησιμοποιούνται για model selection όπου χρειάζεται, αλλά **όχι** ως τελική βάση του cross-model ranking.
 
 ---
 
@@ -175,6 +208,7 @@ WindPower_DigitalTwin/
 ├── CONTRIBUTING.md
 ├── LICENSE
 ├── LOGS.md
+├── LOGS_ARCHIVE.md
 ├── README.md
 └── requirements.txt
 ```
@@ -184,31 +218,23 @@ WindPower_DigitalTwin/
 ## Notebook Guide
 
 ### `01_data_acquisition.ipynb`
-Early exploratory notebook for external data acquisition experiments.
+Early exploratory notebook για external-data experiments.  
+Δεν αποτελεί μέρος του current canonical forecasting pipeline.
 
 ### `02_kassel_exploration.ipynb`
-Initial decoding and inspection of the DaKS raw files.
+Canonical raw validation gate του DaKS pipeline.
 
 ### `03_eda_master.ipynb`
-Master exploratory data analysis across the merged dataset.
+Canonical validated-only EDA stage που λειτουργεί πάνω στο upstream validation contract του `NB02`.
 
 ### `04_feature_engineering_and_graph_construction.ipynb`
-Core notebook for:
-
-- temporal feature engineering,
-- spatial metadata integration,
-- graph construction,
-- and export of the engineered master dataset.
+Feature engineering, spatial metadata integration, graph-ready artifacts και export του engineered dataset.
 
 ### `05_outliers_and_split.ipynb`
-Outlier handling, temporal split, and export of:
-
-- `train_final.csv`
-- `val_final.csv`
-- `test_final.csv`
+Leakage-aware outlier handling, temporal split και export των canonical train / validation / test artifacts.
 
 ### `06_baseline_modeling.ipynb`
-Baseline training and diagnostics for:
+Baseline modeling και diagnostics για:
 
 - Persistence
 - Linear Regression
@@ -216,7 +242,7 @@ Baseline training and diagnostics for:
 - actual-vs-predicted plots
 
 ### `07_advanced_baselines_and_importance.ipynb`
-Advanced tabular baselines and diagnostics for:
+Advanced tabular baselines και diagnostics για:
 
 - Random Forest
 - XGBoost
@@ -300,7 +326,7 @@ Typical exported artifacts include:
 
 ## Quick Start
 
-Recommended execution order:
+Recommended canonical execution order:
 
 1. Run `02_kassel_exploration.ipynb`
 2. Run `03_eda_master.ipynb`
@@ -309,52 +335,53 @@ Recommended execution order:
 5. Run `06_baseline_modeling.ipynb`
 6. Run `07_advanced_baselines_and_importance.ipynb`
 
-Use `01_data_acquisition.ipynb` only if you want to revisit earlier exploratory external-data steps.
+Important execution notes:
+
+- `NB02` is the canonical raw validation authority.
+- `NB03` should be executed only after the upstream validation outputs of `NB02` are available.
+- Downstream notebooks should follow the validated contract established upstream.
+- `01_data_acquisition.ipynb` belongs to the early exploratory phase and is not part of the active canonical forecasting pipeline.
 
 ---
 
 ## Current Research Direction
 
-The repository is evolving from a broad digital-twin framing toward a more precise forecasting-centered research question:
+Το repository μετακινείται από ένα πιο broad digital-twin framing προς ένα πιο αυστηρά forecasting-centered research question:
 
 **physics-informed, graph-aware wind power forecasting with a pathway to diagnostics-aware and prognostics-aware interpretation.**
 
-This means:
+Αυτό σημαίνει ότι:
 
-- forecasting is the current implemented core,
-- residual and error diagnostics support health-oriented interpretation,
-- PHM framing is a research extension rather than a completed module,
-- and graph-based / sequence-based models are the next modeling phase after baseline stabilization.
+- το forecasting είναι ο current implemented core,
+- τα residual και error diagnostics υποστηρίζουν health-oriented interpretation,
+- το PHM framing είναι research extension και όχι completed module,
+- και τα graph-based / sequence-based models αποτελούν το επόμενο modeling phase μετά τη baseline stabilization.
 
 ---
 
 ## Known Notes / Limitations
 
-- The current benchmark core is **tabular forecasting**, not a finalized graph-learning system.
-- The graph-ready pipeline and spatial artifacts are implemented, but the final GNN / Graph-Mamba modeling stage is still future work.
-- The current physics utilities are implemented, but their full integration into future learning objectives still requires careful validation.
-- `mamba-ssm` may be difficult to build on **Windows**, so **Google Colab or Linux** is a reasonable environment for future sequence-model experiments.
-- Large raw and processed files are intentionally excluded from git through `.gitignore`.
+- Το current benchmark core είναι **tabular forecasting**, όχι finalized graph-learning system.
+- Η graph-ready pipeline και τα spatial artifacts είναι implemented, αλλά το τελικό GNN / Graph-Mamba modeling stage παραμένει future work.
+- Τα current physics utilities είναι implemented, αλλά η πλήρης ενσωμάτωσή τους σε μελλοντικά learning objectives χρειάζεται προσεκτική validation.
+- Το `mamba-ssm` μπορεί να είναι δύσκολο να γίνει build σε **Windows**, οπότε **Google Colab ή Linux** είναι λογικό environment για future sequence-model experiments.
+- Μεγάλα raw και processed αρχεία εξαιρούνται σκόπιμα από το git μέσω `.gitignore`.
 
 ---
 
 ## Logs and Progress Tracking
 
-Daily technical progress is tracked in:
+Η repository progress tracking διαχωρίζεται πλέον σε:
 
 ```text
 LOGS.md
+LOGS_ARCHIVE.md
 ```
 
-This includes milestone notes for:
+- `LOGS.md` κρατά το **active canonical methodological log** του current forecasting pipeline.
+- `LOGS_ARCHIVE.md` κρατά historical exploratory, superseded ή legacy entries.
 
-- data strategy changes,
-- notebook completion,
-- baseline results,
-- benchmark consolidation,
-- CI/CD fixes,
-- graph alignment,
-- and the next planned research steps.
+Για current thesis-ready repository state, ως active authority πρέπει να αντιμετωπίζεται το `LOGS.md`.
 
 ---
 
