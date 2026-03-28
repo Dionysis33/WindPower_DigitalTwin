@@ -287,3 +287,143 @@ Methodological audit και rewrite planning για το
 - stable feature-space definition,
 - spatial metadata integration,
 - graph artifact consistency.
+
+
+---
+
+
+## [28/03/2026] - NB02 Coverage-Aware Audit & NB03 Canonical Rewrite Stabilization
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+
+1. **Επέκταση του `NB02` από strict raw validation σε coverage-aware downstream contract**
+   - Το `02_kassel_exploration.ipynb` παρέμεινε η μοναδική **canonical raw validation authority** του pipeline.
+   - Δεν αλλοιώθηκε ο βασικός ρόλος του notebook ως:
+     - raw decoding,
+     - strict timestamp parsing verification,
+     - duplicate / NaT detection,
+     - exact input-target alignment audit.
+   - Προστέθηκε όμως νέο coverage-aware layer ώστε να διαχωρίζονται:
+     - `raw_valid` parks
+     - από `NB04-eligible` parks.
+
+2. **Νέα NB02 artifacts για cohort-aware downstream χρήση**
+   - Προστέθηκαν τα εξής νέα processed artifacts:
+     - `nb02_meta_coverage_audit.csv`
+     - `nb02_coverage_class_summary.csv`
+     - `nb02_nb04_eligibility_summary.csv`
+   - Ο downstream contract δεν βασίζεται πλέον μόνο στο απλό:
+     - `status in {"ok", "warning"}`
+   - Πλέον γίνεται ρητός διαχωρισμός μεταξύ:
+     - strict raw validity
+     - coverage class
+     - strict downstream eligibility
+
+3. **Κύρια empirical findings από τα exported CSV audits**
+   - Το all-pairs raw validation έδειξε ότι το dataset δεν είναι απλώς “ok / failed”.
+   - Αναδείχθηκε πραγματική heterogeneity στο validated population:
+     - full standard window parks
+     - partial mixed window parks
+     - partial / nonstandard train-only parks
+     - partial / nonstandard test-only parks
+     - και ένα raw-failed pair
+   - Στο current run προέκυψε ότι:
+     - το strict raw-valid population είναι μεγαλύτερο από το τελικό benchmark-ready cohort
+     - ενώ το canonical retained cohort για downstream master assembly περιορίζεται στα `NB04-eligible` parks
+   - Άρα το βασικό methodological finding ήταν ότι:
+     > raw-valid ≠ cohort-equivalent
+
+4. **Σταθεροποίηση του `NB03` ως validated-only και coverage-aware master EDA stage**
+   - Το `03_eda_master.ipynb` ξαναγράφηκε ώστε:
+     - να μη ξανακάνει raw validation,
+     - να μη κάνει loose reparsing raw timestamps,
+     - να μη χρησιμοποιεί πλέον hard-coded exclusion logic,
+     - και να μην αντιμετωπίζει όλα τα raw-valid parks ως downstream ισοδύναμα.
+   - Το actual `master_df` πλέον χτίζεται μόνο από parks με:
+     - `nb04_eligible == True`
+   - Το notebook εξάγει canonical downstream artifacts:
+     - `master_dataset.csv`
+     - `master_schema_summary.csv`
+     - `master_park_summary.csv`
+     - `master_anomaly_profile.csv`
+     - `master_park_load_summary.csv`
+
+5. **Config synchronization με το νέο upstream contract**
+   - Το `src/config.py` ενημερώθηκε ώστε να περιλαμβάνει τα νέα NB02 coverage-aware artifact paths.
+   - Έτσι τα downstream notebooks μπορούν να χρησιμοποιούν explicit constants αντί για ad hoc paths.
+   - Αυτό βελτιώνει:
+     - reproducibility,
+     - path consistency,
+     - και notebook-to-script synchronization.
+
+6. **Τι κάναμε και τι ΔΕΝ κάναμε στον `KasselLoader`**
+   - Επιβεβαιώθηκε ξανά ότι ο `KasselLoader` είναι:
+     - operational helper
+     - και όχι canonical raw validation authority
+   - Δεν μεταφέραμε τη methodological authority από το `NB02` στον loader.
+   - Ο loader χρησιμοποιήθηκε downstream μόνο για convenience loading / assembly.
+   - Δεν ολοκληρώθηκε ακόμη separate loader hardening patch.
+
+### Scientific Interpretation:
+Το κρίσιμο methodological εύρημα αυτής της φάσης ήταν ότι
+η raw εγκυρότητα ενός park pair δεν αρκεί από μόνη της για benchmark-ready downstream χρήση.
+
+Με άλλα λόγια:
+- ένα park μπορεί να είναι raw-valid,
+- αλλά να μην ανήκει στο canonical πλήρες cohort που θέλουμε για feature engineering / benchmark assembly.
+
+Αυτό οδήγησε σε σαφέστερο pipeline contract:
+
+`NB02 raw validation -> NB02 coverage-aware eligibility -> NB03 validated-only / NB04-eligible master assembly`
+
+Η αλλαγή αυτή βελτιώνει:
+- cohort clarity,
+- reproducibility,
+- downstream consistency,
+- και benchmark validity.
+
+### CSV-level Findings που χρειάζονται να θυμόμαστε:
+1. Το validated population δεν είναι πλήρως ομοιογενές.
+2. Υπάρχουν parks με nonstandard temporal coverage που δεν πρέπει να περνούν αυτόματα στο canonical downstream cohort.
+3. Τα exported CSV audits είναι πλέον η authority για:
+   - raw validity,
+   - coverage class,
+   - και NB04 eligibility.
+4. Τα downstream στάδια πρέπει να βασίζονται σε αυτά τα artifacts και όχι σε implicit assumptions.
+
+### Loader Notes / Future Caution:
+1. Ο `KasselLoader` παραμένει operational helper και όχι raw-validation authority.
+2. Το current loader implementation χρειάζεται μελλοντικά additional hardening:
+   - explicit pre-check πλήρους timestamp-set equality πριν ή γύρω από το merge,
+   - ώστε να αποφεύγεται πιθανό silent shrinkage σε mismatch case
+   - και καλύτερη ευθυγράμμιση με το canonical NB02 contract.
+3. Επίσης καλό είναι να εξεταστεί στο μέλλον:
+   - recursive file discovery αντί για μόνο flat `glob("*.csv")`
+   - και πιο σαφής handling ειδικών edge cases input files.
+
+### Τι χρειάζεται προσοχή στο μέλλον για αποφυγή methodological regressions:
+- Να μην ξαναμπεί λογική `status in {"ok","warning"}` ως μόνο eligibility gate.
+- Να μην επιστρέψει hard-coded exclusion λογική τύπου συγκεκριμένου `park_id`.
+- Να μην γίνει downstream loose reparsing timestamps μετά το `NB02`.
+- Να μην συγχέονται:
+  - raw-valid parks
+  - με strict benchmark-ready cohort parks.
+- Όταν αλλάζει το notebook-stage contract, να ενημερώνονται συντονισμένα:
+  - `README.md`
+  - `LOGS.md`
+  - `docs/INDEX.md`
+  - και το σχετικό notebook markdown.
+- Να διατηρείται σαφές ότι τα anomaly-like findings στα exported EDA CSVs
+  είναι descriptive outputs του `NB03` και όχι automatic cleaning decisions.
+
+### Practical Note:
+Με την ολοκλήρωση αυτής της φάσης:
+- το `NB02` θεωρείται κλειστό ως canonical raw validation + coverage-aware audit stage
+- το `NB03` θεωρείται κλειστό ως validated-only / NB04-eligible master EDA stage
+- και το επόμενο λογικό methodological βήμα είναι το:
+  - `04_feature_engineering_and_graph_construction.ipynb`
+
+### Commit References:
+- `config: add NB02 coverage-aware artifact paths`
+- `feat(nb02): add coverage-aware downstream eligibility audit`
+- `refactor(nb03): rewrite validated-only master EDA with NB04 eligibility gate`
