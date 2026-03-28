@@ -427,3 +427,64 @@ Methodological audit και rewrite planning για το
 - `config: add NB02 coverage-aware artifact paths`
 - `feat(nb02): add coverage-aware downstream eligibility audit`
 - `refactor(nb03): rewrite validated-only master EDA with NB04 eligibility gate`
+
+
+---
+
+
+## [28/03/2026] - NB04 Canonical Rewrite, Leakage-Safe Feature Engineering & Graph Export Stabilization
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Complete rewrite του `04_feature_engineering_and_graph_construction.ipynb`**
+   - Το `NB04` επανασχεδιάστηκε ως καθαρό **validated-only downstream feature engineering stage**.
+   - Αφαιρέθηκε raw rediscovery λογική, loose reparsing timestamps και ad hoc metadata hunting.
+   - Το notebook πλέον χρησιμοποιεί μόνο τα canonical downstream artifacts που έχουν ήδη παραχθεί upstream.
+
+2. **Leakage-safe temporal feature construction**
+   - Τα lag features κατασκευάζονται αυστηρά ανά `park_id` μετά από deterministic sorting στο canonical `timestamp` backbone.
+   - Τα rolling features έγιναν **causal-by-construction** με `shift(1)` πριν από rolling mean / std.
+   - Έτσι αποφεύγεται direct ή indirect χρήση της current-step target τιμής στη στιγμή `t`.
+
+3. **Σταθεροποίηση feature-space definition**
+   - Το τελικό exported dataset διαχωρίζει καθαρότερα:
+     - backbone / control columns
+     - static / spatial metadata
+     - exogenous meteorological features
+     - engineered temporal / autoregressive features
+   - Provenance / audit columns δεν αντιμετωπίζονται πλέον ως candidate modeling inputs στο canonical export.
+
+4. **Strict spatial validation και graph-ready artifact construction**
+   - Εφαρμόστηκε deterministic node ordering πάνω στο strict `NB04-eligible` cohort.
+   - Ο spatial graph κατασκευάστηκε με μία μόνο authoritative export path.
+   - Ο exported adjacency matrix είναι binary, συμμετρικός και consistent με το graph node order.
+
+5. **Επανεκτέλεση και επιβεβαίωση των NB04 exports**
+   - Το notebook ολοκληρώθηκε επιτυχώς χωρίς execution error.
+   - Παράχθηκαν εκ νέου τα canonical downstream artifacts:
+     - `final_feature_engineered_dataset.csv`
+     - `adjacency_matrix.npy`
+     - `graph_node_order.csv`
+     - `graph_edge_index.npy`
+     - `graph_distance_matrix_km.npy`
+
+### Current rerun outputs:
+- **Parks:** 256
+- **Final dataset rows:** 3,252,070
+- **Final dataset columns:** 47
+- **Graph nodes:** 256
+- **Undirected edges:** 534
+
+### Scientific Interpretation:
+Το βασικό methodological concern του `NB04` για πιθανό leakage σε rolling target-derived features θεωρείται πλέον resolved.
+Το notebook λειτουργεί πλέον ως καθαρό, leakage-aware και graph-ready feature engineering stage για τα downstream benchmark και diagnostics notebooks.
+
+### Next Step:
+Επόμενο βήμα είναι ο downstream rerun / verification έλεγχος στα:
+- `05_outliers_and_split.ipynb`
+- `06_baseline_modeling.ipynb`
+- `07_advanced_baselines_and_importance.ipynb`
+
+ώστε να επιβεβαιωθεί πλήρως η consistency του stabilized artifact chain πριν από το `NB08`.
+
+### Commit References:
+- `fix(nb04): rewrite feature engineering with leakage-safe rolling and graph-ready exports`
