@@ -561,3 +561,69 @@ Methodological audit και rewrite planning για το
 - `NB04 -> NB05`
 
 θεωρείται πλέον σταθεροποιημένο και αναπαραγώγιμο στο current local rerun state.
+
+
+---
+
+
+## [30/03/2026] - NB06 Canonical Rewrite, Test-Only Benchmark Export & Diagnostic Handoff Stabilization
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Complete rewrite του `06_baseline_modeling.ipynb`**
+   - Το `NB06` επανασχεδιάστηκε ως καθαρό downstream baseline notebook πάνω στα canonical split artifacts:
+     - `train_final.csv`
+     - `val_final.csv`
+     - `test_final.csv`
+   - Αφαιρέθηκε ambiguity ανάμεσα σε intermediate validation reporting και final benchmark export.
+   - Το notebook παραμένει αυστηρά στο forecasting scope:
+     - `Persistence`
+     - `Linear Regression`
+     - baseline comparison
+     - residual diagnostics
+     - actual-vs-predicted analysis
+
+2. **Split integrity και feature-space contract checks**
+   - Προστέθηκαν explicit checks για:
+     - required input files
+     - required columns
+     - split/schema consistency
+     - blocked columns εκτός learned-model feature space
+   - Διατηρήθηκε καθαρός feature / target contract για τα baselines του NB06.
+   - Το notebook λειτουργεί πλέον πιο fail-fast και reproducibly πάνω στο stabilized upstream stack.
+
+3. **Canonical benchmark export cleanup**
+   - Το benchmark export logic καθαρίστηκε ώστε να μην υπάρχει contamination του
+     `data/processed/baseline_metrics.csv`
+     από intermediate validation outputs.
+   - Τα validation metrics διατηρούνται μόνο για notebook-level interpretation.
+   - Το `baseline_metrics.csv` ενημερώνεται πλέον μόνο με canonical **test-set** rows του NB06.
+
+4. **Diagnostic handoff artifact**
+   - Προστέθηκε export του:
+     - `data/processed/nb06_test_predictions.csv`
+   - Το artifact αυτό προορίζεται για downstream residual diagnostics και benchmark-aligned error inspection.
+   - Το export βασίζεται σε καθαρό evaluation key space και είναι κατάλληλο ως handoff προς το NB08.
+
+### Scientific Interpretation:
+Το βασικό methodological concern του NB06 για benchmark export contamination θεωρείται πλέον resolved.
+
+Το `NB06` είναι τώρα:
+- methodologically acceptable
+- benchmark-safe στο current scope
+- reproducible ως downstream stage μετά το `NB05`
+- κατάλληλο για diagnostics-oriented handoff
+
+### Important Note:
+Το current `baseline_metrics.csv` μετά το rerun του `NB06` πρέπει να αντιμετωπίζεται ως **transitional benchmark artifact** του NB06 stage και όχι ακόμη ως το τελικό thesis-ready cross-model benchmark table, μέχρι να ολοκληρωθεί και το canonical cleanup / rerun του `NB07`.
+
+### Next Step:
+Επόμενο βήμα είναι το canonical rewrite / rerun του:
+- `07_advanced_baselines_and_importance.ipynb`
+
+με έμφαση σε:
+- κοινό canonical evaluation key space
+- benchmark update consistency
+- πλήρη επανασυγκρότηση του `baseline_metrics.csv` ως final **test-only** benchmark table για όλη την baseline ladder
+
+### Commit References:
+- `fix(nb06): stabilize canonical benchmark export and test-only reporting`
