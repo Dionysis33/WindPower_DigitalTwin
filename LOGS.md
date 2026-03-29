@@ -488,3 +488,76 @@ Methodological audit και rewrite planning για το
 
 ### Commit References:
 - `fix(nb04): rewrite feature engineering with leakage-safe rolling and graph-ready exports`
+
+---
+
+### Verification update after clean rerun
+
+Μετά την ολοκλήρωση του rewrite και του καθαρού rerun του `05_outliers_and_split.ipynb`, πραγματοποιήθηκε επιπλέον **post-export file-level verification** στα canonical split artifacts που παράγονται από το notebook.
+
+Ο στόχος αυτού του δεύτερου ελέγχου ήταν να επιβεβαιωθεί ότι:
+
+- τα exported CSV αρχεία γράφτηκαν σωστά,
+- δεν υπάρχει truncated ή corrupted artifact,
+- τα row counts συμφωνούν ακριβώς με το current in-memory split state,
+- το schema παραμένει identical στα `train / val / test`,
+- και το `test_flag` contract τηρείται όπως ορίζεται από το current flag-aware split protocol.
+
+#### Επιβεβαιωμένα canonical outputs
+
+Το verification επιβεβαίωσε ότι το current rerun state του `NB05` παράγει τα εξής canonical artifacts:
+
+- `train_final.csv` → **1,982,736 rows**, **47 columns**
+- `val_final.csv` → **182,998 rows**, **47 columns**
+- `test_final.csv` → **1,086,336 rows**, **47 columns**
+
+#### Τι επιβεβαιώθηκε στο file-level verification
+
+Πέρα από το απλό row-count check, επιβεβαιώθηκαν και τα εξής:
+
+- σωστή ανάγνωση header χωρίς schema corruption
+- σωστό πλήθος στηλών σε όλα τα exported files
+- επιτυχές sample parse μετά το export
+- παρουσία των required backbone columns:
+  - `park_id`
+  - `timestamp`
+  - `test_flag`
+  - `Power_Output_Normalized`
+  - `Baseline_Prediction`
+- σωστό `test_flag` contract ανά split:
+  - `train_final.csv` → μόνο `test_flag == 0`
+  - `val_final.csv` → μόνο `test_flag == 0`
+  - `test_final.csv` → μόνο `test_flag == 1`
+
+Το τελικό verification cell του notebook επέστρεψε:
+
+- **QUICK VERIFICATION PASSED**
+
+#### Methodological clarification
+
+Η τελική verification φάση βοήθησε επίσης να αποσαφηνιστεί η σωστή διατύπωση του split semantics στο active documentation.
+
+Πιο συγκεκριμένα, το `val_df` πρέπει να περιγράφεται ως:
+
+- **το τελικό χρονικό tail του pre-test window**
+
+και όχι ως stronger claim τύπου:
+
+- **τελευταίο contiguous χρονικό block**
+
+Η νέα διατύπωση είναι πιο ακριβής, επειδή το notebook ορίζει το validation split μέσω χρονικού cutoff μέσα στο pre-test window και όχι μέσω πρόσθετης εγγύησης πλήρους per-park contiguity.
+
+#### Practical implication
+
+Με αυτή την επιβεβαίωση, το `NB05` θεωρείται πλέον πλήρως επαληθευμένο ως canonical downstream stage για:
+
+- leakage-safe outlier handling,
+- flag-aware temporal split,
+- deterministic export,
+- και stable handoff προς τα `NB06` και `NB07`.
+
+Άρα, από τη σκοπιά του artifact chain, το τμήμα:
+
+- `NB04 -> NB05`
+
+θεωρείται πλέον σταθεροποιημένο και αναπαραγώγιμο στο current local rerun state.
