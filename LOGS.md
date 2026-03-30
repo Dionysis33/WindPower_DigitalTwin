@@ -478,4 +478,73 @@ Methodological audit και rewrite planning για το
 
 ### Next Step:
 Επόμενο βήμα είναι downstream diagnostics / interpretation work πάνω στο stabilized forecasting benchmark stack, χωρίς αλλαγή του canonical baseline reporting contract.
+
+
 ---
+
+
+## [30/03/2026] - NB08 Operating-Regime Residual Diagnostics & Health-Oriented Interpretation Bridge
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Ολοκλήρωση του `08_residual_diagnostics_and_operating_regimes.ipynb`**
+   - Το `NB08` υλοποιήθηκε ως **strict downstream diagnostics notebook** πάνω στα canonical exported test artifacts.
+   - Το notebook δεν εισάγει νέο training, δεν αλλάζει splits και δεν επηρεάζει το upstream benchmark protocol.
+
+2. **Canonical downstream evaluation space**
+   - Χρησιμοποιήθηκαν τα εξής canonical inputs:
+     - `data/processed/test_final.csv`
+     - `data/processed/baseline_metrics.csv`
+     - `data/processed/nb06_test_predictions.csv`
+     - `data/processed/predictions/nb07_all_test_predictions_long.csv` ή τα αντίστοιχα fallback exports
+   - Επιβεβαιώθηκε κοινό **test-only row-level evaluation space** για όλα τα implemented baselines.
+
+3. **Residual diagnostics across implemented baselines**
+   - Πραγματοποιήθηκε residual analysis για:
+     - `Persistence`
+     - `Linear Regression`
+     - `Random Forest`
+     - `XGBoost`
+     - `MLP`
+   - Υλοποιήθηκε cross-model residual / absolute-error structure analysis.
+
+4. **Operating-regime slicing**
+   - Ορίστηκαν και αναλύθηκαν:
+     - wind-related regimes
+     - power-related regimes
+     - secondary temporal blocks
+   - Παράχθηκαν regime-wise summaries και diagnostic plots για να φανεί αν η error structure μεταβάλλεται συστηματικά ανά operating condition.
+
+5. **Compact diagnostics exports**
+   - Εξήχθησαν τα εξής summary artifacts:
+     - `nb08_wind_regime_metrics.csv`
+     - `nb08_power_regime_metrics.csv`
+     - `nb08_time_block_metrics.csv`
+     - `nb08_best_model_by_wind_regime.csv`
+     - `nb08_best_model_by_power_regime.csv`
+
+### Scientific Interpretation:
+Το `NB08` έδειξε ότι τα forecasting residuals δεν περιγράφονται επαρκώς μόνο από aggregate metrics όπως MAE / RMSE / R².
+
+Αντίθετα, η residual structure εμφανίζει **structured dependence across operating regimes**, κάτι που ενισχύει τη diagnostics-aware ανάγνωση του benchmark stack.
+
+Αυτό δεν ισοδυναμεί με:
+- fault diagnosis,
+- anomaly detection ως completed module,
+- health-state inference,
+- ή RUL estimation.
+
+Αποτελεί όμως ένα καθαρό και μεθοδολογικά defensible βήμα από:
+
+`forecasting -> residual diagnostics -> health-aware / PHM-oriented interpretation`
+
+### Methodological Note:
+Το notebook παραμένει:
+- **test-only**
+- **benchmark-safe**
+- **non-overclaiming**
+- και πλήρως ευθυγραμμισμένο με το forecasting-first positioning του repository.
+
+Το digital-twin framing διατηρείται, αλλά πλέον υποστηρίζεται από πιο explicit σύνδεση με prognostics / health-management direction μέσω structured residual analysis.
+
+### Practical Outcome:
+Το issue για το operating-regime diagnostics experiment θεωρείται πλέον ολοκληρωμένο σε notebook-level scope και το σχετικό PR merged στο `main`.
