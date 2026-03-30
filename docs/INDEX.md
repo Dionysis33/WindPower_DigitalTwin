@@ -1,46 +1,45 @@
 # Documentation Index
 
-Current canonical pipeline:
-`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering`
+Current canonical workflow:
+
+`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics`
 
 ## Core research documents
+
 - `RESEARCH_SCOPE.md`  
-  Περιγράφει το ακαδημαϊκό scope του project, με το forecasting ως current implemented core και τις PHM / prognostics κατευθύνσεις ως research extension.
+  Περιγράφει το forecasting-first scope του project, τον implemented benchmark core, το current diagnostics extension και τα future research boundaries.
 
 - `DATA.md`  
-  Τεκμηριώνει το **DaKS / Kassel dataset**, την προέλευση των δεδομένων, τους περιορισμούς χρήσης και τις βασικές data-handling αποφάσεις.
+  Τεκμηριώνει το **DaKS / Kassel dataset**, τη data-handling λογική και τη διάκριση μεταξύ public tracked artifacts και local rerun outputs.
 
 - `BASELINE_PROTOCOL.md`  
-  Ορίζει το baseline evaluation protocol, τα train / validation / test splits, τις leakage-aware πρακτικές και τα benchmark comparison standards.
+  Ορίζει το baseline evaluation protocol, το canonical benchmark artifact και τον ρόλο του downstream diagnostics stage.
 
 - `PHM_ROADMAP.md`  
-  Περιγράφει τη μελλοντική επέκταση του project από forecasting προς prognostics, degradation monitoring, anomaly awareness και health-oriented diagnostics.
+  Περιγράφει τη σταδιακή και μη υπερβολική μετάβαση από forecasting benchmark pipeline προς diagnostics-aware και αργότερα PHM-oriented research directions.
 
 ## Repository governance
+
 - `README.md`  
-  Γενική επισκόπηση του repository, του implemented pipeline και της current project status.
+  Γενική επισκόπηση του current public repository state.
 
 - `CONTRIBUTING.md`  
-  Κανόνες για contribution workflow, notebook discipline, documentation consistency και reproducibility requirements.
+  Κανόνες για reproducibility, notebook discipline και documentation consistency.
 
-- `CODE_OF_CONDUCT.md`  
-  Βασικές αρχές συμπεριφοράς και συνεργασίας.
-
-- `SECURITY.md`  
-  Responsible disclosure policy και οδηγίες για πιθανές security αναφορές.
-
-## Logs and progress tracking
 - `LOGS.md`  
-  Active canonical log του current forecasting pipeline, με τα recent methodological updates που αντανακλούν την ενεργή repository state.
+  Active canonical methodological log του current public / thesis-ready state.
 
 - `LOGS_ARCHIVE.md`  
-  Historical archive παλαιότερων exploratory, superseded ή legacy entries. Δεν αποτελεί active canonical authority για το current pipeline.
+  Historical archive παλαιότερων exploratory ή superseded states. Δεν αποτελεί active authority.
 
 ## Practical note
-Η documentation αυτή υποστηρίζει ένα **forecasting-first, reproducible research workflow** με έμφαση σε:
-- raw data integrity,
-- methodological correctness,
-- leakage prevention,
-- benchmark comparability,
-- residual diagnostics,
-- και καθαρό διαχωρισμό μεταξύ implemented pipeline και future research extensions.
+
+Η documentation αυτή υποστηρίζει ένα:
+
+**forecasting-first, benchmark-safe, diagnostics-aware research workflow**
+
+με σαφή διαχωρισμό ανάμεσα σε:
+
+- **already implemented**
+- **current diagnostics extension**
+- **future work**

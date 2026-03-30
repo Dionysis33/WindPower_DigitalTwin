@@ -48,7 +48,15 @@ Dataset source:
 
 ## Τρέχοντα processed artifacts
 
-Με βάση την παρούσα κατάσταση του project, έχουν δημιουργηθεί processed artifacts όπως:
+Είναι σημαντικό να διαχωρίζονται δύο έννοιες:
+
+### Public tracked artifact
+Στο current public repository, το canonical tracked benchmark artifact είναι το:
+
+- `data/processed/baseline_metrics.csv`
+
+### Canonical local rerun artifacts
+Όταν η pipeline εκτελείται τοπικά από την αρχή, μπορούν να παραχθούν artifacts όπως:
 
 - `master_dataset.csv`
 - `final_feature_engineered_dataset.csv`
@@ -56,8 +64,13 @@ Dataset source:
 - `val_final.csv`
 - `test_final.csv`
 - `baseline_metrics.csv`
+- `nb06_test_predictions.csv`
+- `predictions/nb07_all_test_predictions_long.csv`
+- `diagnostics/nb08_wind_regime_metrics.csv`
+- `diagnostics/nb08_power_regime_metrics.csv`
+- `diagnostics/nb08_time_block_metrics.csv`
 
-Τα παραπάνω αποτελούν outputs της pipeline και μπορούν να επαναδημιουργηθούν μέσω των notebooks.
+Τα παραπάνω αποτελούν **pipeline outputs που μπορούν να επαναδημιουργηθούν** μέσω των notebooks και δεν είναι απαραίτητο να versioned/tracked όλα δημόσια στο repository.
 
 ## Target variable
 
