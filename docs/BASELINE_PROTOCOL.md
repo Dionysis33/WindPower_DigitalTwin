@@ -2,8 +2,13 @@
 
 ## Σκοπός
 
-Το παρόν έγγραφο περιγράφει το **baseline evaluation protocol** του project.  
-Ο ρόλος των baselines είναι να λειτουργούν ως καθαρό σημείο αναφοράς (reference point), ώστε κάθε μελλοντικό πιο σύνθετο μοντέλο να αξιολογείται σε δίκαιη και επιστημονικά συνεπή βάση.
+Το παρόν έγγραφο ορίζει το **baseline evaluation protocol** του project.
+
+Η baseline ladder λειτουργεί ως το κοινό benchmark backbone πάνω στο οποίο στηρίζονται:
+
+- η δίκαιη cross-model comparison,
+- η downstream residual diagnostics analysis,
+- και οι μελλοντικές συγκρίσεις με graph-based ή sequence-based models.
 
 ## Baseline philosophy
 
@@ -14,9 +19,9 @@
 - εξετάζουμε αν τα πιο πολύπλοκα μοντέλα προσθέτουν πραγματική αξία,
 - αποφεύγουμε claims υπεροχής χωρίς σωστή σύγκριση.
 
-## Current baselines
+## Current implemented baselines
 
-Στην παρούσα φάση το baseline benchmark set περιλαμβάνει τα εξής models:
+Στην current canonical baseline ladder περιλαμβάνονται:
 
 1. **Persistence**
 2. **Linear Regression**
@@ -24,42 +29,33 @@
 4. **XGBoost**
 5. **MLP**
 
-Αυτά αποτελούν την τρέχουσα baseline ladder του project και λειτουργούν ως κοινό reference suite πριν τη μετάβαση σε graph-based ή sequence-based αρχιτεκτονικές.
-
 ## Data splitting protocol
 
-Η αξιολόγηση βασίζεται σε **temporal split** και όχι σε random split.
+Η αξιολόγηση βασίζεται σε **strict temporal split** και όχι σε random split.
 
-Χρησιμοποιούνται τρία διακριτά σύνολα:
+Χρησιμοποιούνται:
 
-- **Train set**
-- **Validation set**
-- **Test set**
+- **Train**
+- **Validation**
+- **Test**
 
-Η χρονική διάσπαση έχει σχεδιαστεί ώστε:
-
-- το validation να ακολουθεί χρονικά το train,
-- το test να ακολουθεί χρονικά το validation,
-- να μην υπάρχει overlap μεταξύ των splits.
-
-Αυτό είναι κρίσιμο για time-series forecasting και για αποφυγή **look-ahead bias**.
+Το validation χρησιμοποιείται μόνο για model selection όπου απαιτείται.  
+Το test χρησιμοποιείται μόνο για final reporting.
 
 ## Leakage prevention
 
-Ένα από τα βασικά methodological constraints του project είναι η αποφυγή **data leakage**.
+Το protocol επιβάλλει:
 
-Για αυτόν τον λόγο:
+- χρονικά απομονωμένα splits,
+- consistent feature space across splits,
+- train-only preprocessing statistics,
+- benchmark-safe reporting.
 
-- τα split boundaries είναι αυστηρά χρονικά,
-- οι έλεγχοι ακεραιότητας γίνονται με explicit assertions,
-- τα outlier thresholds / clipping limits υπολογίζονται με βάση **train-only statistics**,
-- και στη συνέχεια εφαρμόζονται σε validation / test.
-
-Αυτό σημαίνει ότι το validation και το test δεν επηρεάζουν τον καθορισμό preprocessing thresholds.
+Τα outlier thresholds / clipping limits υπολογίζονται με βάση **train-only statistics** και εφαρμόζονται downstream χωρίς leakage προς validation ή test.
 
 ## Outlier handling protocol
 
-Στο Notebook 05 εφαρμόστηκε train-aware outlier handling με λογική **Z-score clipping**.
+Στο `NB05` εφαρμόστηκε train-aware outlier handling με λογική **Z-score clipping**.
 
 Η διαδικασία έχει ως εξής:
 
@@ -71,106 +67,70 @@
    - test
 4. Export των τελικών datasets
 
-Η προσέγγιση αυτή είναι μεθοδολογικά ισχυρότερη από το να υπολογίζονται thresholds στο συνολικό dataset.
+## Canonical benchmark artifact
 
-## Persistence baseline
-
-Το **Persistence model** λειτουργεί ως naïve forecast:
-
-- η πρόβλεψη για τη χρονική στιγμή `t+1`
-- ισούται με την προηγούμενη διαθέσιμη τιμή.
-
-Στο project, η persistence λογική εφαρμόζεται με τρόπο συμβατό με τη δομή του dataset και τη χρονική ακολουθία των observations.
-
-Ο ρόλος του είναι να απαντά στο ερώτημα:
-
-> «Πόσο καλύτερο είναι το μοντέλο μας από μια πολύ απλή, αλλά ισχυρή, baseline υπόθεση;»
-
-## Linear Regression baseline
-
-Η **Linear Regression** αποτελεί το πρώτο πραγματικό learned model του pipeline.
-
-Χρησιμοποιεί forecasting-ready numerical features, όπως:
-
-- NWP variables,
-- temporal encodings,
-- lag features,
-- rolling statistics,
-- selected engineered predictors.
-
-Στόχος της δεν είναι να δώσει το τελικό state-of-the-art αποτέλεσμα, αλλά:
-
-- να ελέγξει αν τα engineered features περιέχουν predictive signal,
-- να λειτουργήσει ως interpretable benchmark,
-- να δείξει αν υπάρχει σαφές κέρδος σε σχέση με το Persistence baseline.
-
-## Evaluation metrics
-
-Η baseline αξιολόγηση βασίζεται στα εξής metrics:
-
-- **MAE**
-- **RMSE**
-- **R²**
-
-Αυτά αποθηκεύονται σε structured μορφή ώστε να μπορούν να χρησιμοποιηθούν αργότερα σε συγκρίσεις με πιο σύνθετα μοντέλα.
-
-## Unified benchmark reporting rule
-
-Για cross-model benchmark reporting, το canonical comparison artifact του project είναι το:
+Για cross-model reporting, canonical artifact είναι το:
 
 `data/processed/baseline_metrics.csv`
 
-Ο πίνακας αυτός πρέπει να ερμηνεύεται ως:
+Το artifact αυτό ερμηνεύεται ως:
 
-- **test-set benchmark table**
-- με consistent metric naming:
+- **final test-set benchmark table**
+- με canonical metric naming:
   - **MAE**
   - **RMSE**
   - **R²**
-- και με ρητά δηλωμένο primary ranking rule.
+- και με primary ranking criterion το **MAE (ascending)**.
 
-Στην παρούσα φάση, το **primary ranking criterion** είναι το **MAE (ascending)**.
+## Role of diagnostics
 
-Τα validation results χρησιμοποιούνται μόνο για model selection στα advanced baselines όπου απαιτείται, αλλά **δεν** χρησιμοποιούνται για final cross-model ranking.
+Η baseline phase δεν τελειώνει στα aggregate metrics.
 
-## Diagnostic analysis
+Το benchmark stack υποστηρίζει downstream:
 
-Πέρα από τα aggregate metrics, η baseline φάση περιλαμβάνει και **diagnostic analysis**, όπως:
+- residual distribution analysis,
+- actual-vs-predicted comparison,
+- operating-regime-aware error inspection,
+- structured comparison μεταξύ implemented baselines.
 
-- residual distribution,
-- residual plots,
-- comparison plots actual vs predicted,
-- error analysis σε σχέση με wind-related features.
+## Current diagnostics extension
 
-Η ανάλυση αυτή είναι σημαντική γιατί δεν μας ενδιαφέρει μόνο το συνολικό error, αλλά και το **πού** και **πότε** αποτυγχάνει το μοντέλο.
+Μετά την ολοκλήρωση της baseline πεντάδας, το current extension του pipeline είναι ένα **strict downstream diagnostics stage** πάνω στα exported baseline predictions.
 
-## Role of diagnostics for future PHM direction
+Αυτό σημαίνει ότι η αμέσως επόμενη canonical ερμηνευτική φάση είναι:
 
-Η residual behavior analysis μπορεί αργότερα να συνδεθεί με:
+> benchmarked forecasting -> downstream residual diagnostics
 
-- abnormal operating regimes,
-- anomaly sensitivity,
-- health-oriented monitoring,
-- turbine prognostics and health management.
+και όχι:
 
-Σε αυτή τη φάση, τα diagnostics χρησιμοποιούνται κυρίως ως forecasting diagnostics και όχι ως πλήρες PHM module.
+> baseline ladder -> άμεσο νέο modeling stage
+
+## PHM-oriented interpretation boundary
+
+Τα diagnostics μπορούν να συζητηθούν ως βάση για:
+
+- diagnostics-aware interpretation,
+- health-aware discussion,
+- PHM-oriented future work.
+
+Όμως σε αυτή τη φάση τα diagnostics παραμένουν **forecasting diagnostics** και όχι completed PHM module.
 
 ## Current status
 
-Μέχρι στιγμής, το baseline protocol έχει επιβεβαιώσει ότι:
+Η current canonical baseline ladder έχει ολοκληρωθεί και λειτουργεί ως benchmark backbone για:
 
-- η feature-engineered pipeline δίνει καλύτερη απόδοση από το naïve Persistence,
-- η Linear Regression συλλαμβάνει μέρος της δυναμικής του target,
-- αλλά εξακολουθούν να υπάρχουν non-linear effects που δεν περιγράφονται πλήρως από ένα γραμμικό μοντέλο.
+- `NB06` baseline modeling,
+- `NB07` advanced tabular baselines,
+- `NB08` downstream residual diagnostics.
 
-Αυτό δικαιολογεί τη μετάβαση σε ισχυρότερα non-linear baselines στο επόμενο στάδιο.
+## Next benchmarking / modeling step
 
-## Next benchmarking step
-
-Αφού ολοκληρώθηκε η baseline πεντάδα, το επόμενο βήμα δεν είναι πλέον η προσθήκη νέων tabular baselines, αλλά η αξιοποίηση του unified benchmark table ως reference point για:
+Αφού σταθεροποιηθεί και το downstream diagnostics layer, το επόμενο modeling step παραμένει future work:
 
 - graph-based forecasting models,
 - sequence-based models,
-- και μελλοντικές GNN / Graph-Mamba αρχιτεκτονικές.
+- GNN / Mamba / Graph-Mamba experimentation.
 
-Ο ρόλος της baseline ladder είναι πλέον να προσφέρει σταθερό και μεθοδολογικά συνεπές σημείο αναφοράς για κάθε επόμενη πιο σύνθετη μοντελοποίηση.
+Άρα η baseline ladder πρέπει να αντιμετωπίζεται ως:
+
+> canonical benchmark backbone for diagnostics today and advanced modeling tomorrow

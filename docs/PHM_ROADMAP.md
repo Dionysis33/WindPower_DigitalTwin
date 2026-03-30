@@ -2,148 +2,96 @@
 
 ## Γιατί χρειάζεται αυτό το roadmap
 
-Το project ξεκίνησε με βασικό άξονα το **wind power forecasting**, αλλά η ερευνητική του κατεύθυνση μπορεί να επεκταθεί φυσικά προς **turbine prognostics and health management (PHM)**.
+Το project ξεκίνησε και παραμένει **forecasting-first**.  
+Η σύνδεση προς **turbine prognostics and health management (PHM)** είναι πραγματική ως ερευνητική κατεύθυνση, αλλά πρέπει να διατυπώνεται χωρίς overclaiming.
 
-Αυτό δεν σημαίνει ότι το repository σήμερα είναι ήδη πλήρες PHM system.  
-Σημαίνει όμως ότι η παρούσα forecasting pipeline μπορεί να λειτουργήσει ως η επιστημονική βάση για μια πιο health-aware προσέγγιση.
+## Current implemented backbone
 
-## Current stage
-
-Αυτή τη στιγμή το project βρίσκεται στο στάδιο:
+Σήμερα το repository έχει ήδη ολοκληρώσει:
 
 - clean preprocessing,
+- validated-only downstream data assembly,
 - feature engineering,
-- leakage-aware splitting,
+- leakage-aware split strategy,
 - baseline benchmarking,
-- residual diagnostics.
+- advanced tabular baselines.
 
-Αυτό είναι το σωστό πρώτο βήμα, γιατί χωρίς αξιόπιστο forecasting backbone δεν μπορεί να στηριχθεί ένα σοβαρό PHM framework.
+## Current diagnostics extension
 
-## Γιατί το forecasting συνδέεται με PHM
+Το τρέχον επόμενο επίπεδο δεν είναι νέο modeling stage, αλλά **strict downstream residual diagnostics** πάνω στα exported baseline predictions.
 
-Στα wind energy systems, το forecasting error δεν είναι πάντα “τυχαίο”.  
-Σε αρκετές περιπτώσεις μπορεί να αντανακλά:
+Αυτό περιλαμβάνει:
 
-- μεταβολές στη λειτουργική κατάσταση του συστήματος,
-- μη αναμενόμενη απόκλιση από τη φυσιολογική power curve,
-- αισθητηριακές ή λειτουργικές ανωμαλίες,
-- αλλαγές που σχετίζονται με degradation ή abnormal operating regimes.
+- residual behavior inspection,
+- operating-regime-aware slicing,
+- comparison των implemented baselines σε diagnostic space,
+- και προσεκτική health-aware interpretation.
 
-Άρα, ένα καλά μελετημένο forecasting pipeline μπορεί να προσφέρει:
+## Γιατί αυτό συνδέεται με PHM
 
-- **prediction layer**
-- και στη συνέχεια **diagnostic / prognostic signal extraction**
+Στα wind energy systems, τα forecasting residuals μπορεί να σχετίζονται με:
 
-## Σταδιακή μετάβαση που ταιριάζει στο παρόν project
+- departures from expected operating behavior,
+- shifts across operating regimes,
+- performance drift,
+- και wider condition-awareness questions.
 
-### Stage 1 — Forecasting foundation
-Τι υπάρχει ήδη:
+Αυτό όμως δεν σημαίνει ότι το repository έχει ήδη validated fault diagnosis ή prognostics engine.
 
-- καθαρό data pipeline,
-- temporal splitting,
-- outlier handling,
-- baseline models,
-- residual analysis.
+## Stage-wise research path
 
-### Stage 2 — Stronger predictive baselines
-Τι ακολουθεί λογικά:
+### Stage 1 — Forecasting foundation (implemented)
+- raw validation
+- EDA
+- feature engineering
+- temporal split
+- reproducible preprocessing
 
-- **Random Forest**
-- **XGBoost**
-- **MLP**
+### Stage 2 — Baseline ladder (implemented)
+- Persistence
+- Linear Regression
+- Random Forest
+- XGBoost
+- MLP
 
-Ο στόχος εδώ είναι να βελτιωθεί η predictive performance και να χαρτογραφηθεί καλύτερα η non-linear behavior των δεδομένων.
+### Stage 3 — Downstream diagnostics extension (implemented current extension)
+- residual diagnostics
+- operating-regime analysis
+- error structure inspection
+- diagnostics-aware / health-aware interpretation
 
-### Stage 3 — Error-aware diagnostics
-Μετά τα stronger baselines, μπορεί να προστεθεί συστηματικότερη ανάλυση:
+### Stage 4 — Stronger PHM-oriented interpretation (future work)
+- more systematic residual slicing
+- anomaly-awareness hypotheses
+- degradation-oriented discussion
+- stronger uncertainty-aware diagnostics framing
 
-- residuals by wind regime,
-- residuals by time-of-day / season,
-- extreme error slices,
-- uncertainty-aware inspection,
-- systematic underprediction / overprediction patterns.
+### Stage 5 — Advanced forecasting models (future work)
+- graph-based models
+- spatio-temporal learning
+- sequence models
+- GNN / Mamba / Graph-Mamba experimentation
 
-Αυτό είναι το πρώτο ουσιαστικό βήμα προς **diagnostics-oriented forecasting**.
+## Τι δεν πρέπει να ισχυρίζεται ακόμη το repository
 
-### Stage 4 — Health-oriented interpretation
-Σε αυτό το στάδιο, τα residual patterns μπορούν να αντιμετωπιστούν ως πιθανά indicators για:
+Το project δεν πρέπει να παρουσιάζεται ως:
 
-- anomalous behavior,
-- operational drift,
-- performance degradation,
-- turbine condition awareness.
-
-Εδώ αρχίζει η σύνδεση με **health management**.
-
-### Stage 5 — Advanced models with PHM perspective
-Αφού πρώτα χτιστεί σωστό benchmark stack, μπορούν να προστεθούν:
-
-- graph-based models,
-- spatio-temporal architectures,
-- sequence models,
-- ενδεχομένως **Graph Neural Networks**, **Transformers**, ή **Mamba-style** models,
-
-όχι μόνο για καλύτερο forecasting, αλλά και για πλουσιότερη αναπαράσταση λειτουργικής συμπεριφοράς.
-
-## Τι θα άρεσε σε μια ακαδημαϊκή εξέλιξη της πτυχιακής
-
-Για μια πιο ώριμη και επαγγελματική διπλωματική / πτυχιακή πορεία, η πιο ισχυρή αφήγηση είναι:
-
-1. **Ξεκινώ από reproducible forecasting pipeline**
-2. **Χτίζω ισχυρά baselines**
-3. **Αναλύω residuals και failure modes**
-4. **Δείχνω γιατί αυτά σχετίζονται με operational awareness**
-5. **Επεκτείνω τη μεθοδολογία προς prognostics / health management**
-
-Αυτή η πορεία είναι πιο πειστική από το να παρουσιαστεί εξαρχής ένα “Digital Twin” χωρίς αρκετή experimental βάση.
-
-## Τι δεν πρέπει να υποσχεθεί το repository ακόμη
-
-Για λόγους ακαδημαϊκής και τεχνικής ακρίβειας, δεν πρέπει ακόμη να διατυπώνεται ότι το project έχει:
-
-- πλήρες PHM engine,
-- online fault detection,
-- fault classification,
-- RUL estimation,
-- validated health-state inference.
-
-Αυτά μπορούν να εμφανιστούν ως **future work** ή **research roadmap**, όχι ως ήδη υπάρχον functionality.
+- completed PHM system,
+- online fault diagnosis platform,
+- validated anomaly detector,
+- RUL estimation framework,
+- deployed digital twin service.
 
 ## Προτεινόμενη ακαδημαϊκή διατύπωση
 
-Η πιο σωστή διατύπωση για το project σήμερα είναι:
-
-> Το repository αναπτύσσει μια reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με σχεδιασμό που μπορεί να επεκταθεί προς turbine prognostics and health management μέσω residual analysis, stronger baselines και advanced spatio-temporal modeling.
-
-## Practical next steps
-
-Τα επόμενα ρεαλιστικά βήματα που ταιριάζουν με όσα υπάρχουν ήδη στο repo είναι:
-
-1. Ολοκλήρωση του baseline suite:
-   - Random Forest
-   - XGBoost
-   - MLP
-
-2. Standardized benchmark table για όλα τα models
-
-3. Residual slicing:
-   - by wind feature,
-   - by hour,
-   - by month / season,
-   - by target range
-
-4. Σύγκριση linear vs non-linear error structure
-
-5. Προετοιμασία της αφήγησης από forecasting προς PHM / turbine health awareness
+> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με current extension προς downstream residual diagnostics και μελλοντική δυνατότητα επέκτασης προς health-aware και PHM-oriented research directions.
 
 ## Τελικό μήνυμα
 
-Η σωστή εξέλιξη του project δεν είναι:
+Η σωστή εξέλιξη του project είναι:
 
-> forecasting -> κατευθείαν “έτοιμο Digital Twin”
+> forecasting benchmark backbone -> downstream residual diagnostics -> future advanced forecasting models -> broader PHM-oriented research extension
 
-Η σωστή εξέλιξη είναι:
+και όχι:
 
-> reproducible forecasting pipeline -> strong baselines -> residual diagnostics -> anomaly / degradation awareness -> PHM-oriented research direction
-
-Αυτό είναι και πιο επιστημονικά σωστό, και πιο πειστικό για ακαδημαϊκή αξιολόγηση.
+> forecasting -> completed PHM / digital twin claims

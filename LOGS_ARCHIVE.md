@@ -2,8 +2,24 @@
 
 Αυτό το αρχείο διατηρεί παλαιότερα exploratory, superseded ή legacy στοιχεία της ιστορίας του repository.
 
-Δεν πρέπει να αντιμετωπίζεται ως η active canonical περιγραφή του τρέχοντος forecasting pipeline.
-Για την ενεργή canonical κατάσταση, δες το `LOGS.md`.
+Δεν πρέπει να αντιμετωπίζεται ως η active canonical περιγραφή του τρέχοντος forecasting-first pipeline.
+
+Ειδικά:
+- archived park counts,
+- historical benchmark values,
+- παλαιότερες split interpretations,
+- και παλαιότερα “next-step” plans
+
+μπορεί να έχουν πλέον superseded.
+
+Για την ενεργή canonical κατάσταση, δες:
+
+- `README.md`
+- `LOGS.md`
+- `docs/RESEARCH_SCOPE.md`
+- `docs/BASELINE_PROTOCOL.md`
+- `docs/PHM_ROADMAP.md`
+- και το current `data/processed/baseline_metrics.csv`
 
 
 ---

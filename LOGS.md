@@ -1,9 +1,14 @@
 # Active Project Log
 
-Αυτό το αρχείο καταγράφει την ενεργή canonical methodological κατάσταση του τρέχοντος forecasting pipeline του repository.
+Αυτό το αρχείο καταγράφει την ενεργή canonical methodological κατάσταση του τρέχοντος **forecasting-first** pipeline του repository.
 
-Canonical progression:
-`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering`
+Current canonical progression:
+
+`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics`
+
+Interpretation bridge:
+
+`forecasting -> residual diagnostics -> health-aware / PHM-oriented interpretation`
 
 Τα παλαιότερα exploratory ή superseded entries έχουν μεταφερθεί στο `LOGS_ARCHIVE.md`.
 
@@ -548,3 +553,4 @@ Methodological audit και rewrite planning για το
 
 ### Practical Outcome:
 Το issue για το operating-regime diagnostics experiment θεωρείται πλέον ολοκληρωμένο σε notebook-level scope και το σχετικό PR merged στο `main`.
+---
