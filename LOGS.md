@@ -10,186 +10,6 @@ Canonical progression:
 
 ---
 
-
-## [24/03/2026] - Notebook 05/06 Finalization, CI Validation & Baseline Stabilization
-
-### Τεχνικά Επιτεύγματα (Technical Milestones):
-
-1. **Οριστικοποίηση Notebook 05 - Outlier Handling & Temporal Validation**
-   * Αναθεωρήθηκε η μεθοδολογία του outlier handling ώστε τα **Z-score thresholds** να υπολογίζονται αποκλειστικά από το **Train Set** και στη συνέχεια να εφαρμόζονται στα Validation/Test splits.
-   * Η αλλαγή αυτή ενίσχυσε τη μεθοδολογική αυστηρότητα του pipeline και εξάλειψε πιθανό **data leakage** από τη φάση preprocessing.
-   * Επιβεβαιώθηκε η απουσία χρονικής επικάλυψης μεταξύ Train / Validation / Test μέσω validation protocol με `assert` checks.
-   * Ολοκληρώθηκε η εξαγωγή των τελικών split artifacts:
-     - `train_final.csv`
-     - `val_final.csv`
-     - `test_final.csv`
-
-2. **Οριστικοποίηση Notebook 06 - Baseline Benchmarking & Diagnostics**
-   * Πραγματοποιήθηκε πλήρης τελική εκτέλεση του Notebook 06 με:
-     - **Persistence baseline**
-     - **Linear Regression baseline**
-     - συγκριτική αξιολόγηση σε Validation και Test set
-     - residual diagnostics
-     - actual-vs-predicted visualization
-     - ανάλυση residuals ως προς wind-related feature
-   * Το **Linear Regression** επιβεβαιώθηκε ως σαφώς ανώτερο baseline σε σχέση με το Persistence.
-   * Τα τελικά metrics αποθηκεύτηκαν εκ νέου στο αρχείο:
-     - `data/processed/baseline_metrics.csv`
-
-3. **Residual Diagnostics & Error Interpretation**
-   * Προστέθηκε έλεγχος διαθεσιμότητας wind-related features (`Wind_Speed_100m_ms`, `ws_ref`) πριν από την ανάλυση residuals.
-   * Επιλέχθηκε δυναμικά το διαθέσιμο feature για diagnostic plotting, με ρητή σημείωση ότι η μεταβλητή ερμηνεύεται ως **scaled / engineered wind-related feature** και όχι ως ωμή φυσική μέτρηση.
-   * Η ανάλυση residuals έδειξε ότι το σφάλμα του γραμμικού baseline παραμένει δομημένο, επιβεβαιώνοντας ότι το πρόβλημα πρόβλεψης περιέχει σημαντική **μη-γραμμικότητα**.
-
-4. **Documentation & Markdown Refinement**
-   * Βελτιώθηκε το explanatory markdown στα notebooks, με καθαρότερη επιστημονική τεκμηρίωση για:
-     - train-based clipping,
-     - leakage-safe preprocessing,
-     - validation protocol,
-     - baseline interpretation,
-     - και diagnostic analysis.
-   * Το conclusion του Notebook 06 αναδιατυπώθηκε ώστε να περιγράφει με σαφήνεια:
-     - την ανωτερότητα της Linear Regression έναντι του Persistence,
-     - τον ρόλο των baselines ως benchmark ladder,
-     - και τη μετάβαση στο Notebook 07.
-
-5. **CI/CD & Repository Validation**
-   * Επαληθεύτηκε ότι τα πρόσφατα pushes ολοκληρώθηκαν επιτυχώς στο GitHub.
-   * Τα workflows του **GitHub Actions** εκτελέστηκαν επιτυχώς (green status), επιβεβαιώνοντας ότι το repository βρίσκεται σε συγχρονισμένη και σταθερή κατάσταση.
-   * Ολοκληρώθηκε ο τελικός συγχρονισμός του local environment με το απομακρυσμένο `main` branch.
-
-### Τρέχουσα Κατάσταση Έργου:
-* Το pipeline έως και το **Notebook 06** θεωρείται πλέον **σταθεροποιημένο και αναπαραγώγιμο**.
-* Υπάρχει πλέον:
-  - καθαρό preprocessing pipeline,
-  - leakage-safe split strategy,
-  - βασική baseline ladder,
-  - exportable benchmark metrics,
-  - και ώριμη τεκμηρίωση για τη μετάβαση στα advanced baselines.
-
-### Επόμενα Βήματα (Next Steps):
-1. **Notebook 07 - Advanced Baselines & Feature Importance**
-   - Random Forest
-   - XGBoost
-   - MLP
-2. Συγκριτική αξιολόγηση όλων των baselines σε κοινό benchmark framework.
-3. Οριστικοποίηση της baseline πεντάδας πριν τη μετάβαση σε **GNN / Graph-Mamba** αρχιτεκτονικές.
-
-**Commit References:**
-- `fix: finalize train-based clipping and validation protocol in notebook 05`
-- `feat: finalize notebook 06 baseline benchmarking and diagnostics`
-- `chore: update baseline metrics after notebook 06 rerun`
-
-
----
-
-## [25/03/2026] - Notebook 07 Random Forest Baseline with Train / Validation / Test Protocol
-
-### Ολοκληρωμένες Ενέργειες:
-1. Υλοποιήθηκε ο πρώτος καθαρός `Random Forest` baseline στο `07_advanced_baselines_and_importance.ipynb`.
-2. Χρησιμοποιήθηκε strict `train / validation / test` protocol.
-3. Πραγματοποιήθηκε explicit feature audit πριν από την εκπαίδευση.
-4. Εξαιρέθηκαν από το πρώτο clean baseline τα:
-   - `test_flag`
-   - `park_id`
-   - `Baseline_Prediction`
-5. Έγινε validation-based επιλογή υπερπαραμέτρων.
-6. Το τελικό test αποτέλεσμα του `Random Forest` ήταν:
-   - **MAE:** 0.007260
-   - **RMSE:** 0.009845
-   - **R²:** 0.526639
-7. Ενημερώθηκε το κοινό benchmark artifact `data/processed/baseline_metrics.csv`.
-
-### Μεθοδολογική Σημείωση:
-Η παρούσα υλοποίηση αποφεύγει τη χρήση helper / identifier columns και διατηρεί το test split αποκλειστικά για final reporting.
-
-
----
-
-
-## [25/03/2026] - Notebook 07 XGBoost Baseline with Train / Validation / Test Protocol
-
-### Ολοκληρωμένες Ενέργειες:
-1. Υλοποιήθηκε `XGBoost` baseline στο `07_advanced_baselines_and_importance.ipynb`.
-2. Χρησιμοποιήθηκε το ίδιο clean feature space με το `Random Forest` baseline.
-3. Διατηρήθηκε strict `train / validation / test` protocol.
-4. Η επιλογή υπερπαραμέτρων έγινε μόνο με χρήση του validation split.
-5. Το test split χρησιμοποιήθηκε αποκλειστικά για final reporting.
-6. Υπολογίστηκαν τα τελικά test metrics:
-   - **MAE:** 0.006178
-   - **RMSE:** 0.008952
-   - **R²:** 0.608583
-7. Ενημερώθηκε το κοινό benchmark artifact `data/processed/baseline_metrics.csv`.
-8. Προστέθηκαν:
-   - residual diagnostics,
-   - XGBoost feature-importance analysis.
-
-### Validation-best configuration:
-- `n_estimators = 500`
-- `max_depth = 8`
-- `learning_rate = 0.05`
-- `subsample = 0.8`
-- `colsample_bytree = 0.8`
-
-### Scientific Interpretation:
-Το `XGBoost` αποτελεί πλέον το ισχυρότερο current tabular baseline του Notebook 07 και υπερτερεί του `Random Forest`, της `Linear Regression` και του `Persistence` στο current exported benchmark.
-
-### Note on benchmark provenance:
-Το `baseline_metrics.csv` αντιμετωπίζεται πλέον ως το current benchmark artifact αναφοράς. Αν historical τιμές σε παλαιότερα log entries διαφέρουν, αυτές πρέπει να θεωρούνται παλαιότερα notebook outputs και όχι κατ’ ανάγκη το τελικό standardized benchmark state.
-
-
----
-
-## [25/03/2026] - Notebook 07 MLP Baseline as Bridge to Deep Learning Models
-
-### Ολοκληρωμένες Ενέργειες:
-1. Υλοποιήθηκε `MLP` baseline στο `07_advanced_baselines_and_importance.ipynb` με χρήση `PyTorch`.
-2. Χρησιμοποιήθηκε το ίδιο clean feature space με τα `Random Forest` και `XGBoost` baselines.
-3. Εφαρμόστηκε `StandardScaler` fitted μόνο στο `train` split και transform στα `validation` / `test` splits.
-4. Πραγματοποιήθηκε explicit validation-based επιλογή βασικών hyperparameters.
-5. Το test split χρησιμοποιήθηκε αποκλειστικά για final reporting.
-6. Τα τελικά test metrics του `MLP` ήταν:
-   - **MAE:** 0.006917
-   - **RMSE:** 0.009870
-   - **R²:** 0.524226
-7. Ενημερώθηκε το κοινό benchmark artifact `data/processed/baseline_metrics.csv`.
-8. Προστέθηκε residual diagnostic plot για το `MLP`.
-
-### Best validation configuration:
-- `hidden_dims = (128, 64)`
-- `dropout = 0.0`
-- `lr = 0.001`
-- `weight_decay = 1e-5`
-
-### Scientific Interpretation:
-Το `MLP` λειτουργεί επιτυχώς ως bridge baseline ανάμεσα στα classical tabular ML models και στα επόμενα deep-learning-oriented στάδια. Στο current benchmark βελτιώνει το `Random Forest` ως προς το **MAE**, αλλά το `Random Forest` παραμένει οριακά καλύτερο σε **RMSE** και **R²**. Το `XGBoost` συνεχίζει να αποτελεί το ισχυρότερο current tabular baseline αναφοράς.
-
-
----
-
-## [25/03/2026] - Unified Baseline Benchmark Table Standardization
-
-### Ολοκληρωμένες Ενέργειες:
-1. Ορίστηκε το `data/processed/baseline_metrics.csv` ως το **canonical baseline benchmark artifact** του project.
-2. Ενοποιήθηκαν σε κοινό benchmark table τα αποτελέσματα των:
-   - Persistence
-   - Linear Regression
-   - Random Forest
-   - XGBoost
-   - MLP
-3. Καθορίστηκε ότι ο τελικός benchmark ranking πίνακας αφορά αποκλειστικά το **test split**.
-4. Καθορίστηκε ότι το **primary ranking criterion** είναι το **MAE (ascending)**, ενώ τα **RMSE** και **R²** παραμένουν συμπληρωματικά metrics ερμηνείας.
-5. Συγχρονίστηκαν το `README.md`, το `BASELINE_PROTOCOL.md` και το `LOGS.md` ώστε να αντανακλούν την πλήρως υλοποιημένη baseline ladder.
-
-### Scientific Interpretation:
-Η baseline πεντάδα θεωρείται πλέον ολοκληρωμένη και λειτουργεί ως κοινό σημείο αναφοράς για τα επόμενα forecasting experiments. Το `XGBoost` αποτελεί το ισχυρότερο current tabular baseline, ενώ το `MLP` και το `Random Forest` προσφέρουν ισχυρές non-linear συγκρίσεις απέναντι στα απλούστερα baselines.
-
-### Clarification:
-Historical metric values σε παλαιότερα log entries πρέπει να ερμηνεύονται ως notebook-run history. Για thesis reporting, canonical σημείο αναφοράς είναι το τρέχον `data/processed/baseline_metrics.csv`.
-
-
----
-
 ## [27/03/2026] - NB02 Raw Timestamp Validation Stabilization
 
 ### Τεχνικά Επιτεύγματα (Technical Milestones):
@@ -627,3 +447,35 @@ Methodological audit και rewrite planning για το
 
 ### Commit References:
 - `fix(nb06): stabilize canonical benchmark export and test-only reporting`
+
+
+---
+
+
+## [30/03/2026] - NB07 Benchmark Reconciliation & Active Log Finalization
+
+### Ολοκληρωμένες Ενέργειες:
+1. Ολοκληρώθηκε το methodological reconciliation του `07_advanced_baselines_and_importance.ipynb` ως strict downstream stage πάνω στα canonical artifacts του `NB05`.
+2. Επιβεβαιώθηκε ότι το `NB07` παραμένει συνεπές με το established benchmark contract του pipeline:
+   - κοινό leakage-safe feature space,
+   - validation μόνο για model selection,
+   - test μόνο για final reporting.
+3. Ορίστηκε ρητά ότι το `data/processed/baseline_metrics.csv` αποτελεί το current **canonical final test-set benchmark table** για όλη την implemented baseline ladder.
+4. Τα historical NB07 benchmark values και παλαιότερα notebook-run states διατηρούνται μόνο στο `LOGS_ARCHIVE.md` ως history και όχι ως active canonical authority.
+5. Το active documentation realigned ώστε το `README.md`, το `LOGS.md` και το benchmark interpretation να χρησιμοποιούν το ίδιο canonical reporting rule.
+
+### Scientific Interpretation:
+Μετά το παρόν reconciliation pass, το forecasting pipeline θεωρείται documentation-consistent ως προς:
+- split semantics,
+- leakage-safe benchmark reporting,
+- validation-vs-test role separation,
+- και benchmark provenance.
+
+Για thesis-ready reporting, authority για cross-model comparison είναι το τρέχον `data/processed/baseline_metrics.csv` και όχι historical metric mentions σε archived log entries.
+
+### Practical Note:
+Όπου χρειάζεται αριθμητική αναφορά benchmark αποτελεσμάτων, οι τιμές πρέπει να αντιγράφονται από το current `baseline_metrics.csv` και όχι από παλαιότερα notebook outputs ή archived log text.
+
+### Next Step:
+Επόμενο βήμα είναι downstream diagnostics / interpretation work πάνω στο stabilized forecasting benchmark stack, χωρίς αλλαγή του canonical baseline reporting contract.
+---
