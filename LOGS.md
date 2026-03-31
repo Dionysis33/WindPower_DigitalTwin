@@ -553,4 +553,138 @@ Methodological audit και rewrite planning για το
 
 ### Practical Outcome:
 Το issue για το operating-regime diagnostics experiment θεωρείται πλέον ολοκληρωμένο σε notebook-level scope και το σχετικό PR merged στο `main`.
+
+
+---
+
+
+## [31/03/2026] - NB09 Park-Level Diagnostics & Thesis Consolidation
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Ολοκλήρωση του `09_park_level_diagnostics_and_thesis_consolidation.ipynb`**
+   - Το `NB09` υλοποιήθηκε ως **strict downstream diagnostics notebook** πάνω στα canonical exported test artifacts.
+   - Το notebook δεν εισάγει νέο training, δεν αλλάζει splits και δεν επηρεάζει το upstream benchmark protocol.
+   - Το notebook παραμένει πλήρως **forecasting-first** και επιτρέπει μόνο προσεκτική **health-aware / PHM-oriented interpretation** χωρίς overclaiming.
+
+2. **Canonical park-level evaluation space**
+   - Χρησιμοποιήθηκαν τα εξής canonical inputs:
+     - `data/processed/test_final.csv`
+     - `data/processed/baseline_metrics.csv`
+     - `data/processed/nb06_test_predictions.csv`
+     - `data/processed/predictions/nb07_all_test_predictions_long.csv`
+       ή deterministic fallback στα αντίστοιχα model-specific NB07 exports
+     - `data/raw/kassel_dataset/meta.csv`
+   - Επιβεβαιώθηκε κοινό **test-only evaluation space** για όλα τα implemented baselines.
+   - Επιβεβαιώθηκε strict key-space consistency για:
+     - `Persistence`
+     - `Linear Regression`
+     - `Random Forest`
+     - `XGBoost`
+     - `MLP`
+
+3. **Fail-fast integrity checks και artifact-chain stabilization**
+   - Προστέθηκαν explicit fail-fast checks για:
+     - file existence,
+     - required columns,
+     - strict timestamp parsing,
+     - duplicate key detection,
+     - exact `(park_id, timestamp, model)` validation στο prediction space.
+   - Κατά την υλοποίηση εντοπίστηκαν προβλήματα από παλαιότερο **corrupted-history artifact state** γύρω από downstream CSVs.
+   - Η τελική λύση δεν βασίστηκε σε ad hoc CSV edits, αλλά σε επαναβεβαίωση του canonical artifact chain και σε strict downstream validation μέχρι να απομονωθεί το σωστό benchmark-safe input space.
+
+4. **Park-level metric layer**
+   - Υλοποιήθηκε per-park diagnostic aggregation για όλα τα implemented baselines.
+   - Παράχθηκαν park-level metrics όπως:
+     - `MAE`
+     - `RMSE`
+     - `mean_residual`
+     - `abs_bias`
+     - `residual_std`
+     - `underprediction_rate`
+     - `overprediction_rate`
+   - Παράχθηκαν comparative park-level summaries για:
+     - easy parks
+     - hard parks
+     - high-bias parks
+     - high-spread parks
+
+5. **Cross-model park-space comparison**
+   - Υλοποιήθηκε park-level rank-correlation analysis across models.
+   - Το `NB09` έδειξε ότι η σχετική δυσκολία των parks είναι σε μεγάλο βαθμό σταθερή across models, ενώ ταυτόχρονα υπάρχουν meaningful park-specific διαφοροποιήσεις σε bias και spread structure.
+   - Υλοποιήθηκαν selected-park heatmaps και improvement-vs-Persistence analysis.
+
+6. **Deterministic case-study cohort και thesis-ready figures**
+   - Υλοποιήθηκε deterministic selection περίπου 10 representative parks με κατηγορίες:
+     - hard
+     - high-bias
+     - easy
+     - mid-band fill
+   - Προστέθηκε manual override path χωρίς να χάνεται η reproducible default selection logic.
+   - Παράχθηκαν thesis-ready case-study figures με:
+     - actual-vs-predicted trajectories
+     - residual trajectories
+     - compact contextual metadata
+   - Οι case-study windows επιλέγονται deterministically από peak diagnostic difficulty logic και όχι με χειροκίνητο cherry-picking.
+
+7. **NB09 exports και final notebook closure**
+   - Παράχθηκαν οργανωμένα exports στο:
+     - `data/processed/diagnostics/nb09_park_level/`
+   - Περιλαμβάνονται:
+     - park-level summaries
+     - selected-park matrices
+     - spatial context outputs
+     - case-study metadata
+     - export manifest
+     - case-study figures
+   - Το notebook ολοκληρώθηκε επιτυχώς με final check:
+     - **`NB09 SANITY CHECK PASSED`**
+
+### Scientific Interpretation:
+Το `NB09` επεκτείνει το diagnostics layer από το row-level residual space του `NB08` σε ένα πιο ώριμο **park-level diagnostic consolidation layer**.
+
+Το βασικό methodological finding είναι ότι:
+- τα aggregate benchmark metrics παραμένουν απαραίτητα,
+- αλλά δεν αρκούν για πλήρη κατανόηση της behavior των μοντέλων σε όλο το park cohort.
+
+Η park-level ανάλυση δείχνει ότι:
+- ορισμένα parks είναι συστηματικά εύκολα ή δύσκολα across models,
+- ορισμένα parks εμφανίζουν εντονότερη bias structure,
+- και άλλα εμφανίζουν μεγαλύτερη residual spread.
+
+Αυτό ενισχύει τη diagnostics-aware ανάγνωση του benchmark stack και προσφέρει πιο thesis-ready σύνδεση από:
+
+`benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation -> cautious health-aware interpretation`
+
+Το notebook όμως παραμένει αυστηρά:
+- forecasting-downstream,
+- benchmark-safe,
+- test-only,
+- και non-overclaiming.
+
+Άρα το `NB09` δεν πρέπει να ερμηνευθεί ως:
+- νέο forecasting model,
+- anomaly detector,
+- fault diagnosis module,
+- prognostics engine,
+- ή completed PHM system.
+
+### Practical Note:
+Με την ολοκλήρωση αυτής της φάσης:
+- το `NB09` θεωρείται notebook-level complete,
+- το σχετικό issue έκλεισε μέσω merged PR,
+- και ο park-level diagnostics layer είναι πλέον διαθέσιμος στο `main`.
+
+Επιπλέον, το temporary corrupted-history safety state που διατηρήθηκε κατά τη διάρκεια της υλοποίησης δεν είναι πλέον απαραίτητο μετά το successful final sanity pass και την επιβεβαίωση των canonical exports.
+
+### Next Step:
+Επόμενο βήμα είναι documentation realignment και thesis integration όπου χρειάζεται, με έμφαση σε:
+- `README.md`
+- `docs/INDEX.md`
+- chapter-facing wording / figures / captions
+- και ευθυγράμμιση της canonical notebook progression αν αποφασιστεί να παρουσιαστεί ρητά και το `NB09` ως επόμενο diagnostics stage του current public workflow.
+
+### Commit References:
+- `feat(nb09): add park-level diagnostics and thesis consolidation`
+- merged PR: `#22`
+- closed issue: `#21`
 ---
