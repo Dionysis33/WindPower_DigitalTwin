@@ -91,15 +91,19 @@
 - residual distribution analysis,
 - actual-vs-predicted comparison,
 - operating-regime-aware error inspection,
-- structured comparison μεταξύ implemented baselines.
+- structured comparison μεταξύ implemented baselines,
+- και park-level diagnostic aggregation.
 
 ## Current diagnostics extension
 
-Μετά την ολοκλήρωση της baseline πεντάδας, το current extension του pipeline είναι ένα **strict downstream diagnostics stage** πάνω στα exported baseline predictions.
+Μετά την ολοκλήρωση της baseline πεντάδας, το current implemented downstream layer έχει δύο διακριτά notebooks:
+
+- `NB08` -> downstream residual diagnostics and operating regimes
+- `NB09` -> park-level diagnostics and thesis consolidation
 
 Αυτό σημαίνει ότι η αμέσως επόμενη canonical ερμηνευτική φάση είναι:
 
-> benchmarked forecasting -> downstream residual diagnostics
+> benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation
 
 και όχι:
 
@@ -119,13 +123,14 @@
 
 Η current canonical baseline ladder έχει ολοκληρωθεί και λειτουργεί ως benchmark backbone για:
 
-- `NB06` baseline modeling,
-- `NB07` advanced tabular baselines,
-- `NB08` downstream residual diagnostics.
+- `NB06` baseline modeling
+- `NB07` advanced tabular baselines
+- `NB08` downstream residual diagnostics
+- `NB09` park-level diagnostics and thesis consolidation
 
 ## Next benchmarking / modeling step
 
-Αφού σταθεροποιηθεί και το downstream diagnostics layer, το επόμενο modeling step παραμένει future work:
+Αφού σταθεροποιηθεί και το downstream diagnostics / consolidation layer, το επόμενο modeling step παραμένει future work:
 
 - graph-based forecasting models,
 - sequence-based models,
@@ -133,4 +138,4 @@
 
 Άρα η baseline ladder πρέπει να αντιμετωπίζεται ως:
 
-> canonical benchmark backbone for diagnostics today and advanced modeling tomorrow
+> canonical benchmark backbone for diagnostics today, park-level consolidation now, and advanced modeling tomorrow

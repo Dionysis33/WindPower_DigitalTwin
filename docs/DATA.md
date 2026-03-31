@@ -69,6 +69,9 @@ Dataset source:
 - `diagnostics/nb08_wind_regime_metrics.csv`
 - `diagnostics/nb08_power_regime_metrics.csv`
 - `diagnostics/nb08_time_block_metrics.csv`
+- `diagnostics/nb09_park_level/`
+
+Το παραπάνω `nb09_park_level/` directory μπορεί να περιλαμβάνει park-level summaries, selected-park matrices, spatial context outputs, case-study metadata και thesis-ready figures.
 
 Τα παραπάνω αποτελούν **pipeline outputs που μπορούν να επαναδημιουργηθούν** μέσω των notebooks και δεν είναι απαραίτητο να versioned/tracked όλα δημόσια στο repository.
 

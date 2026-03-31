@@ -4,13 +4,11 @@
 
 Current canonical progression:
 
-`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics`
+`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics -> NB09 park-level diagnostics / thesis consolidation`
 
 Interpretation bridge:
 
-`forecasting -> residual diagnostics -> health-aware / PHM-oriented interpretation`
-
-Τα παλαιότερα exploratory ή superseded entries έχουν μεταφερθεί στο `LOGS_ARCHIVE.md`.
+`forecasting -> downstream residual diagnostics -> park-level consolidation -> cautious health-aware / PHM-oriented interpretation`
 
 
 ---

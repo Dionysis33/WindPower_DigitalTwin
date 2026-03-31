@@ -11,7 +11,8 @@
 - feature engineering,
 - leakage-aware temporal split,
 - baseline benchmarking,
-- downstream residual diagnostics.
+- downstream residual diagnostics,
+- park-level diagnostics και thesis-oriented consolidation.
 
 ## Τι είναι ήδη implemented
 
@@ -24,6 +25,7 @@
 - `NB06` baseline modeling
 - `NB07` advanced tabular baselines
 - `NB08` downstream residual diagnostics and operating regimes
+- `NB09` park-level diagnostics and thesis consolidation
 
 Οι implemented baselines είναι:
 
@@ -33,13 +35,16 @@
 - **XGBoost**
 - **MLP**
 
-## Current diagnostics extension
+## Current diagnostics and thesis-consolidation extension
 
-Πάνω στο benchmarked forecasting stack, το project επεκτείνεται σε **strict downstream diagnostics** μέσω residual analysis και operating-regime-aware inspection.
+Πάνω στο benchmarked forecasting stack, το project επεκτείνεται πλέον σε ένα **strict downstream diagnostics layer** με δύο implemented stages:
+
+- `NB08` για row-level residual diagnostics και operating-regime-aware inspection
+- `NB09` για park-level diagnostics και thesis-oriented consolidation
 
 Αυτό το diagnostics layer:
 
-- χρησιμοποιεί exported baseline predictions,
+- χρησιμοποιεί exported baseline predictions και κοινό canonical test-only evaluation space,
 - παραμένει forecasting-downstream,
 - υποστηρίζει diagnostics-aware / health-aware interpretation,
 - αλλά **δεν** ισχυρίζεται ολοκληρωμένο PHM functionality.
@@ -64,13 +69,13 @@
 - remaining useful life estimation,
 - production-grade health monitoring.
 
-Η σωστή ακαδημαϊκή θέση του repository είναι ότι το forecasting residual μπορεί να λειτουργήσει ως **diagnostic signal candidate**, όχι ως τεκμηριωμένη health-state inference από μόνο του.
+Η σωστή ακαδημαϊκή θέση του repository είναι ότι τα forecasting residuals και τα park-level diagnostic patterns μπορούν να λειτουργήσουν ως **diagnostic signal candidates**, όχι ως τεκμηριωμένη health-state inference από μόνα τους.
 
 ## Κεντρική ερευνητική θέση
 
 Η βασική ερευνητική θέση είναι:
 
-> ένα αυστηρά benchmarked forecasting pipeline μπορεί να αποτελέσει το επιστημονικά ορθό υπόβαθρο για diagnostics-aware και αργότερα PHM-oriented research extensions, χωρίς να συγχέεται το forecasting diagnostics stage με completed prognostics functionality.
+> ένα αυστηρά benchmarked forecasting pipeline μπορεί να αποτελέσει το επιστημονικά ορθό υπόβαθρο για diagnostics-aware, park-level και αργότερα PHM-oriented research extensions, χωρίς να συγχέεται το forecasting diagnostics stage με completed prognostics functionality.
 
 ## Ακαδημαϊκή χρήση
 
