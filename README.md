@@ -12,7 +12,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - residual diagnostics,
 - και roadmap προς **graph-based** και **sequence-based** forecasting models.
 
-> Current focus: πρώτα ένα καθαρό, reproducible forecasting benchmark και μετά προσεκτική επέκταση προς diagnostics-aware και prognostics-aware research directions.
+> Current focus: πρώτα ένα καθαρό, reproducible forecasting benchmark και μετά προσεκτική επέκταση προς diagnostics-aware και health-aware / PHM-oriented research directions.
 
 ---
 
@@ -21,14 +21,17 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 Το repository υποστηρίζει ένα **forecasting-first, thesis-ready research pipeline** πάνω στο **DaKS / Kassel synthetic wind power dataset**.
 
 ### Implemented operational core
-Στην current canonical μορφή του, το implemented pipeline περιλαμβάνει:
+
+Στην current canonical μορφή του, το implemented workflow περιλαμβάνει:
 
 - strict raw validation του DaKS dataset
-- validated-only exploratory data analysis
-- feature engineering με temporal και spatial πληροφορία
-- leakage-aware temporal splitting
+- validated-only και coverage-aware downstream EDA
+- feature engineering με temporal, autoregressive και spatial information
+- leakage-aware outlier handling και temporal split
 - baseline benchmarking
 - advanced tabular baseline benchmarking
+- downstream residual diagnostics
+- park-level diagnostics και thesis-consolidation layer
 
 Η current implemented baseline ladder περιλαμβάνει:
 
@@ -38,24 +41,29 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - **XGBoost**
 - **MLP**
 
-### Current diagnostics extension
-Πάνω στο benchmarked forecasting stack, το project επεκτείνεται πλέον σε ένα **strict downstream diagnostics stage** (`NB08`) που λειτουργεί πάνω στα **exported baseline predictions**.
+### Current diagnostics and thesis-consolidation extension
 
-Ο ρόλος αυτού του diagnostics extension είναι:
+Πάνω στο benchmarked forecasting stack, το project έχει πλέον δύο implemented downstream diagnostic layers:
 
-- residual diagnostics,
-- operating-regime-aware error inspection,
-- structured comparison των implemented baselines σε diagnostic space,
-- και προσεκτική σύνδεση από forecasting residuals προς **diagnostics-aware / health-aware interpretation**.
+- `NB08`: row-level residual diagnostics και operating-regime-aware inspection
+- `NB09`: park-level diagnostics και thesis-consolidation layer
+
+Αυτά τα stages:
+
+- χρησιμοποιούν canonical exported predictions και κοινό test-only evaluation space,
+- παραμένουν forecasting-downstream,
+- ενισχύουν diagnostics-aware / health-aware interpretation,
+- αλλά **δεν** αποτελούν νέο modeling stage.
 
 ### Scope boundary
+
 Στο παρόν στάδιο, το **forecasting** παραμένει ο implemented core άξονας του repository.
 
-Το current diagnostics extension:
+Τα `NB08` και `NB09`:
 
-- **δεν** εισάγει νέο forecasting model,
-- **δεν** παρουσιάζει το repository ως completed PHM system,
-- **δεν** αποτελεί validated fault diagnosis / anomaly detection / RUL module.
+- **δεν** εισάγουν νέο forecasting model,
+- **δεν** παρουσιάζουν το repository ως completed PHM system,
+- **δεν** συνιστούν validated anomaly detection, fault diagnosis ή RUL module.
 
 Τα **graph-based**, **sequence-based** και broader **PHM-oriented** extensions παραμένουν planned / future work πάνω σε αυτό το benchmarked forecasting stack.
 
@@ -106,6 +114,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 ## Implemented Pipeline
 
 ### 1. Canonical raw validation (`NB02`)
+
 Το `02_kassel_exploration.ipynb` αποτελεί το **canonical raw validation stage** του pipeline.
 
 Ο ρόλος του περιορίζεται σε:
@@ -117,12 +126,14 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - και strict input-target alignment ανά `park_id`.
 
 ### 2. Canonical validated-only EDA (`NB03`)
+
 Το `03_eda_master.ipynb` αποτελεί το **canonical validated-only EDA stage**.
 
-Διαβάζει τα upstream validation artifacts του `NB02` και συνεχίζει μόνο με validated / downstream-eligible parks.  
+Διαβάζει τα upstream validation artifacts του `NB02` και συνεχίζει μόνο με το **validated / NB04-eligible downstream cohort**.  
 Δεν λειτουργεί ως raw validation / cleaning notebook.
 
 ### 3. Feature engineering (`NB04`)
+
 Το `04_feature_engineering_and_graph_construction.ipynb` καλύπτει:
 
 - temporal feature engineering,
@@ -133,6 +144,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - και export του engineered dataset.
 
 ### 4. Outlier handling and temporal splitting (`NB05`)
+
 Το `05_outliers_and_split.ipynb` εφαρμόζει:
 
 - leakage-aware outlier handling,
@@ -143,6 +155,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
   - `test_final.csv`
 
 ### 5. Baseline modeling (`NB06`)
+
 Το `06_baseline_modeling.ipynb` καλύπτει:
 
 - Persistence
@@ -153,6 +166,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - actual-vs-predicted analysis
 
 ### 6. Advanced tabular baselines (`NB07`)
+
 Το `07_advanced_baselines_and_importance.ipynb` καλύπτει:
 
 - Random Forest
@@ -165,6 +179,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - benchmark-safe prediction export για downstream diagnostics
 
 ### 7. Downstream residual diagnostics and operating regimes (`NB08`)
+
 Το `08_residual_diagnostics_and_operating_regimes.ipynb` αποτελεί **strict downstream diagnostics notebook** πάνω στα exported baseline predictions.
 
 Ο ρόλος του περιορίζεται σε:
@@ -177,6 +192,20 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 
 Το `NB08` **δεν** είναι νέο modeling stage.
 
+### 8. Park-level diagnostics and thesis consolidation (`NB09`)
+
+Το `09_park_level_diagnostics_and_thesis_consolidation.ipynb` αποτελεί **strict downstream diagnostics and consolidation notebook** πάνω στο canonical test-only evaluation space.
+
+Ο ρόλος του περιορίζεται σε:
+
+- per-park diagnostic aggregation across implemented baselines,
+- park-level bias / spread / difficulty analysis,
+- comparative park-space summaries και representative case studies,
+- thesis-ready consolidation του diagnostics layer,
+- και cautious health-aware / PHM-oriented interpretation χωρίς overclaiming.
+
+Το `NB09` **δεν** είναι νέο modeling stage.
+
 ### Split protocol note
 
 Η active split strategy είναι strict temporal split:
@@ -185,10 +214,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - **Validation:** up to `2020-06-30 23:00:00`
 - **Test:** from `2020-07-01` onward
 
-Το current cross-model benchmark artifact είναι το:
-
-```text
-data/processed/baseline_metrics.csv
+Για methodological wording consistency, το validation πρέπει να περιγράφεται ως **το τελικό χρονικό tail του pre-test window** και όχι ως stronger claim τύπου **τελευταίο contiguous χρονικό block**.
 
 ---
 
@@ -200,13 +226,9 @@ data/processed/baseline_metrics.csv
 data/processed/baseline_metrics.csv
 ```
 
-
 ---
 
-
 ## Repository Structure
-
-Το current public repo έχει root files όπως `CITATION.cff`, `README.md`, `LOGS.md`, `LOGS_ARCHIVE.md`, ενώ το `NB08` υπάρχει στο `main` μέσω commit/raw path. :contentReference[oaicite:10]{index=10}sitory Structure
 
 ```text
 WindPower_DigitalTwin/
@@ -223,7 +245,8 @@ WindPower_DigitalTwin/
 │   ├── 05_outliers_and_split.ipynb
 │   ├── 06_baseline_modeling.ipynb
 │   ├── 07_advanced_baselines_and_importance.ipynb
-│   └── 08_residual_diagnostics_and_operating_regimes.ipynb
+│   ├── 08_residual_diagnostics_and_operating_regimes.ipynb
+│   └── 09_park_level_diagnostics_and_thesis_consolidation.ipynb
 ├── src/
 ├── .gitattributes
 ├── .gitignore
@@ -236,29 +259,35 @@ WindPower_DigitalTwin/
 ├── README.md
 ├── SECURITY.md
 └── requirements.txt
+```
 
 ---
-
 
 ## Notebook Guide
 
 ### `01_data_acquisition.ipynb`
+
 Early exploratory notebook για external-data experiments.  
 Δεν αποτελεί μέρος του current canonical forecasting pipeline.
 
 ### `02_kassel_exploration.ipynb`
+
 Canonical raw validation gate του DaKS pipeline.
 
 ### `03_eda_master.ipynb`
-Canonical validated-only EDA stage που λειτουργεί πάνω στο upstream validation contract του `NB02`.
+
+Canonical validated-only EDA stage που λειτουργεί πάνω στο upstream validation contract του `NB02` και στο canonical validated / NB04-eligible cohort.
 
 ### `04_feature_engineering_and_graph_construction.ipynb`
+
 Feature engineering, spatial metadata integration, graph-ready artifacts και export του engineered dataset.
 
 ### `05_outliers_and_split.ipynb`
+
 Leakage-aware outlier handling, temporal split και export των canonical train / validation / test artifacts.
 
 ### `06_baseline_modeling.ipynb`
+
 Baseline modeling και diagnostics για:
 
 - Persistence
@@ -268,6 +297,7 @@ Baseline modeling και diagnostics για:
 - actual-vs-predicted plots
 
 ### `07_advanced_baselines_and_importance.ipynb`
+
 Advanced tabular baselines και diagnostics για:
 
 - Random Forest
@@ -280,6 +310,7 @@ Advanced tabular baselines και diagnostics για:
 - prediction export για downstream diagnostics
 
 ### `08_residual_diagnostics_and_operating_regimes.ipynb`
+
 Strict downstream diagnostics notebook που λειτουργεί πάνω στα exported baseline predictions.
 
 Καλύπτει:
@@ -288,6 +319,20 @@ Strict downstream diagnostics notebook που λειτουργεί πάνω στ
 - operating-regime-aware error slicing,
 - regime-wise benchmark interpretation,
 - και health-aware / PHM-aware discussion χωρίς overclaiming.
+
+Δεν αποτελεί νέο modeling stage.
+
+### `09_park_level_diagnostics_and_thesis_consolidation.ipynb`
+
+Strict downstream park-level diagnostics και thesis-consolidation notebook που λειτουργεί πάνω στο canonical test-only evaluation space.
+
+Καλύπτει:
+
+- per-park diagnostic aggregation,
+- bias / spread / difficulty inspection across parks,
+- comparative case-study selection,
+- thesis-ready consolidation του diagnostics layer,
+- και cautious health-aware / PHM-aware interpretation χωρίς overclaiming.
 
 Δεν αποτελεί νέο modeling stage.
 
@@ -375,14 +420,16 @@ Recommended canonical execution order:
 5. Run `06_baseline_modeling.ipynb`
 6. Run `07_advanced_baselines_and_importance.ipynb`
 7. Run `08_residual_diagnostics_and_operating_regimes.ipynb`
+8. Run `09_park_level_diagnostics_and_thesis_consolidation.ipynb`
 
 Important execution notes:
 
 - `NB02` is the canonical raw validation authority.
 - `NB03` should be executed only after the upstream validation outputs of `NB02` are available.
-- Downstream notebooks should follow the validated contract established upstream.
-- `NB08` είναι **strict downstream diagnostics extension** πάνω στα exported baseline predictions.
-- `NB08` does **not** introduce a new predictive model.
+- Downstream notebooks should follow the validated / NB04-eligible contract established upstream.
+- `NB08` είναι **strict downstream residual diagnostics extension** πάνω στα exported baseline predictions.
+- `NB09` είναι **strict downstream park-level diagnostics / thesis-consolidation extension** πάνω στο canonical test-only evaluation space.
+- Neither `NB08` nor `NB09` introduces a new predictive model.
 - `01_data_acquisition.ipynb` belongs to the early exploratory phase and is not part of the active canonical forecasting pipeline.
 
 ---
@@ -391,13 +438,14 @@ Important execution notes:
 
 Το repository ακολουθεί πλέον την εξής καθαρή ερευνητική γραμμή:
 
-**forecasting-first benchmark pipeline -> downstream residual diagnostics -> careful pathway toward health-aware / PHM-oriented interpretation**
+**forecasting-first benchmark pipeline -> downstream residual diagnostics -> park-level diagnostics consolidation -> cautious pathway toward health-aware / PHM-oriented interpretation**
 
 Αυτό σημαίνει ότι:
 
 - το forecasting είναι ο current implemented core,
 - τα implemented baselines αποτελούν το benchmark backbone,
-- το current diagnostics extension λειτουργεί downstream από τα benchmarked predictions,
+- το `NB08` λειτουργεί ως row-level / regime-aware diagnostics layer,
+- το `NB09` λειτουργεί ως park-level diagnostics και thesis-consolidation layer,
 - το digital twin framing διατηρείται σε research level,
 - και τα graph-based / sequence-based models παραμένουν future modeling work.
 
@@ -406,9 +454,10 @@ Important execution notes:
 ## Known Notes / Limitations
 
 - Το current benchmark core είναι **tabular forecasting**, όχι finalized graph-learning system.
-- Το `NB08` είναι **diagnostics extension** και όχι νέο forecasting model.
-- Τα residual diagnostics υποστηρίζουν **diagnostics-aware / health-aware interpretation**, αλλά **δεν** συνιστούν validated fault diagnosis, anomaly detector ή RUL framework.
-- Η graph-ready pipeline και τα spatial artifacts είναι implemented, αλλά το τελικό GNN / Graph-Mamba modeling stage παραμένει future work.
+- Το `NB08` είναι **diagnostics stage** και όχι νέο forecasting model.
+- Το `NB09` είναι **park-level diagnostics / thesis-consolidation stage** και όχι νέο forecasting model.
+- Τα residual diagnostics και τα park-level diagnostics υποστηρίζουν **diagnostics-aware / health-aware interpretation**, αλλά **δεν** συνιστούν validated anomaly detector, fault diagnosis module ή RUL framework.
+- Η graph-ready pipeline και τα spatial artifacts είναι implemented, αλλά το τελικό GNN / Graph-Mamba / sequence-modeling stage παραμένει future work.
 - Το `mamba-ssm` μπορεί να είναι δύσκολο να γίνει build σε **Windows**, οπότε **Google Colab ή Linux** είναι λογικό environment για future sequence-model experiments.
 - Μεγάλα raw και processed αρχεία εξαιρούνται σκόπιμα από το git. Το canonical public benchmark artifact είναι το `data/processed/baseline_metrics.csv`.
 

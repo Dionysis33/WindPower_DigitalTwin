@@ -18,13 +18,20 @@
 
 ## Current diagnostics extension
 
-Το τρέχον επόμενο επίπεδο δεν είναι νέο modeling stage, αλλά **strict downstream residual diagnostics** πάνω στα exported baseline predictions.
+Το current downstream diagnostics layer δεν είναι νέο modeling stage, αλλά μια **strict forecasting-downstream diagnostics extension** πάνω στα exported baseline predictions.
+
+Σήμερα αυτό περιλαμβάνει δύο implemented notebooks:
+
+- `NB08` για residual diagnostics και operating-regime-aware inspection
+- `NB09` για park-level diagnostics και thesis-consolidation layer
 
 Αυτό περιλαμβάνει:
 
 - residual behavior inspection,
 - operating-regime-aware slicing,
 - comparison των implemented baselines σε diagnostic space,
+- park-level diagnostic aggregation,
+- representative case-study consolidation,
 - και προσεκτική health-aware interpretation.
 
 ## Γιατί αυτό συνδέεται με PHM
@@ -55,9 +62,11 @@
 - MLP
 
 ### Stage 3 — Downstream diagnostics extension (implemented current extension)
-- residual diagnostics
+- row-level residual diagnostics
 - operating-regime analysis
 - error structure inspection
+- park-level diagnostic aggregation
+- thesis-oriented case-study consolidation
 - diagnostics-aware / health-aware interpretation
 
 ### Stage 4 — Stronger PHM-oriented interpretation (future work)
@@ -84,13 +93,13 @@
 
 ## Προτεινόμενη ακαδημαϊκή διατύπωση
 
-> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με current extension προς downstream residual diagnostics και μελλοντική δυνατότητα επέκτασης προς health-aware και PHM-oriented research directions.
+> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με current extension προς downstream residual diagnostics και park-level diagnostic consolidation, και μελλοντική δυνατότητα επέκτασης προς health-aware και PHM-oriented research directions.
 
 ## Τελικό μήνυμα
 
 Η σωστή εξέλιξη του project είναι:
 
-> forecasting benchmark backbone -> downstream residual diagnostics -> future advanced forecasting models -> broader PHM-oriented research extension
+> forecasting benchmark backbone -> downstream residual diagnostics -> park-level diagnostics consolidation -> future advanced forecasting models -> broader PHM-oriented research extension
 
 και όχι:
 
