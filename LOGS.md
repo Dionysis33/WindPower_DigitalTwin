@@ -685,4 +685,85 @@ Methodological audit και rewrite planning για το
 - `feat(nb09): add park-level diagnostics and thesis consolidation`
 - merged PR: `#22`
 - closed issue: `#21`
+
+
 ---
+
+
+## [01/04/2026] - M4 Scope Lock for NB10, Documentation Governance Realignment & Safe Handoff to Follow-up Implementation
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Κλείσιμο του issue `#27` ως scope-lock issue για το `NB10`**
+   - Ορίστηκε ότι το `NB10` δεν πρέπει να ξεκινήσει ως full graph-model notebook ή sequence-model notebook.
+   - Κλειδώθηκε ως **graph-first modeling-readiness / interface-contract / artifact-verification stage**.
+   - Επιβεβαιώθηκε ότι ο ρόλος του είναι να λειτουργήσει ως bridge stage ανάμεσα στο current forecasting-first benchmark stack και στο future graph-based modeling work.
+
+2. **Ορισμός follow-up execution chain**
+   - Το issue `#28` διατηρήθηκε ως το σωστό follow-up implementation issue.
+   - Ορίστηκε ρητά dependency chain όπου το scope-lock προηγείται της implementation φάσης.
+   - Έτσι αποφεύγεται premature notebook implementation πριν παγώσουν:
+     - το notebook role,
+     - το artifact contract,
+     - το `park_id` handling,
+     - και το graph interface contract.
+
+3. **Documentation governance realignment**
+   - Επικαιροποιήθηκε το `CONTRIBUTING.md` ώστε να αποτυπώνει καθαρότερα:
+     - το forecasting-first scope discipline,
+     - τη διάκριση μεταξύ implemented / planned next / future work,
+     - το canonical workflow μέχρι το `NB09`,
+     - το benchmark-safe reporting contract,
+     - και την ανάγκη για coordinated documentation updates όταν αλλάζει η μεθοδολογική σημασία κάποιου stage.
+   - Η αλλαγή αυτή βελτιώνει τη σαφήνεια για μελλοντικά issues, PRs και notebook-facing scope decisions.
+
+4. **Security and artifact-handling refinement**
+   - Επικαιροποιήθηκε το `SECURITY.md` ώστε να καλύπτει πιο καθαρά:
+     - dependency / workflow safety,
+     - notebook execution behavior,
+     - accidental exposure risks για local or processed artifacts,
+     - και responsible disclosure expectations για research-facing repository.
+   - Δόθηκε πιο σαφής έμφαση στο ότι το repository είναι research-facing / thesis-facing και όχι production service, χωρίς να μειώνεται η σημασία του careful artifact handling.
+
+### Scientific / Repository Interpretation:
+Η σημερινή πρόοδος **δεν** αποτελεί νέο modeling stage.
+
+Αντίθετα, αποτελεί:
+- documentation and governance stabilization,
+- scope-lock για το post-`NB09` transition,
+- και methodological preparation για ασφαλή μετάβαση προς future graph-based work.
+
+Το current canonical implemented workflow παραμένει:
+
+`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics -> NB09 park-level diagnostics / thesis consolidation`
+
+Άρα:
+- το forecasting παραμένει ο implemented core άξονας,
+- τα diagnostics παραμένουν downstream interpretation layers,
+- και το `NB10` δεν έχει ακόμη ξεκινήσει ως implementation notebook stage.
+
+### Τι κλειδώθηκε μεθοδολογικά:
+1. Το `NB10` πρέπει να παραμείνει:
+   - forecasting-first,
+   - benchmark-safe,
+   - non-overclaiming,
+   - και graph-readiness oriented.
+2. Το `NB10` δεν πρέπει να:
+   - εισαγάγει full GNN training / benchmarking,
+   - ανοίξει sequence-modeling stage,
+   - αλλάξει το canonical benchmark table,
+   - ή μετακινήσει το repository σε stronger PHM claims.
+3. Το actual implementation work πρέπει να ξεκινήσει μόνο μετά το frozen scope contract.
+
+### Next Step:
+Επόμενο βήμα είναι η ευθυγράμμιση του issue `#28` με το frozen scope του `#27` και η έναρξη του `NB10` μόνο ως:
+
+- graph-readiness notebook scaffold,
+- artifact / interface verification stage,
+- και split-safe contract notebook,
+
+χωρίς ακόμη model training.
+
+### Commit References:
+- 'docs: lock NB10 scope and realign governance docs'
+- closed issue: `#27`
+- follow-up issue: `#28`
