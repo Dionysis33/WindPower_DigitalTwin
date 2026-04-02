@@ -16,14 +16,15 @@
 - baseline benchmarking,
 - advanced tabular baselines.
 
-## Current diagnostics extension
+## Current diagnostics and graph-verification extension
 
-Το current downstream diagnostics layer δεν είναι νέο modeling stage, αλλά μια **strict forecasting-downstream diagnostics extension** πάνω στα exported baseline predictions.
+Το current downstream extension layer δεν είναι νέο deployed modeling stage, αλλά μια **strict forecasting-downstream and forecasting-supportive extension** πάνω στα canonical exported artifacts.
 
-Σήμερα αυτό περιλαμβάνει δύο implemented notebooks:
+Σήμερα αυτό περιλαμβάνει τρία implemented notebooks:
 
 - `NB08` για residual diagnostics και operating-regime-aware inspection
 - `NB09` για park-level diagnostics και thesis-consolidation layer
+- `NB10` για strict graph data-interface / split-to-graph contract / artifact verification
 
 Αυτό περιλαμβάνει:
 
@@ -32,18 +33,22 @@
 - comparison των implemented baselines σε diagnostic space,
 - park-level diagnostic aggregation,
 - representative case-study consolidation,
-- και προσεκτική health-aware interpretation.
+- cautious health-aware interpretation,
+- και graph-ready contract verification πριν από future graph-based forecasting experiments.
 
 ## Γιατί αυτό συνδέεται με PHM
 
-Στα wind energy systems, τα forecasting residuals μπορεί να σχετίζονται με:
+Στα wind energy systems, τα forecasting residuals και τα park-level patterns μπορεί να σχετίζονται με:
 
 - departures from expected operating behavior,
 - shifts across operating regimes,
 - performance drift,
-- και wider condition-awareness questions.
+- condition-awareness questions,
+- και wider diagnostic hypotheses.
 
-Αυτό όμως δεν σημαίνει ότι το repository έχει ήδη validated fault diagnosis ή prognostics engine.
+Παράλληλα, ένα strict graph data-interface / artifact-verification stage είναι χρήσιμο γιατί επιτρέπει future graph-based forecasting work πάνω σε benchmark-safe και μεθοδολογικά καθαρό υπόβαθρο.
+
+Αυτό όμως **δεν** σημαίνει ότι το repository έχει ήδη validated fault diagnosis ή prognostics engine.
 
 ## Stage-wise research path
 
@@ -61,7 +66,7 @@
 - XGBoost
 - MLP
 
-### Stage 3 — Downstream diagnostics extension (implemented current extension)
+### Stage 3 — Downstream diagnostics extension (implemented)
 - row-level residual diagnostics
 - operating-regime analysis
 - error structure inspection
@@ -69,13 +74,20 @@
 - thesis-oriented case-study consolidation
 - diagnostics-aware / health-aware interpretation
 
-### Stage 4 — Stronger PHM-oriented interpretation (future work)
+### Stage 4 — Graph-readiness verification (implemented)
+- graph data-interface checks
+- split-to-graph contract verification
+- artifact-consistency verification
+- benchmark-safe graph-ready handoff
+
+### Stage 5 — Stronger PHM-oriented interpretation (future work)
 - more systematic residual slicing
 - anomaly-awareness hypotheses
 - degradation-oriented discussion
 - stronger uncertainty-aware diagnostics framing
+- richer condition-awareness-oriented analysis
 
-### Stage 5 — Advanced forecasting models (future work)
+### Stage 6 — Advanced forecasting models (future work)
 - graph-based models
 - spatio-temporal learning
 - sequence models
@@ -89,17 +101,18 @@
 - online fault diagnosis platform,
 - validated anomaly detector,
 - RUL estimation framework,
-- deployed digital twin service.
+- deployed digital twin service,
+- ολοκληρωμένο graph-learning benchmark.
 
 ## Προτεινόμενη ακαδημαϊκή διατύπωση
 
-> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με current extension προς downstream residual diagnostics και park-level diagnostic consolidation, και μελλοντική δυνατότητα επέκτασης προς health-aware και PHM-oriented research directions.
+> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με current extension προς downstream residual diagnostics, park-level diagnostic consolidation και graph-contract verification, και μελλοντική δυνατότητα επέκτασης προς condition-awareness-oriented και PHM-oriented research directions.
 
 ## Τελικό μήνυμα
 
 Η σωστή εξέλιξη του project είναι:
 
-> forecasting benchmark backbone -> downstream residual diagnostics -> park-level diagnostics consolidation -> future advanced forecasting models -> broader PHM-oriented research extension
+> forecasting benchmark backbone -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> future advanced forecasting models -> broader PHM-oriented research extension
 
 και όχι:
 

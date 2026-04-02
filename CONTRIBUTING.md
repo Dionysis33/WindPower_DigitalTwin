@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to **WindPower_DigitalTwin**.
 
-This repository is a **research repository** for **spatio-temporal wind power forecasting** on the **DaKS / Kassel synthetic wind power dataset**. It supports a **forecasting-first, reproducible pipeline** and also serves **thesis-oriented academic work** and broader research development around benchmark-safe forecasting, downstream diagnostics, and future health-aware / PHM-oriented extensions.
+This repository is a **research repository** for **spatio-temporal wind power forecasting** on the **DaKS / Kassel synthetic wind power dataset**. It supports a **forecasting-first, reproducible pipeline** and also serves **thesis-oriented academic work** and broader research development around benchmark-safe forecasting, downstream diagnostics, graph-readiness verification, and future health-aware / PHM-oriented extensions.
 
 At the current stage, the repository is maintained primarily by the author. External contributions are welcome, but they must respect the scientific structure, reproducibility requirements, and scope boundaries of the project.
 
@@ -21,7 +21,7 @@ Please make sure that every contribution follows these principles:
 
 - **Forecasting-first scope discipline**  
   The implemented core of the repository remains forecasting-first.  
-  Diagnostics-aware interpretation is welcome, but contributions must not overstate the current repository as a completed PHM, fault-diagnosis, anomaly-detection, or RUL system.
+  Diagnostics-aware and condition-awareness-oriented interpretation is welcome, but contributions must not overstate the current repository as a completed PHM, fault-diagnosis, anomaly-detection, RUL, or deployed digital-twin system.
 
 - **Research consistency**  
   Contributions should align with the repository roadmap and current canonical workflow:
@@ -32,6 +32,7 @@ Please make sure that every contribution follows these principles:
   - baseline benchmarking,
   - downstream residual diagnostics,
   - park-level diagnostics / thesis consolidation,
+  - graph data-interface / split-to-graph contract / artifact verification,
   - and future graph-based or sequence-based forecasting work.
 
 - **Clear stage distinction**  
@@ -74,6 +75,7 @@ At this phase, please avoid contributions that:
 - add undocumented dependencies,
 - bypass canonical stage contracts,
 - present diagnostics outputs as validated health-state inference,
+- present graph-contract verification as completed graph-model evidence,
 - commit large raw or generated artifacts without a strong reason,
 - or mix implemented results with speculative future claims.
 
@@ -140,7 +142,7 @@ If a notebook change affects results, update the relevant interpretation text as
 
 For the current public repository state, the canonical workflow is:
 
-`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics -> NB09 park-level diagnostics / thesis consolidation`
+`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics -> NB09 park-level diagnostics / thesis consolidation -> NB10 graph data-interface / split-to-graph contract / artifact verification`
 
 This means:
 
@@ -151,6 +153,7 @@ This means:
 - `06_baseline_modeling.ipynb` and `07_advanced_baselines_and_importance.ipynb` define the **implemented baseline ladder**.
 - `08_residual_diagnostics_and_operating_regimes.ipynb` is a **strict downstream diagnostics stage**, not a new predictive modeling stage.
 - `09_park_level_diagnostics_and_thesis_consolidation.ipynb` is a **strict downstream diagnostics / consolidation stage**, not a new predictive modeling stage.
+- `10_graph_readiness_and_artifact_verification.ipynb` is a **strict graph-readiness verification stage**, not a graph-training stage.
 
 ### Important downstream rule
 
@@ -187,6 +190,7 @@ Do not blur these categories.
 Residual diagnostics, operating-regime analysis, and park-level diagnostics may support:
 
 - diagnostics-aware interpretation,
+- condition-awareness-oriented discussion,
 - health-aware discussion,
 - PHM-oriented future thinking.
 
@@ -199,12 +203,27 @@ However, they must not be presented as:
 - RUL estimation,
 - or deployed digital twin service.
 
-### 3. Forecasting remains the implemented core
+### 3. Graph-verification boundary
+
+Graph data-interface checks, split-to-graph contract validation, and artifact-consistency verification may support:
+
+- graph-readiness claims,
+- benchmark-safe graph handoff,
+- future graph-based experimentation.
+
+However, they must not be presented as:
+
+- completed graph-learning benchmark,
+- validated GNN superiority,
+- or implemented graph-model training evidence.
+
+### 4. Forecasting remains the implemented core
 
 The repository currently supports:
 
 - benchmark-safe forecasting,
 - diagnostics-aware downstream analysis,
+- graph-readiness verification,
 - and cautious thesis-oriented interpretation.
 
 Graph-based, sequence-based, and broader PHM-oriented modeling remain **future work** unless explicitly implemented and documented.
@@ -252,6 +271,7 @@ Contributors must:
   - source dataset files,
   - processed artifacts,
   - derived benchmark outputs,
+  - graph-ready verification artifacts,
   - and thesis/report figures derived from reruns.
 
 If a contribution depends on dataset access, explain clearly:
@@ -276,7 +296,7 @@ In general:
 
 ## Documentation Consistency
 
-When a change affects pipeline meaning, notebook roles, benchmark reporting, or diagnostics interpretation, documentation must be updated in a coordinated way where relevant:
+When a change affects pipeline meaning, notebook roles, benchmark reporting, diagnostics interpretation, or graph-verification positioning, documentation must be updated in a coordinated way where relevant:
 
 - `README.md`
 - `LOGS.md`
@@ -298,6 +318,7 @@ If a change affects:
 - feature-space definition,
 - benchmark interpretation,
 - diagnostics positioning,
+- graph-ready contracts,
 - or forecasting vs PHM wording,
 
 then it should be reviewed explicitly for documentation realignment and scope consistency.
@@ -314,6 +335,7 @@ Please verify that:
 - required exported artifacts are intentional,
 - documentation has been updated where needed,
 - canonical benchmark or diagnostics wording remains consistent,
+- graph-verification wording remains bounded and precise,
 - scope wording does not overclaim repository functionality,
 - and `git status` is clean except for intended files.
 
@@ -322,6 +344,7 @@ If your change affects results, please also verify:
 - whether metrics changed,
 - whether benchmark ranking changed,
 - whether residual or park-level diagnostics interpretation changed,
+- whether graph-contract interpretation changed,
 - and whether those changes should be reflected in logs or docs.
 
 ---

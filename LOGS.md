@@ -856,3 +856,51 @@ Methodological audit και rewrite planning για το
 ### Commit / PR Reference:
 - PR: `#31`
 - Issue: `#28`
+
+
+---
+
+
+## [02/04/2026] - Post-NB10 Documentation Realignment & Framing Consolidation
+
+### Ολοκληρωμένες Ενέργειες:
+1. Ολοκληρώθηκε documentation realignment μετά το merge του `NB10`.
+2. Ενημερώθηκαν τα canonical docs ώστε το public repository story να αποτυπώνει πλέον ρητά το:
+   - implemented forecasting-first pipeline,
+   - downstream residual diagnostics layer,
+   - park-level diagnostics / thesis-consolidation layer,
+   - και το `NB10` ως strict graph data-interface / split-to-graph contract / artifact-verification stage.
+3. Το `README.md`, το `docs/INDEX.md`, το `docs/RESEARCH_SCOPE.md`, το `docs/BASELINE_PROTOCOL.md`, το `docs/PHM_ROADMAP.md` και το `CONTRIBUTING.md` ευθυγραμμίστηκαν ως προς:
+   - canonical workflow wording,
+   - implemented vs planned next vs future work distinction,
+   - forecasting vs PHM boundary,
+   - και graph-verification vs graph-training boundary.
+4. Αποσαφηνίστηκε ρητά ότι το `NB10`:
+   - δεν αποτελεί νέο graph-model training stage,
+   - δεν παρέχει ακόμη GNN / Graph-Mamba benchmark evidence,
+   - και λειτουργεί μόνο ως benchmark-safe graph-readiness / contract-verification layer.
+5. Ενισχύθηκε η ακαδημαϊκή διατύπωση για τη γέφυρα:
+   - `forecasting -> downstream residual diagnostics -> park-level diagnostics -> graph contract verification -> future condition-awareness / PHM-oriented research extension`
+   χωρίς overclaiming.
+
+### Scientific Interpretation:
+Μετά το παρόν documentation pass, το current public repository state είναι σαφέστερα ευθυγραμμισμένο με το actual implemented scope.
+
+Το forecasting παραμένει ο implemented operational core.
+Τα diagnostics παραμένουν forecasting-downstream και condition-awareness-oriented.
+Το `NB10` παραμένει graph-readiness verification stage.
+Τα graph-based forecasting models και οι broader PHM-oriented extensions παραμένουν planned next / future work και όχι implemented claims.
+
+### Practical Note:
+Η canonical workflow authority στα public docs περιλαμβάνει πλέον ρητά το `NB10`.
+
+Για repository-safe academic wording, πρέπει να διατηρείται ο εξής σαφής διαχωρισμός:
+- implemented now
+- planned next
+- future work / research extension
+
+### Next Step:
+Επόμενο βήμα είναι ξεχωριστό scope-safe planning issue για το επόμενο graph-based forecasting stage, χωρίς ακόμη implementation issue για graph model training.
+
+### Commit Reference:
+- `docs: realign canonical workflow and PHM framing after NB10`
