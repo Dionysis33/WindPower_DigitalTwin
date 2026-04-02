@@ -12,7 +12,8 @@
 - leakage-aware temporal split,
 - baseline benchmarking,
 - downstream residual diagnostics,
-- park-level diagnostics και thesis-oriented consolidation.
+- park-level diagnostics και thesis-oriented consolidation,
+- και strict graph data-interface / split-to-graph contract / artifact verification.
 
 ## Τι είναι ήδη implemented
 
@@ -26,6 +27,7 @@
 - `NB07` advanced tabular baselines
 - `NB08` downstream residual diagnostics and operating regimes
 - `NB09` park-level diagnostics and thesis consolidation
+- `NB10` graph data-interface / split-to-graph contract / artifact verification
 
 Οι implemented baselines είναι:
 
@@ -35,19 +37,28 @@
 - **XGBoost**
 - **MLP**
 
-## Current diagnostics and thesis-consolidation extension
+## Current diagnostics, consolidation, and graph-verification extension
 
-Πάνω στο benchmarked forecasting stack, το project επεκτείνεται πλέον σε ένα **strict downstream diagnostics layer** με δύο implemented stages:
+Πάνω στο benchmarked forecasting stack, το project επεκτείνεται πλέον σε τρία strict downstream / supportive stages:
 
 - `NB08` για row-level residual diagnostics και operating-regime-aware inspection
 - `NB09` για park-level diagnostics και thesis-oriented consolidation
+- `NB10` για strict graph data-interface / split-to-graph contract / artifact verification
 
-Αυτό το diagnostics layer:
+Αυτό το extension layer:
 
-- χρησιμοποιεί exported baseline predictions και κοινό canonical test-only evaluation space,
-- παραμένει forecasting-downstream,
-- υποστηρίζει diagnostics-aware / health-aware interpretation,
-- αλλά **δεν** ισχυρίζεται ολοκληρωμένο PHM functionality.
+- χρησιμοποιεί canonical exported artifacts και benchmark-safe downstream logic,
+- παραμένει forecasting-downstream ή forecasting-supportive,
+- υποστηρίζει diagnostics-aware / condition-awareness-oriented interpretation,
+- σταθεροποιεί το graph-ready handoff προς future graph-based forecasting work,
+- αλλά **δεν** ισχυρίζεται ολοκληρωμένο PHM functionality,
+- και **δεν** αποτελεί ακόμη graph-model training stage.
+
+## Planned next
+
+Το planned next βήμα δεν είναι ακόμη νέο graph-training issue, αλλά:
+
+- scope-safe planning για το επόμενο graph-based forecasting stage.
 
 ## Future work
 
@@ -67,15 +78,17 @@
 - validated anomaly detector,
 - fault classification,
 - remaining useful life estimation,
-- production-grade health monitoring.
+- production-grade health monitoring,
+- ολοκληρωμένο GNN training benchmark,
+- ή deployed digital twin service.
 
-Η σωστή ακαδημαϊκή θέση του repository είναι ότι τα forecasting residuals και τα park-level diagnostic patterns μπορούν να λειτουργήσουν ως **diagnostic signal candidates**, όχι ως τεκμηριωμένη health-state inference από μόνα τους.
+Η σωστή ακαδημαϊκή θέση του repository είναι ότι τα forecasting residuals, τα park-level diagnostic patterns και η graph-ready verification pipeline μπορούν να λειτουργήσουν ως **diagnostic signal candidates** και ως **methodological infrastructure** για μελλοντική condition-awareness-oriented και PHM-oriented έρευνα, όχι ως τεκμηριωμένη health-state inference από μόνα τους.
 
 ## Κεντρική ερευνητική θέση
 
 Η βασική ερευνητική θέση είναι:
 
-> ένα αυστηρά benchmarked forecasting pipeline μπορεί να αποτελέσει το επιστημονικά ορθό υπόβαθρο για diagnostics-aware, park-level και αργότερα PHM-oriented research extensions, χωρίς να συγχέεται το forecasting diagnostics stage με completed prognostics functionality.
+> ένα αυστηρά benchmarked forecasting pipeline, εμπλουτισμένο με downstream residual diagnostics, park-level diagnostic consolidation και graph-contract verification, μπορεί να αποτελέσει το επιστημονικά ορθό υπόβαθρο για diagnostics-aware, condition-awareness-oriented και αργότερα PHM-oriented research extensions, χωρίς να συγχέεται το forecasting diagnostics stage με completed prognostics functionality.
 
 ## Ακαδημαϊκή χρήση
 
@@ -84,4 +97,5 @@
 - μεθοδολογική ορθότητα,
 - σαφή πειραματική τεκμηρίωση,
 - reproducibility,
-- σταδιακή ερευνητική κλιμάκωση από strong baselines προς advanced models.
+- benchmark validity,
+- και σταδιακή ερευνητική κλιμάκωση από strong baselines προς advanced models.

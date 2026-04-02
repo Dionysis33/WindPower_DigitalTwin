@@ -8,6 +8,7 @@
 
 - η δίκαιη cross-model comparison,
 - η downstream residual diagnostics analysis,
+- η park-level diagnostics consolidation,
 - και οι μελλοντικές συγκρίσεις με graph-based ή sequence-based models.
 
 ## Baseline philosophy
@@ -92,32 +93,37 @@
 - actual-vs-predicted comparison,
 - operating-regime-aware error inspection,
 - structured comparison μεταξύ implemented baselines,
-- και park-level diagnostic aggregation.
+- park-level diagnostic aggregation,
+- και condition-awareness-oriented interpretation.
 
-## Current diagnostics extension
+## Current downstream extension
 
-Μετά την ολοκλήρωση της baseline πεντάδας, το current implemented downstream layer έχει δύο διακριτά notebooks:
+Μετά την ολοκλήρωση της baseline πεντάδας, το current implemented downstream / supportive layer έχει τρία διακριτά notebooks:
 
 - `NB08` -> downstream residual diagnostics and operating regimes
 - `NB09` -> park-level diagnostics and thesis consolidation
+- `NB10` -> graph data-interface / split-to-graph contract / artifact verification
 
-Αυτό σημαίνει ότι η αμέσως επόμενη canonical ερμηνευτική φάση είναι:
+Αυτό σημαίνει ότι η αμέσως επόμενη canonical ερμηνευτική και infrastructural φάση είναι:
 
-> benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation
+> benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation -> graph contract verification
 
 και όχι:
 
-> baseline ladder -> άμεσο νέο modeling stage
+> baseline ladder -> άμεσο graph model training stage
 
 ## PHM-oriented interpretation boundary
 
 Τα diagnostics μπορούν να συζητηθούν ως βάση για:
 
 - diagnostics-aware interpretation,
-- health-aware discussion,
+- condition-awareness-oriented discussion,
+- health-aware framing,
 - PHM-oriented future work.
 
 Όμως σε αυτή τη φάση τα diagnostics παραμένουν **forecasting diagnostics** και όχι completed PHM module.
+
+Αντίστοιχα, το `NB10` παραμένει **graph-readiness verification stage** και όχι graph-learning result.
 
 ## Current status
 
@@ -127,10 +133,15 @@
 - `NB07` advanced tabular baselines
 - `NB08` downstream residual diagnostics
 - `NB09` park-level diagnostics and thesis consolidation
+- `NB10` graph data-interface / split-to-graph contract / artifact verification
 
-## Next benchmarking / modeling step
+## Planned next vs future modeling step
 
-Αφού σταθεροποιηθεί και το downstream diagnostics / consolidation layer, το επόμενο modeling step παραμένει future work:
+Το planned next βήμα μετά το current documentation / framing alignment είναι:
+
+- scope-safe planning για το επόμενο graph-based forecasting stage.
+
+Τα παρακάτω παραμένουν future work:
 
 - graph-based forecasting models,
 - sequence-based models,
@@ -138,4 +149,4 @@
 
 Άρα η baseline ladder πρέπει να αντιμετωπίζεται ως:
 
-> canonical benchmark backbone for diagnostics today, park-level consolidation now, and advanced modeling tomorrow
+> canonical benchmark backbone for diagnostics today, graph-contract verification now, and advanced modeling tomorrow
