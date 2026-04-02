@@ -767,3 +767,92 @@ Methodological audit και rewrite planning για το
 - 'docs: lock NB10 scope and realign governance docs'
 - closed issue: `#27`
 - follow-up issue: `#28`
+
+
+---
+
+
+## [02/04/2026] - NB10 Graph Data-Interface & Artifact Verification Stabilization
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Ολοκλήρωση του `10_graph_readiness_and_artifact_verification.ipynb`**
+   - Το `NB10` υλοποιήθηκε ως **strict graph data-interface / split-to-graph contract / artifact-verification notebook**.
+   - Το notebook παραμένει πλήρως **forecasting-first**, **benchmark-safe** και **verification-first**.
+   - Δεν εισάγει νέο modeling stage, δεν κάνει training και δεν αλλάζει το canonical benchmark reporting.
+
+2. **Canonical primary artifact verification**
+   - Το notebook φορτώνει και επαληθεύει τα canonical primary inputs:
+     - `train_final.csv`
+     - `val_final.csv`
+     - `test_final.csv`
+     - `graph_node_order.csv`
+     - `graph_edge_index.npy`
+     - `graph_distance_matrix_km.npy`
+   - Εφαρμόζεται explicit `park_id` normalization και strict timestamp parsing στα canonical splits.
+
+3. **Split / graph contract checks**
+   - Προστέθηκαν explicit checks για:
+     - duplicate `(park_id, timestamp)` detection
+     - schema consistency across `train / val / test`
+     - split overlap absence
+     - node-order consistency
+     - split-to-graph mapping validity
+   - Επιβεβαιώθηκε ότι όλα τα split rows είναι mappable σε valid `node_idx`.
+
+4. **Graph artifact audit**
+   - Υλοποιήθηκε audit για:
+     - `graph_edge_index.npy`
+     - `graph_distance_matrix_km.npy`
+   - Το current local verification pass έδειξε:
+     - **256 graph nodes**
+     - **1068 directed edges**
+     - **534 unique undirected edges**
+     - **0 self-loops**
+     - **0 duplicate directed edges**
+     - edge index range **0..255**
+     - distance matrix **square / symmetric / zero-diagonal**
+
+5. **Robust upstream eligibility cross-check fix**
+   - Διορθώθηκε το προηγούμενο methodological bug όπου γινόταν λανθασμένη υπόθεση ότι το:
+     - `nb02_nb04_eligibility_summary.csv`
+     είναι υποχρεωτικά park-level artifact με `park_id`.
+   - Η νέα λογική:
+     - χρησιμοποιεί πρώτα το `nb02_meta_coverage_audit.csv` ως detailed park-level upstream audit
+     - αντιμετωπίζει το `nb02_nb04_eligibility_summary.csv` ως summary/reference artifact
+     - εκτελεί eligibility cross-check μόνο όταν το διαθέσιμο schema το υποστηρίζει ρητά
+
+6. **Compact readiness exports**
+   - Το `NB10` παράγει τα εξής compact outputs:
+     - `nb10_node_index_map.csv`
+     - `nb10_feature_role_manifest.csv`
+     - `nb10_split_graph_contract_summary.csv`
+     - `nb10_artifact_status_manifest.csv`
+     - `nb10_graph_artifact_summary.csv`
+     - `nb10_cohort_contract_summary.csv`
+     - `nb10_distance_matrix_summary.csv`
+     - `nb10_upstream_audit_notes.csv`
+
+### Scientific Interpretation:
+Το `NB10` δεν αποτελεί νέο forecasting model και δεν λειτουργεί ως GNN benchmark notebook.
+Αποτελεί ένα καθαρό **verification / interface stage** που επιβεβαιώνει ότι τα υπάρχοντα graph-ready και split artifacts του canonical forecasting pipeline είναι parse-safe, cohort-safe, contract-safe και graph-ready για future graph-based modeling work.
+
+### Verification note:
+Το current local verification pass έδειξε observed test-start γύρω στην `2019-12-01`.
+Το εύρημα αυτό διατηρήθηκε ως **verification finding** και δεν “διορθώθηκε” μέσα στο notebook, επειδή παραμένει συμβατό με την DaKS / Vogt interpretation του predefined test-period start.
+
+### Practical Note:
+Με την ολοκλήρωση αυτής της φάσης:
+- το `NB10` θεωρείται merged και notebook-level complete
+- το σχετικό PR merged στο `main`
+- και το repository διαθέτει πλέον explicit graph contract verification layer πριν από οποιοδήποτε future graph-model implementation step
+
+### Next Step:
+Επόμενο βήμα δεν είναι άμεσο GNN training by default.
+Το logical next step είναι να αποφασιστεί με νέο scope-lock issue αν το επόμενο stage θα είναι:
+- graph-model input packaging / data object preparation
+- ή future graph-based forecasting experimentation
+με αυστηρή διατήρηση του forecasting-first και benchmark-safe framing.
+
+### Commit / PR Reference:
+- PR: `#31`
+- Issue: `#28`
