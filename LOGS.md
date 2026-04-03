@@ -904,3 +904,100 @@ Methodological audit και rewrite planning για το
 
 ### Commit Reference:
 - `docs: realign canonical workflow and PHM framing after NB10`
+
+
+---
+
+
+## [03/04/2026] - NB08 Strengthening, Export Verification & Merge Finalization
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Strengthening του `08_residual_diagnostics_and_operating_regimes.ipynb`**
+   - Το `NB08` διατηρήθηκε ως **strict downstream diagnostics notebook** πάνω στα canonical exported baseline predictions.
+   - Δεν έγινε νέο training, δεν άλλαξε το upstream split protocol και δεν μεταβλήθηκε ο benchmark backbone.
+   - Το notebook παρέμεινε πλήρως **test-only**, **benchmark-safe** και **forecasting-downstream**.
+
+2. **Residual-distribution layer enhancement**
+   - Προστέθηκε πιο καθαρό residual distribution overview ανά model.
+   - Προστέθηκαν absolute-error percentile summaries ώστε η downstream ανάλυση να μην περιορίζεται μόνο σε aggregate metrics.
+   - Η νέα markdown αφήγηση έγινε πιο thesis-ready, με αυστηρότερο separation μεταξύ:
+     - implemented diagnostics,
+     - cautious interpretation,
+     - και future work.
+
+3. **Operating-regime diagnostics strengthening**
+   - Προστέθηκε explicit regime support audit για ασφαλέστερη ερμηνεία των regime-wise findings.
+   - Προστέθηκαν directional error rates ανά regime:
+     - underprediction rate
+     - overprediction rate
+     - near-zero rate
+   - Προστέθηκαν richer regime summaries για:
+     - wind-related regimes
+     - power-related regimes
+     - secondary temporal blocks
+
+4. **Cross-model comparison strengthening**
+   - Προστέθηκαν cross-model difficulty / disagreement summaries στο κοινό test-only row-level evaluation space.
+   - Προστέθηκαν relative gain summaries έναντι:
+     - `Persistence`
+     - `Linear Regression`
+   - Η νέα ανάλυση ενισχύει τη benchmark-safe ανάγνωση του residual space χωρίς να μετατρέπει το notebook σε νέο modeling stage.
+
+5. **Cleaner downstream export layer**
+   - Προστέθηκε cleaner export bundle και explicit export manifest.
+   - Επιβεβαιώθηκαν τα εξής diagnostics artifacts:
+     - `nb08_wind_regime_metrics.csv`
+     - `nb08_power_regime_metrics.csv`
+     - `nb08_time_block_metrics.csv`
+     - `nb08_best_model_by_wind_regime.csv`
+     - `nb08_best_model_by_power_regime.csv`
+     - `nb08_error_distribution_overview.csv`
+     - `nb08_error_percentiles.csv`
+     - `nb08_relative_gain_vs_references.csv`
+     - `nb08_rowwise_best_model_frequency.csv`
+     - `nb08_hard_row_regime_distribution.csv`
+     - `nb08_regime_support_audit.csv`
+     - `nb08_export_manifest.csv`
+
+6. **Run / merge finalization**
+   - Το strengthened notebook επανεκτελέστηκε επιτυχώς end-to-end χωρίς broken cells.
+   - Το σχετικό issue για το NB08 strengthening έκλεισε μετά από successful PR merge.
+   - Ο προσωρινός feature branch του NB08 καθαρίστηκε μετά το merge και το local `main` συγχρονίστηκε με το `origin/main`.
+
+### Scientific Interpretation:
+Η σημερινή φάση δεν πρόσθεσε νέο forecasting model και δεν άλλαξε το canonical benchmark reporting contract.
+
+Αντίθετα, ενίσχυσε το `NB08` ως πιο ώριμο **downstream residual diagnostics layer** πάνω στο ήδη benchmarked forecasting stack.
+
+Το βασικό methodological κέρδος είναι ότι το notebook πλέον αποτυπώνει πιο καθαρά:
+
+- τη residual distribution structure,
+- τις tail difficulties,
+- τη directional bias behavior,
+- τη regime dependence του forecasting error,
+- και τη διάκριση μεταξύ common difficulty και model-specific weakness
+
+χωρίς overclaiming προς:
+
+- anomaly detection,
+- fault diagnosis,
+- PHM engine,
+- prognostics module,
+- ή νέο graph / sequence modeling stage.
+
+### Practical Note:
+Με την ολοκλήρωση αυτής της φάσης:
+
+- το `NB08` θεωρείται strengthened και merged στο `main`,
+- το diagnostics export bundle του `NB08` θεωρείται verified,
+- και το notebook είναι πλέον πιο thesis-ready ως strict downstream diagnostics stage.
+
+### Next Step:
+Επόμενο λογικό βήμα είναι:
+
+- strengthening του `09_park_level_diagnostics_and_thesis_consolidation.ipynb`
+- και στη συνέχεια downstream diagnostics freeze / wording stabilization πριν από το επόμενο post-diagnostics stage.
+
+### Commit / PR / Issue Reference:
+- closed issue: `#35`
+- merged PR: `#38`
