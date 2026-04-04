@@ -1,7 +1,7 @@
 version: 2
 updates:
-  - package-ecosystem: "pip" # Για Python πακέτα (requirements.txt)
-    directory: "/" # Ο φάκελος όπου βρίσκεται το requirements.txt
+  - package-ecosystem: "pip"
+    directory: "/"
     schedule:
-      interval: "weekly" # Έλεγχος κάθε εβδομάδα
-    open-pull-requests-limit: 5 # Μέχρι 5 αυτόματα updates ταυτόχρονα
+      interval: "weekly"
+    open-pull-requests-limit: 5
