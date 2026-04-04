@@ -1001,3 +1001,96 @@ Methodological audit και rewrite planning για το
 ### Commit / PR / Issue Reference:
 - closed issue: `#35`
 - merged PR: `#38`
+
+
+---
+
+
+## [04/04/2026] - NB09 Strengthening Finalization, Clean Rerun Verification & Merge Closure
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Ολοκλήρωση του strengthened pass του `09_park_level_diagnostics_and_thesis_consolidation.ipynb`**
+   - Το `NB09` ενισχύθηκε επιτυχώς ως **strict downstream park-level diagnostics / thesis-consolidation notebook** πάνω στο canonical test-only evaluation space.
+   - Δεν εισήχθη νέο training, δεν μεταβλήθηκε το upstream split protocol και δεν άλλαξε ο benchmark backbone.
+   - Το notebook παρέμεινε πλήρως:
+     - forecasting-first
+     - benchmark-safe
+     - test-only
+     - non-overclaiming
+
+2. **Strengthening του park-level consolidation layer**
+   - Προστέθηκαν και επαληθεύτηκαν:
+     - all-cohort best-model wins
+     - winner count / share across parks
+     - winner-margin stability
+     - explicit percentile-based park taxonomy manifest
+     - operating-context descriptors ανά park
+     - selected-cohort coverage / anti-cherry-picking audit
+     - thesis-ready selected parks summary export
+     - cleaner export manifest
+   - Το strengthening παρέμεινε αυστηρά descriptive / diagnostic και δεν μετατράπηκε σε νέο modeling stage.
+
+3. **Clean rerun και export verification**
+   - Πραγματοποιήθηκε clean rerun του notebook και επιβεβαιώθηκε successful final sanity state.
+   - Το notebook ολοκληρώθηκε με:
+     - `analysis_rows = 5,431,680`
+     - `analysis_models = 5`
+     - `analysis_parks = 256`
+     - `park_model_metric_rows = 1,280`
+     - `selected_parks = 10`
+     - `selected_case_study_figures = 10`
+     - `missing_required_exports = 0`
+     - `best_overall_model = XGBoost`
+   - Το τελικό notebook check επέστρεψε:
+     - **`NB09 SANITY CHECK PASSED`**
+
+4. **Verified strengthened exports**
+   - Επιβεβαιώθηκε η παραγωγή και εσωτερική συνέπεια των strengthened outputs όπως:
+     - `nb09_all_cohort_best_model_wins.csv`
+     - `nb09_park_operating_context.csv`
+     - `nb09_park_taxonomy_manifest.csv`
+     - `nb09_selected_cohort_coverage_audit.csv`
+     - `nb09_selected_parks_thesis_summary.csv`
+     - `nb09_export_manifest.csv`
+   - Επιβεβαιώθηκε επίσης consistency μεταξύ:
+     - selected park IDs
+     - selected park model metrics
+     - heatmap matrices
+     - case-study metadata
+     - export manifest
+
+5. **Repository / Git closure**
+   - Το σχετικό feature branch δημιουργήθηκε, έγινε push, άνοιξε PR και ολοκληρώθηκε merge στο `main`.
+   - Το local repository επανήλθε σε:
+     - `main`
+     - up-to-date with `origin/main`
+     - clean working tree
+   - Το issue του strengthened `NB09` θεωρείται πλέον κλειστό σε notebook-level scope.
+
+### Scientific Interpretation:
+Η σημερινή πρόοδος δεν αφορά νέο benchmark ή νέο predictive result.
+Αφορά την οριστικοποίηση ενός πιο ισχυρού **park-level diagnostic consolidation layer** πάνω στο ήδη υλοποιημένο forecasting benchmark stack.
+
+Το strengthened `NB09`:
+- βελτιώνει τη thesis-readiness του downstream diagnostics layer,
+- ενισχύει τη justification των representative parks,
+- κάνει πιο ρητή τη winner stability / taxonomy / operating-context structure,
+- και στηρίζει καλύτερα condition-awareness-oriented interpretation,
+
+χωρίς να μετατρέπεται σε:
+- νέο forecasting model,
+- anomaly detector,
+- fault diagnosis module,
+- prognostics engine,
+- ή completed PHM system.
+
+### Practical Note:
+Σήμερα δεν έγινε νέα εργασία στο `NB10`.
+Το `NB10` παραμένει το already implemented graph-readiness / contract-verification stage του repository και δεν άνοιξε νέο graph-training scope.
+
+### Next Step:
+Επόμενο βήμα είναι το issue freeze pass πριν από το `NB11`, με στόχο:
+- downstream diagnostics artifact freeze
+- wording freeze
+- benchmark immutability verification
+- και scope-safe readiness για το επόμενο planning stage
