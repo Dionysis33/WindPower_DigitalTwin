@@ -1,0 +1,45 @@
+name: Repo safety check
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  repo-safety:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Check for merge conflict markers
+        shell: bash
+        run: |
+          if git grep -nE '^(<<<<<<<|=======|>>>>>>>)' -- .; then
+            echo "Merge conflict markers detected."
+            exit 1
+          fi
+
+      - name: Check for committed private keys
+        shell: bash
+        run: |
+          if git grep -nE 'BEGIN (RSA |DSA |EC |OPENSSH |PGP )?PRIVATE KEY' -- .; then
+            echo "Private key material detected."
+            exit 1
+          fi
+
+      - name: Check for tracked .env-style files
+        shell: bash
+        run: |
+          tracked_env_files=$(git ls-files | grep -E '(^|/)\.env($|\.)' | grep -vE '(^|/)\.env\.example$' || true)
+
+          if [ -n "$tracked_env_files" ]; then
+            echo "Tracked .env-style files detected:"
+            echo "$tracked_env_files"
+            exit 1
+          fi
