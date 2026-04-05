@@ -189,6 +189,16 @@ please review it with extra care before opening a PR.
 
 ---
 
+### Current code scanning note
+
+At the current repository setup, built-in GitHub code scanning alerts are not relied upon as an active security layer.
+
+For this reason, the repository may use lightweight repository-level substitute checks focused on obvious security hygiene risks, such as accidental secret exposure, unsafe merge remnants, or similar CI-detectable regressions.
+
+These checks are intended as minimal safeguards for a research-facing repository and should not be interpreted as equivalent to full production-grade security scanning.
+
+---
+
 ## Final Note
 
 This repository is research-facing and thesis-facing, not production-facing.
