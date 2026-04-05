@@ -1094,3 +1094,38 @@ Methodological audit και rewrite planning για το
 - wording freeze
 - benchmark immutability verification
 - και scope-safe readiness για το επόμενο planning stage
+
+
+---
+
+
+## [05/04/2026] - Security / CI Hardening Pass & Dependency Hygiene Stabilization
+
+### Ολοκληρωμένες Ενέργειες:
+1. Ολοκληρώθηκε μικρό, scope-safe repository hygiene / security / CI pass χωρίς αλλαγή στο forecasting-first scope, στα notebook contracts ή στο canonical benchmark backbone.
+2. Αποσαφηνίστηκε το current code-scanning limitation του repository και προστέθηκε lightweight repository-level substitute safety check.
+3. Έγινε minimal hardening του GitHub Actions workflow με στόχο πιο καθαρό και αξιόπιστο CI behavior.
+4. Επεκτάθηκε το Dependabot coverage και στα GitHub Actions, πέρα από το ήδη υπάρχον `pip` coverage.
+5. Merged τα μικρά και merge-safe dependency updates:
+   - `actions/checkout`
+   - `actions/setup-python`
+   - `charset-normalizer`
+   - `certifi`
+   - `yarl`
+   - `requests`
+6. Έγινε local environment sync και επιβεβαιώθηκε clean dependency state μέσω `pip check`.
+
+### Practical / Repository Note:
+Το isolated update του `torch` σε `2.11.0` δεν προχώρησε και έκλεισε προσωρινά, επειδή δεν ήταν merge-safe στην παρούσα κατάσταση του `requirements.txt`, καθώς το `torchaudio==2.10.0` παραμένει pinned σε `torch==2.10.0`.
+
+### Repository Interpretation:
+Το σημερινό αποτέλεσμα ήταν:
+- stronger dependency hygiene,
+- πιο καθαρό και αξιόπιστο CI layer,
+- πιο ασφαλές repository-level workflow handling,
+- χωρίς notebook reruns,
+- χωρίς benchmark drift,
+- και χωρίς νέο modeling scope.
+
+### Next Step:
+Επιστροφή στο downstream diagnostics freeze / wording stabilization work πριν από το `NB11`.
