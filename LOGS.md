@@ -1129,3 +1129,92 @@ Methodological audit και rewrite planning για το
 
 ### Next Step:
 Επιστροφή στο downstream diagnostics freeze / wording stabilization work πριν από το `NB11`.
+
+
+---
+
+
+## [06/04/2026] - NB11 Graph-Model Input Packaging Finalization, PR Merge & Workflow Closure
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Ολοκλήρωση του `11_graph_model_input_packaging.ipynb`**
+   - Το `NB11` σταθεροποιήθηκε ως **strict graph-model input packaging / data object preparation stage**.
+   - Το notebook λειτουργεί αποκλειστικά πάνω στα canonical downstream artifacts:
+     - `train_final.csv`
+     - `val_final.csv`
+     - `test_final.csv`
+     - `graph_node_order.csv`
+     - `graph_edge_index.npy`
+     - `graph_distance_matrix_km.npy`
+   - Δεν έγινε training, δεν έγινε benchmarking και δεν μεταβλήθηκε το `data/processed/baseline_metrics.csv`.
+
+2. **Coverage-aware packaging hardening**
+   - Διατηρήθηκε η coverage-aware λογική χωρίς υπόθεση πλήρους node coverage ανά timestamp.
+   - Χρησιμοποιήθηκε `observed_mask` για explicit distinction μεταξύ observed και unobserved node-timestamp entries.
+   - Προστέθηκαν integrity checks ώστε observed entries να μην περιέχουν invalid target / baseline / dynamic feature values.
+
+3. **Portable serialization hardening**
+   - Διορθώθηκε το packaging export layer ώστε τα serialized `.pt` artifacts να περιέχουν μόνο tensors και portable Python metadata.
+   - Αφαιρέθηκαν brittle pandas objects από το serialized payload.
+   - Προστέθηκε immediate reload verification των exported graph-ready packages.
+
+4. **Intentional NB11 exports**
+   - Παράχθηκαν τα canonical local packaging artifacts κάτω από το graph packaging export directory, συμπεριλαμβανομένων:
+     - feature-role manifest
+     - node-feature manifest
+     - split-wise packaging summary
+     - packaging status manifest
+     - timestamp-level coverage exports
+     - serialized train / val / test graph datasets
+     - optional PyG preview bundle
+
+5. **Config synchronization**
+   - Ενημερώθηκε το `src/config.py` ώστε να περιλαμβάνει explicit `NB11` paths για το packaging export layer.
+   - Έτσι βελτιώθηκε η path consistency μεταξύ notebook logic και repository configuration.
+
+6. **Git / GitHub workflow completion**
+   - Δημιουργήθηκε και χρησιμοποιήθηκε feature branch για το `NB11`.
+   - Άνοιξε PR:
+     - `#55` → `feat: implement NB11 as strict graph-model input packaging stage`
+   - Το PR merged επιτυχώς στο `main`.
+   - Το associated issue:
+     - `#54` έκλεισε μέσω του merge flow.
+   - Τα GitHub Actions checks ολοκληρώθηκαν επιτυχώς.
+
+### Scientific Interpretation:
+Το `NB11` αποτελεί πλέον implemented **packaging-only bridge stage** ανάμεσα στο current forecasting-first / graph-verified backbone και στο μελλοντικό graph-based forecasting work.
+
+Το notebook παραμένει αυστηρά:
+- forecasting-supportive,
+- benchmark-safe,
+- non-training,
+- non-benchmarking,
+- και non-overclaiming.
+
+Άρα το `NB11` **δεν** πρέπει να παρουσιαστεί ως:
+- graph-training notebook,
+- GNN benchmark,
+- νέο predictive result,
+- ή broader PHM / digital twin implementation evidence.
+
+### Current Status:
+Μετά το σημερινό merge:
+- το `NB11` θεωρείται implemented και merged,
+- το repository διαθέτει πλέον explicit graph-model input packaging layer,
+- και το post-`NB10` transition έχει ολοκληρωθεί με benchmark-safe τρόπο.
+
+### Next Step (tomorrow):
+Αύριο το σωστό επόμενο βήμα είναι **documentation realignment** για να αποτυπωθεί ρητά το `NB11` στο canonical workflow και στο public thesis-facing story του repository.
+
+Συγκεκριμένα:
+- `README.md`
+- `LOGS.md`
+- `docs/INDEX.md`
+- `docs/RESEARCH_SCOPE.md`
+- `docs/BASELINE_PROTOCOL.md`
+- `docs/PHM_ROADMAP.md`
+
+ώστε να αποσαφηνιστεί ότι:
+- **implemented now**: `NB11` packaging / data object preparation stage
+- **planned next**: scope-safe planning για το πρώτο graph-based forecasting stage
+- **future work**: graph training / benchmarking, GNN / Mamba / Graph-Mamba experimentation, broader PHM-oriented extensions
