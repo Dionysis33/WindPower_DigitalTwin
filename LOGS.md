@@ -1218,3 +1218,27 @@ Methodological audit και rewrite planning για το
 - **implemented now**: `NB11` packaging / data object preparation stage
 - **planned next**: scope-safe planning για το πρώτο graph-based forecasting stage
 - **future work**: graph training / benchmarking, GNN / Mamba / Graph-Mamba experimentation, broader PHM-oriented extensions
+
+
+---
+
+
+## [07/04/2026] - NB11 Documentation Realignment Planning
+
+### Ολοκληρωμένες Ενέργειες:
+- Επιβεβαιώθηκε ότι το `NB11` έχει merged στο `main` ως **strict graph-model input packaging / data object preparation stage**.
+- Επιβεβαιώθηκε ότι παραμένει packaging-only, χωρίς training, χωρίς benchmarking και χωρίς mutation του `data/processed/baseline_metrics.csv`.
+- Εντοπίστηκε ότι μέρος του current public documentation εξακολουθεί να περιγράφει το canonical workflow μέχρι το `NB10`.
+- Άνοιξε το issue `#57`:
+  - `[QUESTION] Documentation realignment after NB11 graph-model input packaging merge`
+
+### Practical Note:
+Το επόμενο pass θα είναι αυστηρά docs-only και θα περιοριστεί στα:
+- `README.md`
+- `docs/INDEX.md`
+- `docs/RESEARCH_SCOPE.md`
+- `docs/BASELINE_PROTOCOL.md`
+- `docs/PHM_ROADMAP.md`
+
+### Next Step:
+Αύριο θα γίνει μικρό documentation realignment pass για το `#57`, χωρίς notebook edits, χωρίς benchmark changes και χωρίς line-ending cleanup.
