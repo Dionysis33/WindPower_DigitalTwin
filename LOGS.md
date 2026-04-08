@@ -1242,3 +1242,40 @@ Methodological audit και rewrite planning για το
 
 ### Next Step:
 Αύριο θα γίνει μικρό documentation realignment pass για το `#57`, χωρίς notebook edits, χωρίς benchmark changes και χωρίς line-ending cleanup.
+
+
+---
+
+
+## [08/04/2026] - NB11 Documentation Realignment Pass Started
+
+### Ολοκληρωμένες Ενέργειες:
+- Ξεκίνησε το docs-only realignment pass μετά το merge του `NB11`.
+- Άνοιξε και χρησιμοποιείται το issue `#57` για coordinated documentation update μετά το `NB11`.
+- Δημιουργήθηκε το branch:
+  - `docs/nb11-documentation-realignment`
+- Το current docs pass περιορίστηκε στα:
+  - `README.md`
+  - `docs/INDEX.md`
+  - `docs/RESEARCH_SCOPE.md`
+  - `docs/BASELINE_PROTOCOL.md`
+  - `docs/PHM_ROADMAP.md`
+
+### Στόχος του pass:
+Να ευθυγραμμιστεί το public repository story με το current merged state ώστε το `NB11` να αποτυπώνεται σωστά ως:
+
+- strict graph-model input packaging / data object preparation stage,
+- packaging-only,
+- χωρίς training,
+- χωρίς benchmarking,
+- και χωρίς mutation του canonical benchmark artifact `data/processed/baseline_metrics.csv`.
+
+### Scope note:
+Σε αυτό το pass δεν γίνονται:
+- notebook edits,
+- benchmark changes,
+- line-ending cleanup,
+- ή clean-code / dependency hygiene changes.
+
+### Next Step:
+Επόμενο βήμα είναι η ολοκλήρωση του docs pass, το άνοιγμα docs-only PR και ο τελικός έλεγχος wording / scope consistency πριν το merge.
