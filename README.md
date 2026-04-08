@@ -43,32 +43,34 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - **XGBoost**
 - **MLP**
 
-### Current diagnostics, consolidation, and graph-verification extension
+### Current diagnostics, graph-verification, and packaging extension
 
-Πάνω στο benchmarked forecasting stack, το project έχει πλέον τρία implemented downstream extension layers:
+Πάνω στο benchmarked forecasting stack, το project έχει πλέον τέσσερα implemented downstream extension layers:
 
 - `NB08`: row-level residual diagnostics και operating-regime-aware inspection
 - `NB09`: park-level diagnostics και thesis-consolidation layer
 - `NB10`: strict graph data-interface / split-to-graph contract / artifact-verification layer
+- `NB11`: strict graph-model input packaging / data object preparation layer
 
 Αυτά τα stages:
 
 - χρησιμοποιούν canonical exported artifacts και κοινό benchmark-safe evaluation logic,
 - παραμένουν forecasting-downstream ή forecasting-supportive,
 - ενισχύουν diagnostics-aware / condition-awareness-oriented interpretation,
-- σταθεροποιούν το graph-ready handoff για επόμενο modeling stage,
-- αλλά **δεν** αποτελούν νέο graph-training ή PHM modeling stage.
+- σταθεροποιούν όχι μόνο το graph-ready contract αλλά και το graph-model-ready handoff προς future graph-based forecasting work,
+- αλλά **δεν** αποτελούν νέο graph-training, graph-benchmarking ή PHM modeling stage.
 
 ### Scope boundary
 
 Στο παρόν στάδιο, το **forecasting** παραμένει ο implemented core άξονας του repository.
 
-Τα `NB08`, `NB09` και `NB10`:
+Τα `NB08`, `NB09`, `NB10` και `NB11`:
 
 - **δεν** εισάγουν νέο deployed forecasting system,
 - **δεν** παρουσιάζουν το repository ως completed PHM system,
 - **δεν** συνιστούν validated anomaly detection, fault diagnosis ή RUL module,
 - **δεν** ισοδυναμούν με ολοκληρωμένο GNN / Graph-Mamba training stage.
+- **δεν** ισοδυναμούν με graph-model training, graph benchmark ή validated GNN / Graph-Mamba evidence.
 
 Τα **graph-based**, **sequence-based** και broader **PHM-oriented** extensions παραμένουν planned / future work πάνω σε αυτό το benchmarked forecasting stack.
 
@@ -226,6 +228,24 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 Το `NB10` **δεν** είναι graph model training stage.  
 Δεν υλοποιεί ακόμη GNN benchmarking, Graph-Mamba experimentation ή νέο predictive model.
 
+### 10. Graph-model input packaging / data object preparation (`NB11`)
+
+Το `11_graph_model_input_packaging.ipynb` αποτελεί **strict graph-model input packaging / data object preparation notebook** πάνω στα canonical split και graph artifacts του forecasting pipeline.
+
+Ο ρόλος του περιορίζεται σε:
+
+- deterministic loading των canonical split artifacts,
+- feature-role και node-role manifesting,
+- coverage-aware graph-model input packaging,
+- `observed_mask`-aware tensor preparation,
+- portable serialized graph-ready dataset export,
+- και benchmark-safe handoff προς future graph-based forecasting stages.
+
+Το `NB11` **δεν** είναι training notebook.  
+Δεν κάνει benchmarking.  
+Δεν αλλάζει το `data/processed/baseline_metrics.csv`.  
+Δεν παρέχει ακόμη graph-learning evidence ή νέο predictive result.
+
 ### Split protocol note
 
 Η active split strategy είναι strict temporal split:
@@ -255,10 +275,17 @@ data/processed/baseline_metrics.csv
 ```text
 WindPower_DigitalTwin/
 ├── .github/
+│   ├── ISSUE_TEMPLATE/
+│   ├── workflows/
+│   │   ├── python-app.yml
+│   │   └── repo-safety-check.yml
+│   ├── dependabot.yml
+│   └── pull_request_template.md
 ├── data/
 │   └── processed/
 │       └── baseline_metrics.csv
 ├── docs/
+├── models/
 ├── notebooks/
 │   ├── 01_data_acquisition.ipynb
 │   ├── 02_kassel_exploration.ipynb
@@ -269,11 +296,16 @@ WindPower_DigitalTwin/
 │   ├── 07_advanced_baselines_and_importance.ipynb
 │   ├── 08_residual_diagnostics_and_operating_regimes.ipynb
 │   ├── 09_park_level_diagnostics_and_thesis_consolidation.ipynb
-│   └── 10_graph_readiness_and_artifact_verification.ipynb
+│   ├── 10_graph_readiness_and_artifact_verification.ipynb
+│   └── 11_graph_model_input_packaging.ipynb
 ├── reports/
 │   └── figures/
 ├── scripts/
 ├── src/
+│   ├── data/
+│   ├── features/
+│   ├── __init__.py
+│   └── config.py
 ├── venv/
 ├── .env
 ├── .gitattributes
@@ -287,7 +319,6 @@ WindPower_DigitalTwin/
 ├── README.md
 ├── requirements.txt
 └── SECURITY.md
-```
 
 ---
 
@@ -377,6 +408,24 @@ Strict graph data-interface / split-to-graph contract / artifact-verification no
 
 Δεν αποτελεί νέο graph-training stage.
 
+### `11_graph_model_input_packaging.ipynb`
+
+Strict graph-model input packaging / data object preparation notebook.
+
+Καλύπτει:
+
+- deterministic loading των canonical split και graph artifacts
+- feature-role και node-role manifesting
+- coverage-aware graph-model input packaging
+- `observed_mask`-aware tensor preparation
+- portable serialized graph-ready dataset export
+- benchmark-safe handoff προς future graph-based forecasting work
+
+Δεν αποτελεί training notebook.
+Δεν αποτελεί benchmarking notebook.
+Δεν αλλάζει το `data/processed/baseline_metrics.csv`.
+Δεν αποτελεί graph-learning evidence.
+
 ---
 
 ## Installation
@@ -465,6 +514,7 @@ Recommended canonical execution order:
 7. Run `08_residual_diagnostics_and_operating_regimes.ipynb`
 8. Run `09_park_level_diagnostics_and_thesis_consolidation.ipynb`
 9. Run `10_graph_readiness_and_artifact_verification.ipynb`
+10. Run `11_graph_model_input_packaging.ipynb`
 
 Important execution notes:
 
@@ -474,8 +524,8 @@ Important execution notes:
 - `NB08` είναι **strict downstream residual diagnostics extension** πάνω στα exported baseline predictions.
 - `NB09` είναι **strict downstream park-level diagnostics / thesis-consolidation extension** πάνω στο canonical test-only evaluation space.
 - `NB10` είναι **strict graph data-interface / split-to-graph contract / artifact-verification extension** και όχι νέο graph-training notebook.
-- Neither `NB08`, `NB09`, nor `NB10` introduces a new predictive model.
-- `01_data_acquisition.ipynb` belongs to the early exploratory phase and is not part of the active canonical forecasting pipeline.
+- `NB11` είναι **strict graph-model input packaging / data object preparation extension** και όχι training / benchmarking notebook.
+- Neither `NB08`, `NB09`, `NB10`, nor `NB11` introduces a new predictive model.
 
 ---
 
@@ -483,7 +533,7 @@ Important execution notes:
 
 Το repository ακολουθεί πλέον την εξής καθαρή ερευνητική γραμμή:
 
-**forecasting-first benchmark pipeline -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> cautious pathway toward condition-awareness-oriented interpretation and future PHM-oriented research extension**
+**forecasting-first benchmark pipeline -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> graph-model input packaging -> cautious pathway toward condition-awareness-oriented interpretation and future PHM-oriented research extension**
 
 Αυτό σημαίνει ότι:
 
@@ -492,6 +542,7 @@ Important execution notes:
 - το `NB08` λειτουργεί ως row-level / regime-aware diagnostics layer
 - το `NB09` λειτουργεί ως park-level diagnostics και thesis-consolidation layer
 - το `NB10` λειτουργεί ως graph-readiness / contract-verification layer
+- το `NB11` λειτουργεί ως graph-model input packaging / data-object-preparation layer
 - το digital twin framing διατηρείται σε research level
 - και τα graph-based / sequence-based models παραμένουν future modeling work
 
@@ -522,9 +573,11 @@ Important execution notes:
 
 ### Planned next
 
-Το άμεσο επόμενο βήμα μετά το current documentation / framing alignment είναι:
+Το άμεσο επόμενο βήμα μετά το current documentation / framing alignment δεν είναι νέο packaging stage — αυτό έχει πλέον υλοποιηθεί στο `NB11`.
 
-- scope-safe planning για το επόμενο graph-based forecasting stage
+Το planned next είναι:
+
+- scope-safe planning για το πρώτο actual graph-based forecasting stage μετά το packaging layer
 
 ### Future work
 
@@ -545,8 +598,9 @@ Important execution notes:
 - Το `NB08` είναι diagnostics stage και όχι νέο forecasting model.
 - Το `NB09` είναι park-level diagnostics / thesis-consolidation stage και όχι νέο forecasting model.
 - Το `NB10` είναι graph contract verification stage και όχι graph model training stage.
+- Το `NB11` είναι graph-model input packaging / data object preparation stage και όχι graph training ή graph benchmarking stage.
 - Τα residual diagnostics και τα park-level diagnostics υποστηρίζουν diagnostics-aware / health-aware interpretation, αλλά δεν συνιστούν validated anomaly detector, fault diagnosis module ή RUL framework.
-- Η graph-ready pipeline και τα spatial artifacts είναι implemented, αλλά το τελικό GNN / Graph-Mamba / sequence-modeling stage παραμένει future work.
+- Η graph-ready pipeline, το graph-contract verification layer και το graph-model input packaging layer είναι implemented, αλλά το actual GNN / Graph-Mamba / sequence-modeling stage παραμένει future work.
 - Το `mamba-ssm` μπορεί να είναι δύσκολο να γίνει build σε Windows, οπότε Google Colab ή Linux είναι λογικό environment για future sequence-model experiments.
 - Μεγάλα raw και processed αρχεία εξαιρούνται σκόπιμα από το git. Το canonical public benchmark artifact είναι το `data/processed/baseline_metrics.csv`.
 
