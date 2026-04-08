@@ -83,6 +83,9 @@
   - **R²**
 - και με primary ranking criterion το **MAE (ascending)**.
 
+Το `NB11` καταναλώνει τα canonical split και graph artifacts downstream, αλλά **δεν** μεταβάλλει το `data/processed/baseline_metrics.csv`.  
+Το benchmark artifact παραμένει canonical authority μόνο για cross-model test-set reporting και όχι για graph packaging outputs.
+
 ## Role of diagnostics
 
 Η baseline phase δεν τελειώνει στα aggregate metrics.
@@ -98,15 +101,16 @@
 
 ## Current downstream extension
 
-Μετά την ολοκλήρωση της baseline πεντάδας, το current implemented downstream / supportive layer έχει τρία διακριτά notebooks:
+Μετά την ολοκλήρωση της baseline πεντάδας, το current implemented downstream / supportive layer έχει τέσσερα διακριτά notebooks:
 
 - `NB08` -> downstream residual diagnostics and operating regimes
 - `NB09` -> park-level diagnostics and thesis consolidation
 - `NB10` -> graph data-interface / split-to-graph contract / artifact verification
+- `NB11` -> graph-model input packaging / data object preparation
 
 Αυτό σημαίνει ότι η αμέσως επόμενη canonical ερμηνευτική και infrastructural φάση είναι:
 
-> benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation -> graph contract verification
+> benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation -> graph contract verification -> graph-model input packaging
 
 και όχι:
 
@@ -123,7 +127,7 @@
 
 Όμως σε αυτή τη φάση τα diagnostics παραμένουν **forecasting diagnostics** και όχι completed PHM module.
 
-Αντίστοιχα, το `NB10` παραμένει **graph-readiness verification stage** και όχι graph-learning result.
+Αντίστοιχα, το `NB10` παραμένει **graph-readiness verification stage** και το `NB11` παραμένει **graph-model input packaging stage**, όχι graph-learning result.
 
 ## Current status
 
@@ -134,12 +138,15 @@
 - `NB08` downstream residual diagnostics
 - `NB09` park-level diagnostics and thesis consolidation
 - `NB10` graph data-interface / split-to-graph contract / artifact verification
+- `NB11` graph-model input packaging / data object preparation
 
 ## Planned next vs future modeling step
 
-Το planned next βήμα μετά το current documentation / framing alignment είναι:
+Το planned next βήμα μετά το current documentation / framing alignment δεν είναι πλέον packaging issue, επειδή αυτό το bridge stage έχει ήδη υλοποιηθεί στο `NB11`.
 
-- scope-safe planning για το επόμενο graph-based forecasting stage.
+Το planned next είναι:
+
+- scope-safe planning για το πρώτο actual graph-based forecasting stage μετά το packaging layer.
 
 Τα παρακάτω παραμένουν future work:
 
@@ -149,4 +156,4 @@
 
 Άρα η baseline ladder πρέπει να αντιμετωπίζεται ως:
 
-> canonical benchmark backbone for diagnostics today, graph-contract verification now, and advanced modeling tomorrow
+> canonical benchmark backbone for diagnostics today, graph-contract verification and graph-model input packaging now, and advanced modeling tomorrow

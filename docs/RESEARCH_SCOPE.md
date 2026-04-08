@@ -13,7 +13,8 @@
 - baseline benchmarking,
 - downstream residual diagnostics,
 - park-level diagnostics και thesis-oriented consolidation,
-- και strict graph data-interface / split-to-graph contract / artifact verification.
+- strict graph data-interface / split-to-graph contract / artifact verification,
+- και strict graph-model input packaging / data object preparation.
 
 ## Τι είναι ήδη implemented
 
@@ -28,6 +29,7 @@
 - `NB08` downstream residual diagnostics and operating regimes
 - `NB09` park-level diagnostics and thesis consolidation
 - `NB10` graph data-interface / split-to-graph contract / artifact verification
+- `NB11` graph-model input packaging / data object preparation
 
 Οι implemented baselines είναι:
 
@@ -37,28 +39,32 @@
 - **XGBoost**
 - **MLP**
 
-## Current diagnostics, consolidation, and graph-verification extension
+## Current diagnostics, consolidation, graph-verification, and packaging extension
 
-Πάνω στο benchmarked forecasting stack, το project επεκτείνεται πλέον σε τρία strict downstream / supportive stages:
+Πάνω στο benchmarked forecasting stack, το project επεκτείνεται πλέον σε τέσσερα strict downstream / supportive stages:
 
 - `NB08` για row-level residual diagnostics και operating-regime-aware inspection
 - `NB09` για park-level diagnostics και thesis-oriented consolidation
 - `NB10` για strict graph data-interface / split-to-graph contract / artifact verification
+- `NB11` για strict graph-model input packaging / data object preparation
 
 Αυτό το extension layer:
 
 - χρησιμοποιεί canonical exported artifacts και benchmark-safe downstream logic,
 - παραμένει forecasting-downstream ή forecasting-supportive,
 - υποστηρίζει diagnostics-aware / condition-awareness-oriented interpretation,
-- σταθεροποιεί το graph-ready handoff προς future graph-based forecasting work,
+- σταθεροποιεί τόσο το graph-ready contract όσο και το graph-model-ready handoff προς future graph-based forecasting work,
 - αλλά **δεν** ισχυρίζεται ολοκληρωμένο PHM functionality,
-- και **δεν** αποτελεί ακόμη graph-model training stage.
+- **δεν** αποτελεί graph-model training stage,
+- και **δεν** αποτελεί graph-benchmarking evidence.
 
 ## Planned next
 
-Το planned next βήμα δεν είναι ακόμη νέο graph-training issue, αλλά:
+Το planned next βήμα δεν είναι πλέον graph-model input packaging issue, γιατί αυτό έχει ήδη υλοποιηθεί στο `NB11`.
 
-- scope-safe planning για το επόμενο graph-based forecasting stage.
+Το planned next είναι:
+
+- scope-safe planning για το πρώτο actual graph-based forecasting stage μετά το packaging layer.
 
 ## Future work
 
@@ -88,7 +94,7 @@
 
 Η βασική ερευνητική θέση είναι:
 
-> ένα αυστηρά benchmarked forecasting pipeline, εμπλουτισμένο με downstream residual diagnostics, park-level diagnostic consolidation και graph-contract verification, μπορεί να αποτελέσει το επιστημονικά ορθό υπόβαθρο για diagnostics-aware, condition-awareness-oriented και αργότερα PHM-oriented research extensions, χωρίς να συγχέεται το forecasting diagnostics stage με completed prognostics functionality.
+> ένα αυστηρά benchmarked forecasting pipeline, εμπλουτισμένο με downstream residual diagnostics, park-level diagnostic consolidation, graph-contract verification και graph-model input packaging, μπορεί να αποτελέσει το επιστημονικά ορθό υπόβαθρο για diagnostics-aware, condition-awareness-oriented και αργότερα PHM-oriented research extensions, χωρίς να συγχέεται το forecasting diagnostics stage ή το packaging stage με completed prognostics functionality.
 
 ## Ακαδημαϊκή χρήση
 

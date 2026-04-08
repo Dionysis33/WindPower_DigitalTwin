@@ -16,15 +16,16 @@
 - baseline benchmarking,
 - advanced tabular baselines.
 
-## Current diagnostics and graph-verification extension
+## Current diagnostics, graph-verification, and packaging extension
 
 Το current downstream extension layer δεν είναι νέο deployed modeling stage, αλλά μια **strict forecasting-downstream and forecasting-supportive extension** πάνω στα canonical exported artifacts.
 
-Σήμερα αυτό περιλαμβάνει τρία implemented notebooks:
+Σήμερα αυτό περιλαμβάνει τέσσερα implemented notebooks:
 
 - `NB08` για residual diagnostics και operating-regime-aware inspection
 - `NB09` για park-level diagnostics και thesis-consolidation layer
 - `NB10` για strict graph data-interface / split-to-graph contract / artifact verification
+- `NB11` για strict graph-model input packaging / data object preparation
 
 Αυτό περιλαμβάνει:
 
@@ -34,7 +35,8 @@
 - park-level diagnostic aggregation,
 - representative case-study consolidation,
 - cautious health-aware interpretation,
-- και graph-ready contract verification πριν από future graph-based forecasting experiments.
+- graph-ready contract verification,
+- και graph-model input packaging πριν από future graph-based forecasting experiments.
 
 ## Γιατί αυτό συνδέεται με PHM
 
@@ -46,7 +48,7 @@
 - condition-awareness questions,
 - και wider diagnostic hypotheses.
 
-Παράλληλα, ένα strict graph data-interface / artifact-verification stage είναι χρήσιμο γιατί επιτρέπει future graph-based forecasting work πάνω σε benchmark-safe και μεθοδολογικά καθαρό υπόβαθρο.
+Παράλληλα, ένα strict graph data-interface / artifact-verification stage μαζί με ένα strict graph-model input packaging stage είναι χρήσιμα γιατί επιτρέπουν future graph-based forecasting work πάνω σε benchmark-safe, contract-safe και μεθοδολογικά καθαρό υπόβαθρο.
 
 Αυτό όμως **δεν** σημαίνει ότι το repository έχει ήδη validated fault diagnosis ή prognostics engine.
 
@@ -54,7 +56,7 @@
 
 ### Stage 1 — Forecasting foundation (implemented)
 - raw validation
-- EDA
+- validated-only EDA
 - feature engineering
 - temporal split
 - reproducible preprocessing
@@ -80,12 +82,13 @@
 - artifact-consistency verification
 - benchmark-safe graph-ready handoff
 
-### Stage 5 — Stronger PHM-oriented interpretation (future work)
-- more systematic residual slicing
-- anomaly-awareness hypotheses
-- degradation-oriented discussion
-- stronger uncertainty-aware diagnostics framing
-- richer condition-awareness-oriented analysis
+### Stage 5 — Graph-model input packaging (implemented)
+- deterministic loading of canonical split / graph artifacts
+- feature-role and node-role manifesting
+- coverage-aware graph-model input packaging
+- observed-mask-aware tensor preparation
+- portable serialized graph-ready dataset export
+- benchmark-safe handoff to future graph-based forecasting experiments
 
 ### Stage 6 — Advanced forecasting models (future work)
 - graph-based models
@@ -102,17 +105,18 @@
 - validated anomaly detector,
 - RUL estimation framework,
 - deployed digital twin service,
+- graph-model input packaging as graph-learning evidence,
 - ολοκληρωμένο graph-learning benchmark.
 
 ## Προτεινόμενη ακαδημαϊκή διατύπωση
 
-> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με current extension προς downstream residual diagnostics, park-level diagnostic consolidation και graph-contract verification, και μελλοντική δυνατότητα επέκτασης προς condition-awareness-oriented και PHM-oriented research directions.
+> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με current extension προς downstream residual diagnostics, park-level diagnostic consolidation, graph-contract verification και graph-model input packaging, και μελλοντική δυνατότητα επέκτασης προς condition-awareness-oriented και PHM-oriented research directions.
 
 ## Τελικό μήνυμα
 
 Η σωστή εξέλιξη του project είναι:
 
-> forecasting benchmark backbone -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> future advanced forecasting models -> broader PHM-oriented research extension
+> forecasting benchmark backbone -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> graph-model input packaging -> future advanced forecasting models -> broader PHM-oriented research extension
 
 και όχι:
 
