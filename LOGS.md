@@ -1279,3 +1279,27 @@ Methodological audit και rewrite planning για το
 
 ### Next Step:
 Επόμενο βήμα είναι η ολοκλήρωση του docs pass, το άνοιγμα docs-only PR και ο τελικός έλεγχος wording / scope consistency πριν το merge.
+
+
+---
+
+
+## [09/04/2026] - Post-NB11 Scope Freeze Completed & NB12 Started
+
+### Ολοκληρωμένες Ενέργειες:
+- Ολοκληρώθηκε το scope-lock issue για το πρώτο actual graph-based forecasting stage μετά το `NB11`.
+- Κλειδώθηκε ότι το επόμενο stage θα είναι:
+  - νέο notebook (`NB12`)
+  - minimal graph-only forecasting baseline
+  - πάνω στα canonical `NB11` packaged artifacts
+  - χωρίς ακόμη sequence / Mamba / Graph-Mamba ή Django/demo-layer scope
+- Δημιουργήθηκε νέο implementation / experiment issue για το πρώτο graph-based forecasting baseline.
+- Ξεκίνησε η συγγραφή του:
+  - `12_first_graph_based_forecasting_baseline.ipynb`
+
+### Σημείωση:
+Το `NB11` παραμένει packaging-only, non-training και non-benchmarking stage.  
+Το `NB12` είναι πλέον το νέο canonical implementation target για το πρώτο graph-based forecasting baseline.
+
+### Next Step:
+Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation και strict χρήση των `NB11` packaged artifacts.
