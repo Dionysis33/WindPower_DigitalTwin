@@ -1303,3 +1303,95 @@ Methodological audit και rewrite planning για το
 
 ### Next Step:
 Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation και strict χρήση των `NB11` packaged artifacts.
+
+
+---
+
+
+## [11/04/2026] - NB12 First Graph-Based Forecasting Baseline Completion, Full Run Verification & Merge Closure
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Ολοκλήρωση του `12_first_graph_based_forecasting_baseline.ipynb`**
+   - Το `NB12` υλοποιήθηκε ως το πρώτο **actual graph-based forecasting notebook** του repository μετά το `NB11` graph-model input packaging stage.
+   - Το notebook καταναλώνει ως canonical handoff τα packaged graph artifacts του `NB11`.
+   - Διατηρήθηκε forecasting-first, benchmark-safe και non-overclaiming framing.
+   - Δεν έγινε mutation του `data/processed/baseline_metrics.csv`.
+
+2. **Scaffold-to-run stabilization**
+   - Υλοποιήθηκαν fail-fast integrity checks για τα packaged graph inputs.
+   - Επιβεβαιώθηκε σωστή κατασκευή snapshot-level graph datasets και DataLoaders.
+   - Υλοποιήθηκε minimal `GCNNodeRegressor` baseline με mask-aware regression logic.
+   - Κατά τη διάρκεια της υλοποίησης εντοπίστηκαν και διορθώθηκαν issues σε:
+     - NaN-producing training behavior,
+     - batch aggregation logic,
+     - prediction collection,
+     - snapshot / timestamp indexing consistency,
+     - και export-layer completeness.
+
+3. **Training / validation / test protocol**
+   - Εκτελέστηκε full training run με validation-driven model selection και early stopping.
+   - Το best checkpoint επιλέχθηκε αποκλειστικά από το validation space.
+   - Το test split χρησιμοποιήθηκε μόνο για final reporting.
+   - Το notebook ολοκληρώθηκε με successful final sanity pass και verified export bundle.
+
+4. **NB12-specific exports**
+   - Παράχθηκαν local rerun artifacts για το `NB12`, όπως:
+     - training history
+     - observed-only test predictions
+     - NB12 test metrics
+     - benchmark-safe comparison table
+     - run config
+     - saved best model state
+   - Το export layer επαληθεύτηκε επιτυχώς χωρίς missing required outputs.
+
+5. **Git / GitHub workflow completion**
+   - Δημιουργήθηκε feature branch για το `NB12`.
+   - Άνοιξε draft PR για το πρώτο graph baseline stage.
+   - Ολοκληρώθηκαν επιτυχώς τα GitHub Actions checks.
+   - Το full run ολοκληρώθηκε, έγινε push του τελικού notebook state και το PR merged στο `main`.
+   - Το σχετικό issue έκλεισε μέσω του merge flow.
+
+### Final Run Summary:
+- **Best epoch:** 5
+- **Best validation loss:** 0.06048211165600353
+- **Test MAE:** 0.2177424039668681
+- **Test RMSE:** 0.30926228878733425
+- **Test R²:** -0.03694281122153131
+- **Observed test rows:** 1086336
+
+### Scientific Interpretation:
+Το `NB12` αποτελεί πλέον το πρώτο implemented **graph-based forecasting baseline stage** του repository.
+
+Η βασική επιστημονική σημασία του αποτελέσματος είναι ότι:
+- το graph-ready / packaging bridge του `NB10` και `NB11` οδήγησε πλέον σε actual executable graph-model baseline,
+- το repository διαθέτει πλέον end-to-end μετάβαση από:
+  - forecasting benchmark backbone
+  - downstream diagnostics
+  - graph contract verification
+  - graph-model input packaging
+  - προς πρώτο actual graph-based forecasting run.
+
+Ωστόσο, το current `NB12` αποτέλεσμα **δεν** τεκμηριώνει graph superiority.
+Αντίθετα, δείχνει ότι:
+- το πρώτο GCN baseline είναι τεχνικά λειτουργικό και reproducible,
+- αλλά δεν υπερτερεί ακόμη του implemented tabular benchmark backbone,
+- άρα το graph modeling παραμένει ενεργό research direction και όχι validated replacement των current baselines.
+
+### Current Status:
+Μετά το σημερινό merge:
+- το `NB12` θεωρείται implemented και merged,
+- το repository διαθέτει πλέον πρώτο actual graph-based forecasting baseline,
+- και η μετάβαση από packaging-only graph readiness σε executable graph forecasting notebook έχει ολοκληρωθεί με benchmark-safe τρόπο.
+
+### Next Step:
+Επόμενο λογικό βήμα είναι ένα μικρό, scope-safe follow-up γύρω από:
+- graph baseline stabilization / tuning
+ή
+- graph ablation / spatial sensitivity analysis
+χωρίς ακόμη άνοιγμα broad GNN superiority claims, sequence-model scope ή Graph-Mamba benchmarking.
+
+### Commit / PR / Issue Reference:
+- `feat(nb12): add graph baseline scaffold and package integrity checks`
+- `feat(nb12): complete first graph baseline run evaluation and exports`
+- merged PR: `#66`
+- related issue: `#60`
