@@ -42,16 +42,10 @@ NB02_FAILURE_REASON_SUMMARY = DATA_PROCESSED / "nb02_failure_reason_summary.csv"
 # -------------------------------------------------------------------
 # NB02 | Coverage-aware downstream eligibility artifacts
 # -------------------------------------------------------------------
-# Νέα artifacts που ξεχωρίζουν:
-# - raw-valid parks
-# - coverage classes
-# - NB04-eligible parks
-#
-# Σημαντικό:
 # Το NB02 παραμένει canonical raw-validation authority.
-# Τα παρακάτω ΔΕΝ αλλάζουν αυτόν τον ρόλο.
-# Απλώς επεκτείνουν το downstream contract ώστε το NB03/NB04
-# να μην αντιμετωπίζουν όλα τα raw-valid parks ως ισοδύναμα.
+# Τα παρακάτω artifacts επεκτείνουν το downstream contract ώστε
+# τα NB03 / NB04 και τα επόμενα stages να μην αντιμετωπίζουν
+# όλα τα raw-valid parks ως ισοδύναμα.
 NB02_META_COVERAGE_AUDIT = DATA_PROCESSED / "nb02_meta_coverage_audit.csv"
 NB02_COVERAGE_CLASS_SUMMARY = DATA_PROCESSED / "nb02_coverage_class_summary.csv"
 NB02_NB04_ELIGIBILITY_SUMMARY = DATA_PROCESSED / "nb02_nb04_eligibility_summary.csv"
@@ -146,10 +140,60 @@ NB11_NODE_FEATURE_MANIFEST = NB11_EXPORT_DIR / "nb11_node_feature_manifest.csv"
 NB11_SPLIT_GRAPH_PACKAGING_SUMMARY = NB11_EXPORT_DIR / "nb11_split_graph_packaging_summary.csv"
 NB11_PACKAGING_STATUS_MANIFEST = NB11_EXPORT_DIR / "nb11_packaging_status_manifest.csv"
 
+NB11_TRAIN_TIMESTAMP_COVERAGE = NB11_EXPORT_DIR / "nb11_train_timestamp_coverage.csv"
+NB11_VAL_TIMESTAMP_COVERAGE = NB11_EXPORT_DIR / "nb11_val_timestamp_coverage.csv"
+NB11_TEST_TIMESTAMP_COVERAGE = NB11_EXPORT_DIR / "nb11_test_timestamp_coverage.csv"
+
 NB11_TRAIN_GRAPH_DATASET = NB11_EXPORT_DIR / "train_graph_dataset.pt"
 NB11_VAL_GRAPH_DATASET = NB11_EXPORT_DIR / "val_graph_dataset.pt"
 NB11_TEST_GRAPH_DATASET = NB11_EXPORT_DIR / "test_graph_dataset.pt"
 NB11_PREVIEW_PYG_OBJECTS = NB11_EXPORT_DIR / "nb11_preview_pyg_objects.pt"
+
+
+# -------------------------------------------------------------------
+# Graph baseline directories
+# -------------------------------------------------------------------
+GRAPH_BASELINES_DIR = DATA_PROCESSED / "graph_baselines"
+
+
+# -------------------------------------------------------------------
+# NB12 | First graph-based forecasting baseline exports
+# -------------------------------------------------------------------
+# Το NB12 είναι το πρώτο actual graph-based forecasting notebook
+# πάνω στα canonical packaged artifacts του NB11.
+# Τα paths εδώ είναι read-only references για follow-up χρήση.
+NB12_GRAPH_BASELINE_DIR = GRAPH_BASELINES_DIR / "nb12_first_graph_baseline"
+
+NB12_BENCHMARK_COMPARISON = NB12_GRAPH_BASELINE_DIR / "nb12_benchmark_comparison.csv"
+NB12_BEST_MODEL_STATE = NB12_GRAPH_BASELINE_DIR / "nb12_best_model_state.pt"
+NB12_RUN_CONFIG = NB12_GRAPH_BASELINE_DIR / "nb12_run_config.json"
+NB12_TEST_METRICS = NB12_GRAPH_BASELINE_DIR / "nb12_test_metrics.csv"
+NB12_TEST_PREDICTIONS_OBSERVED_ONLY = (
+    NB12_GRAPH_BASELINE_DIR / "nb12_test_predictions_observed_only.csv"
+)
+NB12_TRAINING_HISTORY = NB12_GRAPH_BASELINE_DIR / "nb12_training_history.csv"
+
+
+# -------------------------------------------------------------------
+# NB13 | Graph ablation / spatial sensitivity analysis
+# -------------------------------------------------------------------
+# Το NB13 είναι strict follow-up του NB12.
+# Τα παρακάτω constants ορίζουν export namespace scaffold.
+# Δεν αποτελούν claim ότι όλα τα exports έχουν ήδη παραχθεί.
+NB13_GRAPH_ABLATION_DIR = (
+    GRAPH_BASELINES_DIR / "nb13_graph_ablation_and_spatial_sensitivity"
+)
+
+NB13_EXPERIMENT_REGISTRY = NB13_GRAPH_ABLATION_DIR / "nb13_experiment_registry.csv"
+NB13_RUN_CONFIG = NB13_GRAPH_ABLATION_DIR / "nb13_run_config.json"
+NB13_VALIDATION_SUMMARY = NB13_GRAPH_ABLATION_DIR / "nb13_validation_summary.csv"
+NB13_TEST_METRICS = NB13_GRAPH_ABLATION_DIR / "nb13_test_metrics.csv"
+NB13_ABLATION_COMPARISON = NB13_GRAPH_ABLATION_DIR / "nb13_ablation_comparison.csv"
+NB13_TRAINING_HISTORY = NB13_GRAPH_ABLATION_DIR / "nb13_training_history.csv"
+NB13_TEST_PREDICTIONS_OBSERVED_ONLY = (
+    NB13_GRAPH_ABLATION_DIR / "nb13_test_predictions_observed_only.csv"
+)
+NB13_EXPORT_MANIFEST = NB13_GRAPH_ABLATION_DIR / "nb13_export_manifest.csv"
 
 
 # -------------------------------------------------------------------
