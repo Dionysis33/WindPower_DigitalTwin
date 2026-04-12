@@ -1395,3 +1395,123 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - `feat(nb12): complete first graph baseline run evaluation and exports`
 - merged PR: `#66`
 - related issue: `#60`
+
+
+---
+
+
+## [12/04/2026] - NB13 Graph Ablation / Spatial Sensitivity Completion, Full Run Verification & Draft PR Opened
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Ολοκλήρωση του `13_graph_ablation_and_spatial_sensitivity_analysis.ipynb`**
+   - Το `NB13` υλοποιήθηκε ως **strict graph ablation / spatial sensitivity follow-up** του `NB12`.
+   - Το notebook βασίζεται αποκλειστικά στα canonical `NB11` packaged graph artifacts και στα read-only `NB12` reference outputs.
+   - Διατηρήθηκε forecasting-first, benchmark-safe και non-overclaiming framing.
+   - Δεν έγινε mutation του `data/processed/baseline_metrics.csv`.
+
+2. **Canonical artifact loading, integrity checks και frozen experiment protocol**
+   - Υλοποιήθηκαν fail-fast integrity checks για:
+     - `NB11` packaged graph artifacts
+     - `NB12` reference exports
+     - snapshot / node / feature-dimension consistency
+   - Επιβεβαιώθηκε σωστό package-to-dataset handoff από το `NB11` contract.
+   - Κλειδώθηκε explicit experiment registry με fixed `NB12`-compatible training configuration και validation-only model selection rule.
+
+3. **Controlled graph ablation design**
+   - Υλοποιήθηκαν deterministic topology variants:
+     - `self_only_control`
+     - `canonical_nb11_graph`
+     - `local_pruned_graph`
+   - Το `local_pruned_graph` ορίστηκε ως deterministic pruning του canonical graph με βάση το edge-distance ranking.
+   - Το notebook εξέτασε αυστηρά μόνο:
+     - spatial-vs-self-only control
+     - topology choice
+     - aggregation depth (`1` vs `2` message-passing layers)
+
+4. **Training / validation / test execution**
+   - Εκτελέστηκαν όλα τα enabled `NB13` experiments με:
+     - fixed GCN family
+     - early stopping
+     - validation-driven best-checkpoint selection
+     - test-only final reporting
+   - Το notebook ολοκληρώθηκε με successful final sanity pass και verified notebook-closure artifacts.
+
+5. **NB13-specific exports**
+   - Παράχθηκαν local rerun artifacts για το `NB13`, όπως:
+     - experiment registry
+     - run config / protocol lock
+     - validation summary
+     - test metrics
+     - training history
+     - ablation comparison table
+     - control-comparison summary
+     - depth-effect summary
+     - `NB13` vs `NB12` reference summary
+     - notebook summary / export manifest
+   - Το full observed-only test prediction export παραλείφθηκε σκόπιμα σε αυτό το πρώτο canonical run για export-discipline reasons.
+   - Το export layer επαληθεύτηκε επιτυχώς χωρίς missing required outputs.
+
+6. **Git / GitHub workflow progress**
+   - Δημιουργήθηκε feature branch για το `NB13`.
+   - Άνοιξε draft PR για το current `NB13` implementation state.
+   - Τα GitHub Actions checks ολοκληρώθηκαν επιτυχώς.
+   - Το σχετικό issue παραμένει ανοιχτό μέχρι το merge / final closure pass.
+
+### Final Run Summary:
+- **Best NB13 run:** `NB13_E06`
+- **Best topology:** `local_pruned_graph`
+- **Best message-passing layers:** 2
+- **Best validation loss:** 0.060495
+- **Test MAE:** 0.218184
+- **Test RMSE:** 0.308976
+- **Test R²:** -0.035027
+
+### Additional Comparison Findings:
+- **Best local-pruned vs self-only same-depth delta (test MAE):** `-0.000187`
+- **Best NB13 vs NB12 reference delta (test MAE):** `+0.000441`
+
+### Scientific Interpretation:
+Το `NB13` αποτελεί πλέον implemented **graph ablation / spatial sensitivity analysis stage** πάνω στο πρώτο graph-based forecasting baseline του repository.
+
+Η βασική επιστημονική σημασία του αποτελέσματος είναι ότι:
+- η επίδοση είναι πράγματι **ευαίσθητη στην topology choice**
+- ένα πιο local / pruned graph αποδίδει ελαφρώς καλύτερα από το πλήρες canonical graph
+- το observed gain έναντι του `self_only_control` είναι υπαρκτό αλλά **πολύ μικρό**
+- και το effect του deeper aggregation δεν είναι σταθερά θετικό across topology families
+
+Ωστόσο, το current `NB13` αποτέλεσμα **δεν** τεκμηριώνει ισχυρή graph superiority.
+Αντίθετα, δείχνει ότι:
+- η graph topology μπορεί να επηρεάζει την επίδοση
+- το full canonical graph δεν είναι απαραίτητα η καλύτερη επιλογή στο current setup
+- αλλά η συνολική βελτίωση παραμένει μικρή και topology-sensitive
+- και κανένα `NB13` run δεν βελτιώνει το `NB12` reference στο primary benchmark criterion (`test MAE`)
+
+Άρα το current evidence είναι πιο συμβατό με το ότι:
+- το forecasting task εξακολουθεί να κυριαρχείται σε μεγάλο βαθμό από ισχυρό node-local / tabular signal
+- ενώ η neighbor aggregation προσθέτει, στην καλύτερη περίπτωση, μικρό incremental effect
+
+### Current Status:
+Μετά το σημερινό run:
+- το `NB13` θεωρείται notebook-level complete στο current feature branch
+- το export bundle του `NB13` θεωρείται verified
+- το draft PR είναι ανοιχτό με passing checks
+- και το issue παραμένει active μέχρι το final review / merge closure
+
+### Next Step:
+Επόμενο λογικό βήμα είναι:
+- final review και merge του `NB13` PR
+- closure του σχετικού issue μέσω του merge flow
+- και στη συνέχεια coordinated documentation realignment για:
+  - `LOGS.md`
+  - `README.md`
+  - `docs/INDEX.md`
+  - `docs/RESEARCH_SCOPE.md`
+  - `docs/BASELINE_PROTOCOL.md`
+  - `docs/PHM_ROADMAP.md`
+
+χωρίς ακόμη άνοιγμα broader GNN superiority claims, sequence-model scope ή Graph-Mamba benchmarking.
+
+### Commit / PR / Issue Reference:
+- `feat(nb13): add graph ablation and spatial sensitivity analysis`
+- draft PR: `#69`
+- related issue: `#68`
