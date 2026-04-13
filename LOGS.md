@@ -4,11 +4,11 @@
 
 Current canonical progression:
 
-`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics -> NB09 park-level diagnostics / thesis consolidation`
+`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics -> NB09 park-level diagnostics / thesis consolidation -> NB10 graph data-interface / split-to-graph contract / artifact verification -> NB11 graph-model input packaging / data object preparation -> NB12 first graph-based forecasting baseline -> NB13 graph ablation / spatial sensitivity analysis`
 
 Interpretation bridge:
 
-`forecasting -> downstream residual diagnostics -> park-level consolidation -> cautious health-aware / PHM-oriented interpretation`
+`forecasting benchmark backbone -> downstream residual diagnostics -> park-level consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> topology-aware graph ablation -> cautious graph interpretation without superiority claims`
 
 
 ---
@@ -1400,7 +1400,7 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 ---
 
 
-## [12/04/2026] - NB13 Graph Ablation / Spatial Sensitivity Completion, Full Run Verification & Draft PR Opened
+## [12/04/2026] - NB13 Graph Ablation / Spatial Sensitivity Completion, Merge Closure & Documentation Alignment Readiness
 
 ### Ολοκληρωμένες Ενέργειες:
 1. **Ολοκλήρωση του `13_graph_ablation_and_spatial_sensitivity_analysis.ipynb`**
@@ -1491,27 +1491,27 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - ενώ η neighbor aggregation προσθέτει, στην καλύτερη περίπτωση, μικρό incremental effect
 
 ### Current Status:
-Μετά το σημερινό run:
-- το `NB13` θεωρείται notebook-level complete στο current feature branch
+Μετά το merge closure:
+- το `NB13` θεωρείται implemented και merged στο `main`
 - το export bundle του `NB13` θεωρείται verified
-- το draft PR είναι ανοιχτό με passing checks
-- και το issue παραμένει active μέχρι το final review / merge closure
+- το repository διαθέτει πλέον explicit graph ablation / spatial sensitivity follow-up stage μετά το `NB12`
+- και το σχετικό issue έχει κλείσει μέσω του merge flow
 
 ### Next Step:
-Επόμενο λογικό βήμα είναι:
-- final review και merge του `NB13` PR
-- closure του σχετικού issue μέσω του merge flow
-- και στη συνέχεια coordinated documentation realignment για:
-  - `LOGS.md`
-  - `README.md`
-  - `docs/INDEX.md`
-  - `docs/RESEARCH_SCOPE.md`
-  - `docs/BASELINE_PROTOCOL.md`
-  - `docs/PHM_ROADMAP.md`
+Επόμενο λογικό βήμα είναι coordinated documentation realignment για:
+- `LOGS.md`
+- `README.md`
+- `docs/INDEX.md`
+- `docs/RESEARCH_SCOPE.md`
+- `docs/BASELINE_PROTOCOL.md`
+- `docs/PHM_ROADMAP.md`
 
-χωρίς ακόμη άνοιγμα broader GNN superiority claims, sequence-model scope ή Graph-Mamba benchmarking.
+ώστε να αποτυπωθεί καθαρά ότι:
+- **implemented now**: `NB12` first graph-based forecasting baseline και `NB13` graph ablation / spatial sensitivity follow-up
+- **current interpretation boundary**: topology-sensitive effect without strong graph superiority claims
+- **future work**: broader graph redesign, sequence models / Mamba / Graph-Mamba experimentation και broader PHM-oriented implementation
 
 ### Commit / PR / Issue Reference:
 - `feat(nb13): add graph ablation and spatial sensitivity analysis`
-- draft PR: `#69`
-- related issue: `#68`
+- merged PR: `#69`
+- closed issue: `#68`

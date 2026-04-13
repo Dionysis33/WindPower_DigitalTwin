@@ -142,7 +142,7 @@ If a notebook change affects results, update the relevant interpretation text as
 
 For the current public repository state, the canonical workflow is:
 
-`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics -> NB09 park-level diagnostics / thesis consolidation -> NB10 graph data-interface / split-to-graph contract / artifact verification`
+`NB02 raw validation -> NB03 validated-only EDA -> NB04 feature engineering -> NB05 outlier handling / temporal split -> NB06 baseline modeling -> NB07 advanced tabular baselines -> NB08 downstream residual diagnostics -> NB09 park-level diagnostics / thesis consolidation -> NB10 graph data-interface / split-to-graph contract / artifact verification -> NB11 graph-model input packaging / data object preparation -> NB12 first graph-based forecasting baseline -> NB13 graph ablation / spatial sensitivity analysis`
 
 This means:
 
@@ -154,6 +154,9 @@ This means:
 - `08_residual_diagnostics_and_operating_regimes.ipynb` is a **strict downstream diagnostics stage**, not a new predictive modeling stage.
 - `09_park_level_diagnostics_and_thesis_consolidation.ipynb` is a **strict downstream diagnostics / consolidation stage**, not a new predictive modeling stage.
 - `10_graph_readiness_and_artifact_verification.ipynb` is a **strict graph-readiness verification stage**, not a graph-training stage.
+- `11_graph_model_input_packaging.ipynb` is a **strict graph-model input packaging / data object preparation stage**, not a training or benchmark-reporting stage.
+- `12_first_graph_based_forecasting_baseline.ipynb` is the **first actual graph-based forecasting baseline** of the repository, but it does not validate graph superiority over the canonical benchmark backbone.
+- `13_graph_ablation_and_spatial_sensitivity_analysis.ipynb` is a **strict follow-up graph ablation / spatial sensitivity stage** and should be interpreted as cautious graph evidence rather than superiority proof.
 
 ### Important downstream rule
 
@@ -224,9 +227,12 @@ The repository currently supports:
 - benchmark-safe forecasting,
 - diagnostics-aware downstream analysis,
 - graph-readiness verification,
+- graph-model input packaging,
+- first graph-based forecasting baseline evidence,
+- topology-aware graph ablation / spatial sensitivity follow-up,
 - and cautious thesis-oriented interpretation.
 
-Graph-based, sequence-based, and broader PHM-oriented modeling remain **future work** unless explicitly implemented and documented.
+Broader graph redesign, sequence-based modeling, and broader PHM-oriented modeling remain **future work** unless explicitly implemented and documented.
 
 ---
 
