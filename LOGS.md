@@ -1515,3 +1515,37 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - `feat(nb13): add graph ablation and spatial sensitivity analysis`
 - merged PR: `#69`
 - closed issue: `#68`
+
+
+---
+
+
+## [14/04/2026] - Post-NB13 Documentation Realignment Closure, Release Checkpoint & NB14 Scope-to-Implementation Transition
+
+### Ολοκληρωμένες Ενέργειες:
+1. Ολοκληρώθηκε το post-`NB13` documentation realignment του repository και έγινε merge στο `main`.
+2. Ευθυγραμμίστηκαν τα active canonical docs ώστε το current public / thesis-facing story να αποτυπώνει καθαρά το workflow μέχρι το `NB13`, με:
+   - `NB12` ως πρώτο actual graph-based forecasting baseline
+   - `NB13` ως graph ablation / spatial sensitivity follow-up
+   - και χωρίς strong graph superiority claims.
+3. Ολοκληρώθηκε local / remote cleanup μετά το merge του docs-only PR και επιβεβαιώθηκε clean `main` state.
+4. Δημιουργήθηκε νέο release checkpoint για το `M10`, που αποτυπώνει:
+   - completion του `NB13`
+   - completion του post-`NB13` documentation realignment
+   - και το current benchmark-safe graph interpretation boundary.
+5. Άνοιξε και κλείδωσε νέο scope-lock issue για το επόμενο στάδιο μετά το `NB13`.
+6. Ορίστηκε ότι το επόμενο notebook θα είναι το:
+   - `NB14` ως **controlled graph refinement notebook**
+   - με **local execution by default**
+   - forecasting-first, benchmark-safe και non-overclaiming framing.
+7. Άνοιξε νέο implementation milestone / issue για το `NB14` με σαφές in-scope / out-of-scope boundary.
+
+### Scientific / Repository Interpretation:
+Το repository διαθέτει πλέον documentation-consistent canonical workflow μέχρι το `NB13`, με implemented forecasting core, diagnostics layers, graph verification / packaging, πρώτο graph baseline και strict graph follow-up. Το current graph layer παραμένει benchmark-safe αλλά δεν τεκμηριώνει strong superiority claims. Το επόμενο στάδιο κλειδώθηκε ως μικρό και controlled graph refinement follow-up, χωρίς άνοιγμα sequence-model, digital twin application ή PHM implementation scope. 
+
+### Next Step:
+Επόμενο βήμα είναι το notebook planning και η controlled implementation του `NB14` πάνω στο υπάρχον `NB12` / `NB13` stack, με:
+- ένα μόνο καθαρό graph refinement question
+- comparison έναντι του `NB12` reference
+- comparison έναντι του `NB13` best configuration
+- και strict local, benchmark-safe execution.
