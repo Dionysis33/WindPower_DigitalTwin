@@ -1549,3 +1549,123 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - comparison έναντι του `NB12` reference
 - comparison έναντι του `NB13` best configuration
 - και strict local, benchmark-safe execution.
+
+
+---
+
+
+## [15/04/2026] - NB14 Controlled Graph Refinement Completion & Post-NB14 Documentation Realignment
+
+### Τεχνικά Επιτεύγματα (Technical Milestones):
+1. **Ολοκλήρωση του `14_controlled_graph_refinement_followup.ipynb`**
+   - Το `NB14` υλοποιήθηκε ως **strict post-`NB13` controlled graph refinement follow-up**.
+   - Το notebook παρέμεινε πλήρως:
+     - forecasting-first
+     - benchmark-safe
+     - validation-only για model selection
+     - test-only για final reporting
+     - non-overclaiming
+   - Δεν εισήχθη νέο model family, δεν άνοιξε sequence-model scope και δεν μεταβλήθηκε το canonical tabular benchmark backbone.
+
+2. **Strict comparison boundary και narrow-scope refinement design**
+   - Το `NB14` λειτούργησε με αυστηρό comparison boundary μόνο απέναντι σε:
+     - το `NB12` reference
+     - και το `NB13` best configuration
+   - Το refinement question περιορίστηκε αυστηρά μέσα στην established `local_pruned_graph` family.
+   - Η controlled μεταβλητή του notebook ήταν το pruning-strength refinement μέσω μικρού και προδηλωμένου candidate set.
+
+3. **Runtime stabilization και contract-safe execution**
+   - Προστέθηκε runtime stabilization patch για masked-out / unobserved rows ώστε το execution path να παραμένει numerically stable.
+   - Επιβεβαιώθηκε ότι τα stabilized core tensors είναι finite.
+   - Το notebook ολοκληρώθηκε με successful final sanity pass και χωρίς benchmark-contract breakage.
+
+4. **Validation-only model selection**
+   - Εκτελέστηκαν οι candidate `NB14` experiments:
+     - `NB14_E01`
+     - `NB14_E02`
+     - `NB14_E03`
+   - Το validation-selected αποτέλεσμα ήταν το:
+     - `NB14_E01`
+   - Χαρακτηριστικά του selected run:
+     - topology variant: `local_pruned_graph`
+     - edge policy: `keep_shortest_edges_only`
+     - edge keep quantile: `0.50`
+     - message passing layers: `2`
+     - refined directed edges: `534`
+     - runtime input feature dim: `41`
+
+5. **Final test-only reporting**
+   - Το selected experiment ήταν το:
+     - `NB14_E01`
+   - Με τελικό:
+     - best epoch: `5`
+     - best validation loss: `0.060545`
+     - best validation MAE: `0.179216`
+     - test loss: `0.095326`
+     - test MAE: `0.218257`
+     - test RMSE: `0.308930`
+     - test R²: `-0.034714`
+     - test observed points: `1,086,336`
+
+6. **Strict reference comparison against `NB12` and `NB13`**
+   - Η strict comparison έδειξε:
+     - `NB12` reference test MAE: `0.217742`
+     - `NB13` best reference (`NB13_E06`) test MAE: `0.218184`
+     - `NB14` selected (`NB14_E01`) test MAE: `0.218257`
+   - Άρα:
+     - delta test MAE vs `NB12` reference: `+0.000515`
+     - delta test MAE vs `NB13` best: `+0.000074`
+
+### Scientific Interpretation:
+Το `NB14` αποτελεί πλέον implemented **controlled graph refinement follow-up stage** πάνω στο post-`NB13` graph evidence line.
+
+Η βασική επιστημονική σημασία του αποτελέσματος είναι ότι:
+- το repository επεκτάθηκε με ένα ακόμη αυστηρά ελεγχόμενο graph-only follow-up stage,
+- η comparison λογική παρέμεινε benchmark-safe και απολύτως constrained,
+- το selected refinement διατήρησε competitive behavior μέσα στην `local_pruned_graph` family,
+- αλλά το αποτέλεσμα **δεν** βελτιώνει ούτε το `NB12` reference ούτε το `NB13` best run στο primary benchmark criterion (`test MAE`).
+
+Άρα το `NB14` πρέπει να διαβάζεται ως:
+- controlled graph refinement evidence-consolidation step,
+- narrow-scope post-`NB13` graph-only extension,
+- benchmark-safe follow-up evaluation,
+- και όχι ως graph superiority validation stage.
+
+### Documentation Realignment:
+Μετά την ολοκλήρωση του `NB14`, έγινε coordinated post-`NB14` documentation realignment ώστε το current public / thesis-facing repository story να αποτυπώνει σωστά ότι:
+
+- το canonical workflow εκτείνεται πλέον μέχρι το `NB14`
+- το `NB14` είναι strict controlled graph refinement follow-up
+- το current graph layer περιλαμβάνει:
+  - graph-readiness verification
+  - graph-model input packaging
+  - first graph-based forecasting baseline
+  - graph ablation / spatial sensitivity follow-up
+  - controlled graph refinement follow-up
+- αλλά το repository παραμένει forecasting-first, benchmark-safe και non-overclaiming
+- και δεν τεκμηριώνει validated graph superiority, completed PHM functionality ή completed digital twin implementation
+
+Στο documentation pass ευθυγραμμίστηκαν τα:
+- `README.md`
+- `docs/INDEX.md`
+- `docs/RESEARCH_SCOPE.md`
+- `docs/BASELINE_PROTOCOL.md`
+- `docs/PHM_ROADMAP.md`
+
+### Practical Note:
+Με την ολοκλήρωση αυτής της φάσης:
+- το `NB14` θεωρείται notebook-level complete
+- το σχετικό implementation pass merged στο `main`
+- και το current thesis-facing repository state είναι πλέον documentation-consistent μέχρι το `NB14`
+
+### Next Step:
+Το άμεσο επόμενο βήμα δεν είναι νέο packaging stage, ούτε πρώτο graph-based forecasting stage, ούτε νέο controlled graph refinement issue, επειδή αυτά έχουν ήδη υλοποιηθεί.
+
+Το planned next είναι:
+- documentation-consistent consolidation του post-`NB14` interpretation boundary
+- και στη συνέχεια scope-safe planning μόνο για broader graph refinement ή επόμενο graph-related step, εφόσον αυτό δικαιολογείται από νέα benchmark evidence και χωρίς premature superiority claims
+- ενώ Mamba / Graph-Mamba, stronger digital-twin integration και broader PHM-oriented modeling παραμένουν future work
+
+### Commit / PR / Issue Reference:
+- merged PR: `#74`
+- closed issue: `#73`

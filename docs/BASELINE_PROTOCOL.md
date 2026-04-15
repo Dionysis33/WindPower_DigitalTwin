@@ -84,9 +84,9 @@
   - **R²**
 - και με primary ranking criterion το **MAE (ascending)**.
 
-Τα `NB10`–`NB13` μπορούν να καταναλώνουν canonical split, graph ή benchmark artifacts downstream, αλλά **δεν** επαναορίζουν το `data/processed/baseline_metrics.csv` ως graph benchmark table.
+Τα `NB10`–`NB14` μπορούν να καταναλώνουν canonical split, graph ή benchmark artifacts downstream, αλλά **δεν** επαναορίζουν το `data/processed/baseline_metrics.csv` ως graph benchmark table.
 
-Το benchmark artifact παραμένει canonical authority μόνο για cross-model **test-set baseline reporting** και όχι για graph packaging, graph verification, graph ablation ή graph follow-up exports.
+Το benchmark artifact παραμένει canonical authority μόνο για cross-model **test-set baseline reporting** και όχι για graph packaging, graph verification, graph baseline, graph ablation ή controlled graph-refinement exports.
 
 ## Role of diagnostics
 
@@ -103,7 +103,7 @@
 
 ## Current downstream and graph-extension path
 
-Μετά την ολοκλήρωση της baseline πεντάδας, το current implemented downstream / graph-extension layer έχει έξι διακριτά notebooks:
+Μετά την ολοκλήρωση της baseline πεντάδας, το current implemented downstream / graph-extension layer έχει επτά διακριτά notebooks:
 
 - `NB08` -> downstream residual diagnostics and operating regimes
 - `NB09` -> park-level diagnostics and thesis consolidation
@@ -111,10 +111,11 @@
 - `NB11` -> graph-model input packaging / data object preparation
 - `NB12` -> first graph-based forecasting baseline
 - `NB13` -> graph ablation / spatial sensitivity analysis
+- `NB14` -> controlled graph refinement follow-up
 
 Αυτό σημαίνει ότι η canonical ερμηνευτική και graph-extension φάση είναι πλέον:
 
-> benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> topology-aware graph ablation
+> benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> topology-aware graph ablation -> controlled graph refinement follow-up
 
 και όχι:
 
@@ -130,7 +131,8 @@
 Αυτό ισχύει:
 - για την tabular baseline ladder,
 - για το `NB12`,
-- και για το `NB13` follow-up comparison framework.
+- για το `NB13` follow-up comparison framework,
+- και για το `NB14` controlled graph refinement follow-up framework.
 
 ## Graph interpretation boundary
 
@@ -138,16 +140,19 @@
 
 Το `NB13` αποτελεί strict follow-up sensitivity / ablation stage πάνω σε frozen `NB12`-compatible training configuration.
 
+Το `NB14` αποτελεί strict post-`NB13` controlled graph refinement follow-up μέσα σε benchmark-safe και narrow-scope comparison boundary.
+
 Όμως:
 
 - το `NB12` δεν τεκμηριώνει graph superiority έναντι του canonical benchmark backbone,
 - το `NB13` δείχνει topology sensitivity αλλά μικρό spatial gain,
-- και κανένα `NB13` run δεν βελτιώνει το `NB12` reference στο primary benchmark criterion (`test MAE`).
+- και το `NB14` πρέπει να διαβάζεται ως controlled graph refinement evidence-consolidation stage και όχι ως graph superiority validation stage.
 
 Άρα τα current graph stages πρέπει να αντιμετωπίζονται ως:
 
 - implemented graph-based forecasting evidence,
 - cautious topology-aware follow-up evidence,
+- controlled graph refinement follow-up evidence,
 - αλλά όχι ως validated superiority result.
 
 ## PHM-oriented interpretation boundary
@@ -165,7 +170,8 @@
 - το `NB10` παραμένει **graph-readiness verification stage**,
 - το `NB11` παραμένει **graph-model input packaging stage**,
 - το `NB12` παραμένει **first graph forecasting baseline**,
-- και το `NB13` παραμένει **graph ablation / spatial sensitivity follow-up**,
+- το `NB13` παραμένει **graph ablation / spatial sensitivity follow-up**,
+- και το `NB14` παραμένει **controlled graph refinement follow-up stage**,
 
 χωρίς να μετατρέπεται το repository σε:
 - validated PHM system,
@@ -185,15 +191,16 @@
 - `NB11` graph-model input packaging / data object preparation
 - `NB12` first graph-based forecasting baseline
 - `NB13` graph ablation / spatial sensitivity analysis
+- `NB14` controlled graph refinement follow-up
 
 ## Planned next vs future modeling step
 
-Το planned next βήμα δεν είναι πλέον ούτε packaging issue ούτε το πρώτο graph-based forecasting stage, επειδή αυτά έχουν ήδη υλοποιηθεί στα `NB11` και `NB12`.
+Το planned next βήμα δεν είναι πλέον ούτε packaging issue, ούτε το πρώτο graph-based forecasting stage, ούτε controlled graph refinement issue, επειδή αυτά έχουν ήδη υλοποιηθεί στα `NB11`, `NB12` και `NB14`.
 
 Το planned next είναι:
 
-- scope-safe consolidation του post-NB13 benchmark interpretation boundary
-- και στη συνέχεια broader graph refinement μόνο αν αυτό δικαιολογείται από νέα benchmark evidence
+- documentation-consistent consolidation του post-`NB14` benchmark interpretation boundary
+- και στη συνέχεια broader graph refinement ή επόμενο graph-related step μόνο αν αυτό δικαιολογείται από νέα benchmark evidence και χωρίς premature superiority claims
 
 Τα παρακάτω παραμένουν future work:
 
@@ -201,6 +208,8 @@
 - stronger graph-based forecasting claims μόνο αν υποστηριχθούν από νέα evidence,
 - sequence-based models,
 - GNN / Mamba / Graph-Mamba experimentation,
+- stronger digital-twin integration,
+- deployed PHM / digital twin implementation,
 - broader PHM-oriented modeling.
 
 ## Final principle

@@ -20,13 +20,14 @@
 - graph data-interface / split-to-graph contract / artifact verification,
 - graph-model input packaging / data object preparation,
 - πρώτο actual graph-based forecasting baseline,
-- και graph ablation / spatial sensitivity follow-up.
+- graph ablation / spatial sensitivity follow-up,
+- και controlled graph refinement follow-up.
 
 ## Current diagnostics and graph-extension layer
 
 Το current downstream / graph-extension layer δεν αποτελεί deployed PHM stage, αλλά μια **strict forecasting-downstream and graph-aware research extension** πάνω στα canonical exported artifacts.
 
-Σήμερα αυτό περιλαμβάνει έξι implemented notebooks:
+Αυτό περιλαμβάνει επτά implemented notebooks:
 
 - `NB08` για residual diagnostics και operating-regime-aware inspection
 - `NB09` για park-level diagnostics και thesis-consolidation layer
@@ -34,6 +35,7 @@
 - `NB11` για strict graph-model input packaging / data object preparation
 - `NB12` για first actual graph-based forecasting baseline
 - `NB13` για graph ablation / spatial sensitivity analysis ως strict follow-up του `NB12`
+- `NB14` για controlled graph refinement follow-up ως strict post-`NB13` benchmark-safe extension
 
 Αυτό το extension layer περιλαμβάνει:
 
@@ -46,7 +48,8 @@
 - graph-ready contract verification,
 - graph-model input packaging,
 - first graph-based forecasting evidence,
-- και topology-aware graph follow-up analysis.
+- topology-aware graph follow-up analysis,
+- και controlled graph refinement follow-up evidence consolidation.
 
 ## Γιατί αυτό συνδέεται με PHM
 
@@ -123,14 +126,23 @@
 - benchmark-safe reference comparison
 - topology-aware interpretation without superiority claims
 
-### Stage 8 — Broader graph and sequence research (future work)
+### Stage 8 — Controlled graph refinement follow-up (implemented)
+- strict post-`NB13` benchmark-safe follow-up
+- narrow-scope graph-only refinement inside the established local-pruned family
+- controlled pruning-strength refinement
+- validation-only model selection
+- test-only final reporting
+- strict comparison only against `NB12` reference and `NB13` best configuration
+- evidence consolidation without superiority claims
+
+### Stage 9 — Broader graph and sequence research (future work)
 - broader graph redesign
 - richer spatio-temporal graph formulations
 - sequence models
 - GNN / Mamba / Graph-Mamba experimentation
 - stronger graph claims only if supported by new evidence
 
-### Stage 9 — Broader PHM-oriented research extension (future work)
+### Stage 10 — Broader PHM-oriented research extension (future work)
 - anomaly-aware analysis
 - fault-oriented diagnostics
 - degradation monitoring
@@ -139,18 +151,19 @@
 
 ## Current graph interpretation boundary
 
-Το `NB12` και το `NB13` επεκτείνουν πράγματι το repository από graph-readiness σε actual graph-based forecasting experimentation.
+Τα `NB12`, `NB13` και `NB14` επεκτείνουν πράγματι το repository από graph-readiness σε actual graph-based forecasting experimentation και controlled graph follow-up evaluation.
 
 Όμως:
 
 - το `NB12` δεν τεκμηριώνει graph superiority έναντι του canonical benchmark backbone,
 - το `NB13` δείχνει sensitivity στην topology choice αλλά μικρό spatial gain,
-- και κανένα `NB13` run δεν βελτιώνει το `NB12` reference στο primary benchmark criterion (`test MAE`).
+- και το `NB14` δεν βελτιώνει ούτε το `NB12` reference ούτε το `NB13` best run στο primary benchmark criterion (`test MAE`).
 
 Άρα το current graph layer πρέπει να αντιμετωπίζεται ως:
 
 - implemented graph-based forecasting evidence,
 - topology-aware follow-up evidence,
+- controlled graph refinement follow-up evidence,
 - αλλά όχι ως validated superiority result.
 
 ## Τι δεν πρέπει να ισχυρίζεται ακόμη το repository
@@ -173,19 +186,20 @@
 - graph contract verification,
 - graph-model input packaging,
 - graph baseline evidence,
-- και graph ablation evidence
+- graph ablation evidence,
+- και controlled graph refinement evidence
 
 με validated health-state inference ή completed prognostics functionality.
 
 ## Προτεινόμενη ακαδημαϊκή διατύπωση
 
-> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με implemented extension προς downstream residual diagnostics, park-level diagnostic consolidation, graph-contract verification, graph-model input packaging, πρώτο graph-based forecasting baseline και topology-aware graph ablation, και μελλοντική δυνατότητα επέκτασης προς condition-awareness-oriented και PHM-oriented research directions χωρίς overclaiming ως προς current health-state inference ή graph superiority.
+> Το repository αναπτύσσει μια forecasting-first, reproducible pipeline για spatio-temporal wind power forecasting στο DaKS dataset, με implemented extension προς downstream residual diagnostics, park-level diagnostic consolidation, graph-contract verification, graph-model input packaging, πρώτο graph-based forecasting baseline, topology-aware graph ablation και controlled graph refinement follow-up, και μελλοντική δυνατότητα επέκτασης προς condition-awareness-oriented και PHM-oriented research directions χωρίς overclaiming ως προς current health-state inference ή validated graph superiority.
 
 ## Τελικό μήνυμα
 
 Η σωστή εξέλιξη του project είναι:
 
-> forecasting benchmark backbone -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> topology-aware graph ablation -> broader graph / sequence research if justified -> broader PHM-oriented research extension
+> forecasting benchmark backbone -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> topology-aware graph ablation -> controlled graph refinement follow-up -> broader graph / sequence research if justified -> broader PHM-oriented research extension
 
 και όχι:
 
