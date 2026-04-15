@@ -12,9 +12,10 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - park-level diagnostics,
 - graph-ready contract verification και graph-model input packaging,
 - πρώτο actual graph-based forecasting baseline,
-- και graph ablation / spatial sensitivity analysis με benchmark-safe και non-overclaiming framing.
+- graph ablation / spatial sensitivity analysis,
+- και controlled graph refinement follow-up με benchmark-safe, forecasting-first και non-overclaiming framing.
 
-> Current focus: πρώτα ένα καθαρό, reproducible και benchmark-safe forecasting backbone, μετά diagnostics-aware και condition-awareness-oriented interpretation, στη συνέχεια cautious graph-based forecasting evaluation, και αργότερα προσεκτική επέκταση προς broader PHM-oriented research directions.
+> Current focus: πρώτα ένα καθαρό, reproducible και benchmark-safe forecasting backbone, μετά diagnostics-aware και condition-awareness-oriented interpretation, στη συνέχεια cautious graph-based forecasting evaluation μέσω baseline, ablation και controlled refinement stages, και αργότερα προσεκτική επέκταση προς broader PHM-oriented και digital-twin-oriented research directions.
 
 ---
 
@@ -37,7 +38,8 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - graph data-interface / split-to-graph contract / artifact verification,
 - graph-model input packaging / data object preparation,
 - πρώτο actual graph-based forecasting baseline,
-- και graph ablation / spatial sensitivity follow-up.
+- graph ablation / spatial sensitivity follow-up,
+- και controlled graph refinement follow-up πάνω στο post-`NB13` graph evidence.
 
 Η current implemented baseline ladder περιλαμβάνει:
 
@@ -49,7 +51,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 
 ### Current graph-based extension
 
-Πάνω στο benchmarked forecasting stack, το project έχει πλέον έξι implemented downstream / graph-extension stages:
+Πάνω στο benchmarked forecasting stack, το project έχει πλέον επτά implemented downstream / graph-extension stages:
 
 - `NB08`: row-level residual diagnostics και operating-regime-aware inspection
 - `NB09`: park-level diagnostics και thesis-consolidation layer
@@ -57,12 +59,13 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - `NB11`: strict graph-model input packaging / data object preparation layer
 - `NB12`: first actual graph-based forecasting baseline
 - `NB13`: graph ablation / spatial sensitivity analysis as strict follow-up of `NB12`
+- `NB14`: controlled graph refinement follow-up as strict post-`NB13` benchmark-safe extension
 
 Αυτά τα stages:
 
 - χρησιμοποιούν canonical exported artifacts και benchmark-safe evaluation logic,
 - διατηρούν validation-only model selection και test-only final reporting όπου υπάρχει model fitting,
-- επεκτείνουν το repository από graph-readiness σε actual graph-based forecasting experimentation,
+- επεκτείνουν το repository από graph-readiness σε actual graph-based forecasting experimentation και controlled graph follow-up evaluation,
 - αλλά παραμένουν forecasting-first και non-overclaiming,
 - και **δεν** τεκμηριώνουν ακόμη validated graph superiority έναντι του current benchmark backbone.
 
@@ -70,19 +73,22 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 
 Στο παρόν στάδιο, το **forecasting** παραμένει ο implemented core άξονας του repository.
 
-Τα `NB08`–`NB13`:
+Τα `NB08`–`NB14`:
 
 - **δεν** παρουσιάζουν το repository ως completed PHM system,
 - **δεν** συνιστούν validated anomaly detection, fault diagnosis ή RUL module,
 - **δεν** τεκμηριώνουν validated GNN / Graph-Mamba superiority,
-- και **δεν** μετατρέπουν το repository σε completed graph-learning benchmark beyond the current cautious baseline and ablation evidence.
+- **δεν** μετατρέπουν το repository σε completed graph-learning benchmark beyond the current cautious baseline, ablation και controlled refinement evidence,
+- και **δεν** συνιστούν completed digital twin implementation.
 
-Η σωστή repository-level ερμηνεία είναι ότι:
+Το `NB14` πρέπει να διαβάζεται ως:
 
-- το `NB12` παρέχει το πρώτο actual graph-based forecasting baseline,
-- το `NB13` ελέγχει topology sensitivity και spatial contribution με strict follow-up design,
-- το current graph result είναι benchmark-safe αλλά όχι superiority-validating,
-- και graph redesign, sequence models / Mamba / Graph-Mamba και broader PHM-oriented modeling παραμένουν future work.
+- controlled graph refinement follow-up,
+- narrow-scope post-`NB13` graph-only extension,
+- benchmark-safe comparison stage,
+- και non-overclaiming evidence consolidation step,
+
+όχι ως νέο broad graph benchmark suite ή graph superiority validation stage.
 
 ---
 
@@ -309,7 +315,8 @@ WindPower_DigitalTwin/
 │   ├── 10_graph_readiness_and_artifact_verification.ipynb
 │   ├── 11_graph_model_input_packaging.ipynb
 │   ├── 12_first_graph_based_forecasting_baseline.ipynb
-│   └── 13_graph_ablation_and_spatial_sensitivity_analysis.ipynb
+│   ├── 13_graph_ablation_and_spatial_sensitivity_analysis.ipynb
+│   └── 14_controlled_graph_refinement_followup.ipynb
 ├── reports/
 │   └── figures/
 ├── scripts/
@@ -318,8 +325,6 @@ WindPower_DigitalTwin/
 │   ├── features/
 │   ├── __init__.py
 │   └── config.py
-├── venv/
-├── .env
 ├── .gitattributes
 ├── .gitignore
 ├── CITATION.cff
@@ -469,6 +474,23 @@ Strict follow-up notebook του `NB12` για graph ablation / spatial sensitiv
 
 Το `NB13` δείχνει sensitivity στην topology choice και μικρό spatial gain, αλλά δεν στηρίζει strong graph superiority claims και δεν βελτιώνει το `NB12` reference στο primary benchmark criterion (`test MAE`).
 
+### `14_controlled_graph_refinement_followup.ipynb`
+
+Strict post-`NB13` controlled graph refinement notebook που λειτουργεί ως narrow-scope benchmark-safe follow-up μέσα στην established `local_pruned_graph` family.
+
+Καλύπτει:
+
+- canonical artifact loading και read-only reference policy
+- strict comparison boundary μόνο απέναντι σε `NB12` reference και `NB13` best configuration
+- predeclared experiment registry γύρω από controlled pruning-strength refinement
+- deterministic refined edge-bundle construction
+- validation-only model selection
+- test-only final reporting για το validation-selected experiment
+- strict reference comparison απέναντι σε `NB12` και `NB13`
+- και final sanity test για benchmark-contract integrity
+
+Το `NB14` αποτελεί controlled graph refinement evidence-consolidation stage, αλλά δεν συνιστά broad graph benchmark suite, δεν τεκμηριώνει graph superiority claim, και δεν μετατρέπει το repository σε sequence-model, PHM ή completed digital twin implementation stage.
+
 ---
 
 ## Installation
@@ -560,6 +582,7 @@ Recommended canonical execution order:
 10. Run `11_graph_model_input_packaging.ipynb`
 11. Run `12_first_graph_based_forecasting_baseline.ipynb`
 12. Run `13_graph_ablation_and_spatial_sensitivity_analysis.ipynb`
+13. Run `14_controlled_graph_refinement_followup.ipynb`
 
 Important execution notes:
 
@@ -574,6 +597,8 @@ Important execution notes:
 - `NB12` είναι το **first actual graph-based forecasting baseline** πάνω στα packaged graph artifacts του `NB11`.
 - `NB13` είναι **strict graph ablation / spatial sensitivity follow-up** του `NB12`, με frozen benchmark-safe training configuration.
 - Neither `NB12` nor `NB13` should be described as validated graph superiority evidence; they provide cautious graph-based forecasting evidence and topology-sensitivity analysis only.
+- `NB14` είναι **strict controlled graph refinement follow-up** του `NB13`, ως narrow-scope benchmark-safe graph-only extension.
+- Neither `NB12`, `NB13`, nor `NB14` should be described as validated graph superiority evidence; they provide cautious graph-based forecasting evidence, topology-sensitivity analysis, and controlled refinement follow-up only.
 
 ---
 
@@ -581,7 +606,7 @@ Important execution notes:
 
 Το repository ακολουθεί πλέον την εξής καθαρή ερευνητική γραμμή:
 
-**forecasting-first benchmark pipeline -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> topology-aware graph ablation -> cautious pathway toward condition-awareness-oriented interpretation and future PHM-oriented research extension**
+**forecasting-first benchmark pipeline -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> graph ablation / spatial sensitivity follow-up -> controlled graph refinement follow-up -> cautious pathway toward condition-awareness-oriented interpretation and future PHM-oriented research extension**
 
 Αυτό σημαίνει ότι:
 
@@ -592,9 +617,10 @@ Important execution notes:
 - το `NB10` λειτουργεί ως graph-readiness / contract-verification layer
 - το `NB11` λειτουργεί ως graph-model input packaging / data-object-preparation layer
 - το `NB12` λειτουργεί ως πρώτο actual graph-based forecasting baseline
-- το `NB13` λειτουργεί ως graph ablation / spatial sensitivity layer για controlled follow-up interpretation
-- το digital twin framing διατηρείται σε research level
-- και broader graph redesign, sequence-based models και PHM implementation παραμένουν future work
+- το `NB13` λειτουργεί ως graph ablation / spatial sensitivity layer για strict post-`NB12` follow-up evaluation
+- το `NB14` λειτουργεί ως controlled graph refinement layer για strict post-`NB13` benchmark-safe follow-up evaluation
+- το digital twin framing διατηρείται σε research / future-integration επίπεδο
+- και broader graph redesign, sequence-based models, Mamba / Graph-Mamba, καθώς και deployed PHM / digital twin implementation παραμένουν future work
 
 ---
 
@@ -615,7 +641,7 @@ Important execution notes:
 - completed PHM system
 - ή deployed digital twin service
 
-Η σωστή ακαδημαϊκή θέση του repository είναι ότι ένα αυστηρά benchmarked forecasting pipeline, εμπλουτισμένο με downstream residual και park-level diagnostics, graph-contract verification, graph-model input packaging, πρώτο graph-based forecasting baseline και topology-aware graph ablation, μπορεί να στηρίξει condition-awareness-oriented interpretation και να αποτελέσει μεθοδολογικά ορθό υπόβαθρο για μελλοντικές prognostics / PHM-oriented επεκτάσεις χωρίς overclaiming.
+Η σωστή ακαδημαϊκή θέση του repository είναι ότι ένα αυστηρά benchmarked forecasting pipeline, εμπλουτισμένο με downstream residual και park-level diagnostics, graph-contract verification, graph-model input packaging, πρώτο graph-based forecasting baseline, graph ablation / spatial sensitivity analysis και controlled graph refinement follow-up, μπορεί να στηρίξει condition-awareness-oriented interpretation και να αποτελέσει μεθοδολογικά ορθό υπόβαθρο για μελλοντικές prognostics / PHM-oriented επεκτάσεις χωρίς overclaiming.
 
 ---
 
@@ -623,12 +649,12 @@ Important execution notes:
 
 ### Planned next
 
-Το άμεσο επόμενο βήμα μετά το current documentation / framing alignment δεν είναι ούτε νέο packaging stage ούτε το πρώτο graph-based forecasting stage, επειδή αυτά έχουν ήδη υλοποιηθεί στα `NB11` και `NB12`.
+Το άμεσο επόμενο βήμα μετά το current documentation / framing alignment δεν είναι ούτε νέο packaging stage, ούτε το πρώτο graph-based forecasting stage, ούτε νέο controlled graph refinement stage, επειδή αυτά έχουν ήδη υλοποιηθεί στα `NB11`, `NB12` και `NB14`.
 
 Το planned next είναι:
 
-- documentation-consistent consolidation του post-`NB13` public repository story
-- και στη συνέχεια scope-safe planning για broader graph refinement only if justified by the current benchmark evidence
+- documentation-consistent consolidation του post-`NB14` public repository story
+- και στη συνέχεια scope-safe planning μόνο για broader graph refinement ή επόμενο graph-related step, εφόσον αυτό δικαιολογείται από το current benchmark evidence και χωρίς premature superiority claims
 
 ### Future work
 
@@ -639,6 +665,7 @@ Important execution notes:
 - sequence-based forecasting models
 - Mamba / Graph-Mamba experimentation
 - stronger digital-twin integration
+- deployed PHM / digital twin implementation
 - broader prognostics / PHM-oriented modeling
 
 ---
@@ -653,7 +680,9 @@ Important execution notes:
 - Το `NB12` είναι implemented graph-based forecasting baseline, αλλά δεν τεκμηριώνει graph superiority έναντι του canonical benchmark backbone.
 - Το `NB13` είναι topology-aware graph ablation / spatial sensitivity stage, αλλά το observed spatial gain είναι μικρό και δεν αρκεί για strong superiority claims.
 - Το `NB13` δεν βελτιώνει το `NB12` reference στο primary benchmark criterion (`test MAE`).
-- Τα residual diagnostics και τα park-level diagnostics υποστηρίζουν diagnostics-aware / health-aware interpretation, αλλά δεν συνιστούν validated anomaly detector, fault diagnosis module ή RUL framework.
+- Το `NB14` είναι strict controlled graph refinement follow-up μέσα στην established post-`NB13` graph evidence line, αλλά δεν συνιστά broad graph benchmark suite και δεν τεκμηριώνει graph superiority claim.
+- Το `NB14` επίσης δεν βελτιώνει ούτε το `NB12` reference ούτε το `NB13` best run στο `test MAE`, άρα πρέπει να διαβάζεται ως benchmark-safe evidence consolidation και όχι ως stronger graph validation stage.
+- Τα residual diagnostics, τα park-level diagnostics και τα graph follow-up stages υποστηρίζουν diagnostics-aware / health-aware interpretation, αλλά δεν συνιστούν validated anomaly detector, fault diagnosis module ή RUL framework.
 - Το `mamba-ssm` μπορεί να είναι δύσκολο να γίνει build σε Windows, οπότε Google Colab ή Linux είναι λογικό environment για future sequence-model experiments.
 - Μεγάλα raw και processed αρχεία εξαιρούνται σκόπιμα από το git. Το canonical public benchmark artifact είναι το `data/processed/baseline_metrics.csv`.
 

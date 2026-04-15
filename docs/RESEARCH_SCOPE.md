@@ -16,7 +16,8 @@
 - strict graph data-interface / split-to-graph contract / artifact verification,
 - strict graph-model input packaging / data object preparation,
 - πρώτο actual graph-based forecasting baseline,
-- και strict graph ablation / spatial sensitivity follow-up.
+- strict graph ablation / spatial sensitivity follow-up,
+- και strict controlled graph refinement follow-up.
 
 ## Τι είναι ήδη implemented
 
@@ -34,6 +35,7 @@
 - `NB11` graph-model input packaging / data object preparation
 - `NB12` first graph-based forecasting baseline
 - `NB13` graph ablation / spatial sensitivity analysis
+- `NB14` controlled graph refinement follow-up
 
 Οι implemented baselines είναι:
 
@@ -45,7 +47,7 @@
 
 ## Current diagnostics, graph, and cautious forecasting extension
 
-Πάνω στο benchmarked forecasting stack, το project επεκτείνεται πλέον σε έξι strict downstream / graph-extension stages:
+Πάνω στο benchmarked forecasting stack, το project επεκτείνεται πλέον σε επτά strict downstream / graph-extension stages:
 
 - `NB08` για row-level residual diagnostics και operating-regime-aware inspection
 - `NB09` για park-level diagnostics και thesis-oriented consolidation
@@ -53,25 +55,27 @@
 - `NB11` για strict graph-model input packaging / data object preparation
 - `NB12` για first actual graph-based forecasting baseline
 - `NB13` για graph ablation / spatial sensitivity analysis ως strict follow-up του `NB12`
+- `NB14` για controlled graph refinement follow-up ως strict post-`NB13` benchmark-safe extension
 
 Αυτό το extension layer:
 
 - χρησιμοποιεί canonical exported artifacts και benchmark-safe evaluation logic,
 - παραμένει forecasting-first και non-overclaiming,
 - διατηρεί validation-only model selection και test-only final reporting όπου υπάρχει model fitting,
-- επεκτείνει το repository από graph-readiness σε actual graph-based forecasting experimentation,
+- επεκτείνει το repository από graph-readiness σε actual graph-based forecasting experimentation και controlled graph follow-up evaluation,
 - αλλά **δεν** τεκμηριώνει ακόμη validated graph superiority,
 - **δεν** ισχυρίζεται ολοκληρωμένο PHM functionality,
-- και **δεν** αποτελεί completed graph-learning benchmark beyond the current cautious baseline and ablation evidence.
+- και **δεν** αποτελεί completed graph-learning benchmark beyond the current cautious baseline, ablation και controlled refinement evidence.
 
 ## Planned next
 
-Το planned next βήμα δεν είναι πλέον ούτε graph-model input packaging issue ούτε το πρώτο actual graph-based forecasting stage, επειδή αυτά έχουν ήδη υλοποιηθεί στα `NB11` και `NB12`.
+Το planned next βήμα δεν είναι πλέον ούτε graph-model input packaging issue, ούτε το πρώτο actual graph-based forecasting stage, ούτε controlled graph refinement issue, επειδή αυτά έχουν ήδη υλοποιηθεί στα `NB11`, `NB12` και `NB14`.
 
 Το άμεσο planned next είναι:
 
-- scope-safe planning για broader graph refinement μόνο αν δικαιολογείται από το current benchmark evidence
-- και, μόνο εφόσον υπάρξει νέα τεκμηριωμένη ανάγκη, future experiment planning χωρίς premature superiority claims
+- documentation-consistent consolidation του post-`NB14` public repository story
+- scope-safe planning μόνο για broader graph refinement ή επόμενο graph-related step, εφόσον αυτό δικαιολογείται από το current benchmark evidence
+- και, μόνο αν υπάρξει σαφής methodological justification, future experiment planning χωρίς premature superiority claims
 
 ## Future work
 
@@ -82,6 +86,7 @@
 - sequence-based forecasting models,
 - GNN / Mamba / Graph-Mamba experimentation,
 - stronger digital-twin integration,
+- deployed PHM / digital twin implementation,
 - broader PHM-oriented modeling.
 
 ## Scope boundary
@@ -97,7 +102,7 @@
 - ολοκληρωμένο graph-learning benchmark,
 - ή deployed digital twin service.
 
-Η σωστή ακαδημαϊκή θέση του repository είναι ότι τα forecasting residuals, τα park-level diagnostic patterns, το graph contract verification, το graph-model input packaging, το πρώτο graph-based baseline και το topology-aware graph ablation layer μπορούν να λειτουργήσουν ως **diagnostic signal candidates**, ως **benchmark-safe graph evidence**, και ως **methodological infrastructure** για μελλοντική condition-awareness-oriented και PHM-oriented έρευνα, όχι ως τεκμηριωμένη health-state inference ή validated graph superiority από μόνα τους.
+Η σωστή ακαδημαϊκή θέση του repository είναι ότι τα forecasting residuals, τα park-level diagnostic patterns, το graph contract verification, το graph-model input packaging, το πρώτο graph-based baseline, το topology-aware graph ablation layer και το controlled graph refinement follow-up μπορούν να λειτουργήσουν ως **diagnostic signal candidates**, ως **benchmark-safe graph evidence**, και ως **methodological infrastructure** για μελλοντική condition-awareness-oriented και PHM-oriented έρευνα, όχι ως τεκμηριωμένη health-state inference, validated graph superiority ή completed digital twin implementation από μόνα τους.
 
 ## Κεντρική ερευνητική θέση
 
