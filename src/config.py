@@ -227,3 +227,17 @@ Z_SCORE_THRESHOLD = 3.0
 # Reproducibility
 # -------------------------------------------------------------------
 RANDOM_SEED = 42
+
+
+# -------------------------------------------------------------------
+# Django demo | Local read-only artifact bundle
+# -------------------------------------------------------------------
+DEMO_DIR = DATA_PROCESSED / "demo"
+
+DEMO_MANIFEST_PATH = DEMO_DIR / "demo_manifest.json"
+DEMO_BENCHMARK_SUMMARY = DEMO_DIR / "demo_benchmark_summary.csv"
+DEMO_PARK_SUMMARY = DEMO_DIR / "demo_park_summary.csv"
+DEMO_PREDICTIONS_LONG = DEMO_DIR / "demo_predictions_long.csv"
+DEMO_REGIME_SUMMARY = DEMO_DIR / "demo_regime_summary.csv"
+DEMO_CASE_STUDY_METADATA = DEMO_DIR / "demo_case_study_metadata.csv"
+DEMO_UI_NOTES_PATH = DEMO_DIR / "demo_ui_notes.txt"
