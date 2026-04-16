@@ -1669,3 +1669,63 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 ### Commit / PR / Issue Reference:
 - merged PR: `#74`
 - closed issue: `#73`
+
+
+---
+
+
+## [16/04/2026] - Lightweight Local Django Demo Scaffold & Read-Only Artifact Interface Pass
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Έναρξη και αρχικό scaffold του lightweight local Django demo**
+   - Δημιουργήθηκε minimal local Django project κάτω από το `django_demo/`.
+   - Προστέθηκε το πρώτο app `demo_ui`.
+   - Ρυθμίστηκαν basic local settings, routing και initial home page scaffold.
+
+2. **Read-only local artifact bundle preparation**
+   - Προστέθηκε deterministic export script:
+     - `scripts/export_demo_bundle.py`
+   - Δημιουργήθηκε local demo artifact directory κάτω από:
+     - `data/processed/demo/`
+   - Ορίστηκαν demo-related config paths ώστε το local demo να διαβάζει curated exported artifacts και όχι raw dataset files.
+
+3. **Initial local verification**
+   - Επιβεβαιώθηκε local Django scaffold integrity με:
+     - `python manage.py check`
+   - Επιβεβαιώθηκε initial local run με:
+     - `python manage.py runserver`
+   - Το current pass παρέμεινε local-only και development-only.
+
+### Scientific Interpretation:
+Η σημερινή φάση δεν αποτελεί νέο forecasting benchmark stage, νέο modeling stage ή νέο diagnostics stage.
+
+Αντίθετα, αποτελεί ένα μικρό και scope-safe implementation pass για:
+- lightweight local visualization / interface scaffolding,
+- read-only consumption curated local artifacts,
+- και thesis-safe interface experimentation πάνω στο ήδη implemented forecasting / diagnostics backbone.
+
+Το pass παραμένει αυστηρά:
+- local-only,
+- read-only,
+- artifact-based,
+- benchmark-safe,
+- και non-overclaiming.
+
+Άρα δεν πρέπει να ερμηνεύεται ως:
+- completed digital twin implementation,
+- deployed service,
+- PHM module,
+- νέο benchmark pass,
+- ή νέο forecasting result.
+
+### Practical Note:
+Το current Django layer είναι προς το παρόν μόνο local demo scaffold.
+Δεν αλλάζει το canonical forecasting workflow και δεν μεταβάλλει το benchmark artifact contract του repository.
+
+### Next Step:
+Επόμενο βήμα είναι:
+- initial migrations,
+- σύνδεση benchmark / park / regime summaries με τα exported demo artifacts,
+- και wording cleanup ώστε το local UI να παραμένει thesis-safe και documentation-consistent.
+
+**Commit Reference:** `feat: scaffold local django demo and export demo bundle`
