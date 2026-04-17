@@ -1,319 +1,80 @@
-<!DOCTYPE html>
-<html lang="el">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ page_title }}</title>
-    <style>
-        :root {
-            --bg: #0f172a;
-            --panel: #111827;
-            --panel-2: #1f2937;
-            --text: #e5e7eb;
-            --muted: #94a3b8;
-            --border: #334155;
-            --accent: #38bdf8;
-            --accent-soft: rgba(56, 189, 248, 0.12);
-            --ok: #22c55e;
-            --warn: #f59e0b;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        }
+{% extends "demo_ui/base.html" %}
 
-        * {
-            box-sizing: border-box;
-        }
+{% block title %}WindPower Forecasting Interface{% endblock %}
 
-        body {
-            margin: 0;
-            font-family: Inter, "Segoe UI", Arial, sans-serif;
-            background:
-                radial-gradient(circle at top right, rgba(56, 189, 248, 0.10), transparent 25%),
-                linear-gradient(180deg, #0b1220 0%, var(--bg) 100%);
-            color: var(--text);
-        }
+{% block content %}
+<section class="hero-panel" id="overview">
+    <div class="hero-eyebrow">Forecasting-first local interface</div>
+    <h1>WindPower Forecasting Interface</h1>
+    <p class="hero-subtitle">
+        This local interface provides read-only access to already exported forecasting results,
+        diagnostic summaries, and selected pipeline artifacts for structured inspection.
+    </p>
+</section>
 
-        .container {
-            max-width: 1120px;
-            margin: 0 auto;
-            padding: 2rem 1rem 3rem;
-        }
+<section class="dashboard-grid">
+    <article class="card" id="artifacts">
+        <h2>Interface status</h2>
 
-        .hero {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(15, 23, 42, 0.9));
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            margin-bottom: 1.5rem;
-        }
+        {% if manifest_exists %}
+            <div class="status-pill status-ok">Manifest available</div>
+        {% else %}
+            <div class="status-pill status-warn">Manifest not available</div>
+        {% endif %}
 
-        .eyebrow {
-            display: inline-block;
-            font-size: 0.85rem;
-            color: var(--accent);
-            background: var(--accent-soft);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            padding: 0.35rem 0.7rem;
-            border-radius: 999px;
-            margin-bottom: 1rem;
-        }
+        <div class="section-label">Artifact directory</div>
+        <div class="path-box">{{ artifact_dir }}</div>
+    </article>
 
-        h1 {
-            margin: 0 0 0.75rem;
-            font-size: 2rem;
-            line-height: 1.2;
-        }
+    <article class="card card-wide">
+        <h2>Artifact overview</h2>
 
-        .subtitle {
-            margin: 0;
-            color: var(--muted);
-            max-width: 800px;
-            font-size: 1rem;
-        }
+        <div class="metrics-grid">
+            {% for item in artifact_counts %}
+                <div class="metric-card">
+                    <div class="metric-label">{{ item.label }}</div>
+                    <div class="metric-value">{{ item.value }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </article>
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(12, 1fr);
-            gap: 1rem;
-        }
+    <article class="card" id="parks">
+        <div class="card-header-row">
+            <h2>Selected parks</h2>
+            <span class="count-note">{{ selected_parks|length }} parks</span>
+        </div>
 
-        .card {
-            grid-column: span 12;
-            background: rgba(17, 24, 39, 0.92);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            padding: 1.25rem;
-            box-shadow: var(--shadow);
-        }
+        <div class="badge-grid">
+            {% for park in selected_parks %}
+                <span class="park-badge">{{ park }}</span>
+            {% endfor %}
+        </div>
+    </article>
 
-        .card h2 {
-            margin: 0 0 1rem;
-            font-size: 1.1rem;
-        }
+    <article class="card" id="scope">
+        <h2>Strict scope limitations</h2>
 
-        .card h3 {
-            margin: 0 0 0.8rem;
-            font-size: 0.95rem;
-            color: var(--muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-        }
+        <div class="badge-grid">
+            {% for item in display_non_claims %}
+                <span class="claim-badge">{{ item }}</span>
+            {% endfor %}
+        </div>
+    </article>
 
-        .span-4 { grid-column: span 4; }
-        .span-6 { grid-column: span 6; }
-        .span-8 { grid-column: span 8; }
+    <article class="card card-full">
+        <h2>Current operational boundary</h2>
+        <ul class="boundary-list">
+            <li>Local-only execution</li>
+            <li>Read-only loading of curated local artifacts</li>
+            <li>No retraining</li>
+            <li>No new benchmark stage</li>
+            <li>No completed digital twin / PHM claim</li>
+        </ul>
+    </article>
+</section>
 
-        .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 0.9rem;
-            border-radius: 12px;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .status.ok {
-            background: rgba(34, 197, 94, 0.12);
-            color: #86efac;
-            border: 1px solid rgba(34, 197, 94, 0.25);
-        }
-
-        .status.warn {
-            background: rgba(245, 158, 11, 0.12);
-            color: #fcd34d;
-            border: 1px solid rgba(245, 158, 11, 0.25);
-        }
-
-        .meta-list,
-        .simple-list {
-            margin: 0;
-            padding-left: 1.1rem;
-        }
-
-        .simple-list li {
-            margin-bottom: 0.45rem;
-        }
-
-        .muted {
-            color: var(--muted);
-        }
-
-        .codebox {
-            display: block;
-            background: #0b1220;
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 0.85rem 1rem;
-            font-family: Consolas, Monaco, monospace;
-            font-size: 0.92rem;
-            color: #cbd5e1;
-            overflow-wrap: anywhere;
-        }
-
-        .metrics {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-            gap: 0.8rem;
-        }
-
-        .metric {
-            background: rgba(31, 41, 55, 0.78);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 0.9rem 1rem;
-        }
-
-        .metric .label {
-            font-size: 0.82rem;
-            color: var(--muted);
-            margin-bottom: 0.3rem;
-        }
-
-        .metric .value {
-            font-size: 1.35rem;
-            font-weight: 700;
-        }
-
-        .parks {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-
-        .park-badge,
-        .claim-badge {
-            display: inline-flex;
-            align-items: center;
-            border-radius: 999px;
-            padding: 0.5rem 0.8rem;
-            font-size: 0.9rem;
-            border: 1px solid var(--border);
-            background: rgba(31, 41, 55, 0.9);
-        }
-
-        .park-badge {
-            color: #dbeafe;
-            background: rgba(59, 130, 246, 0.12);
-            border-color: rgba(59, 130, 246, 0.25);
-        }
-
-        .claim-badge {
-            color: #fde68a;
-            background: rgba(245, 158, 11, 0.10);
-            border-color: rgba(245, 158, 11, 0.22);
-        }
-
-        .footer-note {
-            margin-top: 1.5rem;
-            color: var(--muted);
-            font-size: 0.92rem;
-            text-align: center;
-        }
-
-        @media (max-width: 900px) {
-            .span-4,
-            .span-6,
-            .span-8 {
-                grid-column: span 12;
-            }
-
-            h1 {
-                font-size: 1.7rem;
-            }
-
-            .hero {
-                padding: 1.4rem;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <section class="hero">
-            <div class="eyebrow">Lightweight Local Demo</div>
-            <h1>{{ page_title }}</h1>
-            <p class="subtitle">
-                Το παρόν interface λειτουργεί ως μικρό, local, read-only layer για structured browsing
-                ήδη παραγμένων forecasting, diagnostics και selected artifact summaries.
-            </p>
-        </section>
-
-        <section class="grid">
-            <div class="card span-4">
-                <h2>Demo status</h2>
-
-                {% if manifest_exists %}
-                    <div class="status ok">● Demo manifest detected</div>
-                {% else %}
-                    <div class="status warn">● Demo manifest not found</div>
-                {% endif %}
-
-                <h3>Artifact directory</h3>
-                <code class="codebox">{{ demo_dir }}</code>
-            </div>
-
-            <div class="card span-8">
-                <h2>Artifact counts</h2>
-
-                {% if artifact_counts %}
-                    <div class="metrics">
-                        {% for key, value in artifact_counts.items %}
-                            <div class="metric">
-                                <div class="label">{{ key }}</div>
-                                <div class="value">{{ value }}</div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p class="muted">Δεν βρέθηκαν artifact counts στο manifest.</p>
-                {% endif %}
-            </div>
-
-            <div class="card span-6">
-                <h2>Selected demo parks</h2>
-
-                {% if selected_parks %}
-                    <div class="parks">
-                        {% for park in selected_parks %}
-                            <span class="park-badge">{{ park }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p class="muted">Δεν υπάρχουν selected parks στο manifest.</p>
-                {% endif %}
-            </div>
-
-            <div class="card span-6">
-                <h2>Strict non-claims</h2>
-
-                {% if non_claims %}
-                    <div class="parks">
-                        {% for item in non_claims %}
-                            <span class="claim-badge">{{ item }}</span>
-                        {% endfor %}
-                    </div>
-                {% else %}
-                    <p class="muted">Δεν βρέθηκαν non-claims στο manifest.</p>
-                {% endif %}
-            </div>
-
-            <div class="card span-12">
-                <h2>Current boundary</h2>
-                <ul class="simple-list">
-                    <li>Local-only execution</li>
-                    <li>Read-only loading of curated demo artifacts</li>
-                    <li>No retraining</li>
-                    <li>No new benchmark stage</li>
-                    <li>No completed digital twin / PHM claim</li>
-                </ul>
-            </div>
-        </section>
-
-        <p class="footer-note">
-            Forecasting remains the implemented core. This page is only a lightweight local demo shell.
-        </p>
-    </div>
-</body>
-</html>
+<p class="footer-note">
+    Forecasting remains the implemented core. This interface is a lightweight local layer for artifact browsing only.
+</p>
+{% endblock %}
