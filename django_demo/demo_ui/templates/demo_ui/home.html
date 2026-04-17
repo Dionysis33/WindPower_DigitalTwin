@@ -1,0 +1,80 @@
+{% extends "demo_ui/base.html" %}
+
+{% block title %}WindPower Forecasting Interface{% endblock %}
+
+{% block content %}
+<section class="hero-panel" id="overview">
+    <div class="hero-eyebrow">Forecasting-first local interface</div>
+    <h1>WindPower Forecasting Interface</h1>
+    <p class="hero-subtitle">
+        This local interface provides read-only access to already exported forecasting results,
+        diagnostic summaries, and selected pipeline artifacts for structured inspection.
+    </p>
+</section>
+
+<section class="dashboard-grid">
+    <article class="card" id="artifacts">
+        <h2>Interface status</h2>
+
+        {% if manifest_exists %}
+            <div class="status-pill status-ok">Manifest available</div>
+        {% else %}
+            <div class="status-pill status-warn">Manifest not available</div>
+        {% endif %}
+
+        <div class="section-label">Artifact directory</div>
+        <div class="path-box">{{ artifact_dir }}</div>
+    </article>
+
+    <article class="card card-wide">
+        <h2>Artifact overview</h2>
+
+        <div class="metrics-grid">
+            {% for item in artifact_counts %}
+                <div class="metric-card">
+                    <div class="metric-label">{{ item.label }}</div>
+                    <div class="metric-value">{{ item.value }}</div>
+                </div>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="card" id="parks">
+        <div class="card-header-row">
+            <h2>Selected parks</h2>
+            <span class="count-note">{{ selected_parks|length }} parks</span>
+        </div>
+
+        <div class="badge-grid">
+            {% for park in selected_parks %}
+                <span class="park-badge">{{ park }}</span>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="card" id="scope">
+        <h2>Strict scope limitations</h2>
+
+        <div class="badge-grid">
+            {% for item in display_non_claims %}
+                <span class="claim-badge">{{ item }}</span>
+            {% endfor %}
+        </div>
+    </article>
+
+    <article class="card card-full">
+        <h2>Current operational boundary</h2>
+        <ul class="boundary-list">
+            <li>Local-only execution</li>
+            <li>Read-only loading of curated local artifacts</li>
+            <li>No retraining</li>
+            <li>No new benchmark stage</li>
+            <li>No completed digital twin / PHM claim</li>
+        </ul>
+    </article>
+</section>
+
+<p class="footer-note">
+    Forecasting remains the implemented core. This interface is a lightweight local layer for artifact browsing only.
+</p>
+{% endblock %}

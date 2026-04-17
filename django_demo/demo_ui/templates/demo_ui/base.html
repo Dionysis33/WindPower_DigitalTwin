@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WindPower Forecasting Interface{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'demo_ui/css/app.css' %}">
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-shell header-inner">
+            <div class="brand-wrap">
+                <span class="brand-badge">Local read-only interface</span>
+                <a href="{% url 'home' %}" class="brand-title">
+                    WindPower Forecasting Interface
+                </a>
+            </div>
+
+            <nav class="top-nav">
+                <a href="#overview">Overview</a>
+                <a href="#parks">Parks</a>
+                <a href="#artifacts">Artifacts</a>
+                <a href="#scope">Scope</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-wrap">
+        <div class="site-shell">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+</body>
+</html>
