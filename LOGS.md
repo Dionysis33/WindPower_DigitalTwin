@@ -1729,3 +1729,66 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - και wording cleanup ώστε το local UI να παραμένει thesis-safe και documentation-consistent.
 
 **Commit Reference:** `feat: scaffold local django demo and export demo bundle`
+
+
+---
+
+
+## [17/04/2026] - Django Read-Only Interface Refinement, Merge to Main, and Writing-Track Kickoff
+
+### Summary
+Σήμερα ολοκληρώθηκε το πρώτο clean UI refinement pass του local Django read-only interface και το αντίστοιχο PR έγινε merge στο `main`.
+
+Το σημερινό pass περιλάμβανε:
+- επιτυχή εφαρμογή initial Django migrations,
+- local browser verification του interface μέσω `runserver`,
+- refactor του interface structure με εισαγωγή `base.html`,
+- μεταφορά του styling σε dedicated `app.css`,
+- καθαρισμό wording ώστε το interface να παραμένει forecasting-first και thesis-safe,
+- βελτίωση της visual παρουσίασης του local artifact browser,
+- merge του PR `#79` στο `main`,
+- cleanup του feature branch μετά το merge,
+- άνοιγμα νέου implementation issue για το επόμενο multi-page Django pass,
+- άνοιγμα νέου writing/documentation issue για την οργανωμένη έναρξη της academic thesis writing φάσης,
+- δημιουργία νέου milestone για writing / academic structure alignment.
+
+### Implemented / Verified Today
+Στο implementation επίπεδο επιβεβαιώθηκε ότι:
+- το Django scaffold τρέχει επιτυχώς local,
+- το current interface φορτώνει curated exported artifacts σε read-only mode,
+- η navigation/template structure μπορεί πλέον να εξελιχθεί πιο καθαρά σε multi-page μορφή,
+- το styling layer αποσυνδέθηκε από inline-heavy προσέγγιση και πέρασε σε πιο maintainable CSS structure.
+
+### Scientific Interpretation
+Το σημερινό pass δεν εισάγει:
+- νέο forecasting benchmark stage,
+- retraining,
+- νέο scientific result,
+- completed digital twin claim,
+- PHM platform functionality.
+
+Η σημασία του σημερινού βήματος είναι κυρίως infrastructural και presentation-oriented:
+το forecasting παραμένει το implemented operational core της πτυχιακής, ενώ το Django layer λειτουργεί πλέον πιο καθαρά ως thesis-safe local artifact interface για structured inspection ήδη παραγμένων outputs.
+
+### Documentation / Writing Track
+Παράλληλα με το Django refinement:
+- άνοιξε νέο issue για το επόμενο expansion pass του Django interface προς multi-page read-only artifact browser,
+- άνοιξε ξεχωριστό issue για την έναρξη του thesis writing pass,
+- δημιουργήθηκε νέο milestone για writing and academic structure alignment, ώστε να διαχωρίζεται καθαρά το implementation track από το academic writing track.
+
+### Practical Note
+Κατά τη διάρκεια του merge / post-merge workflow εμφανίστηκε παροδική αστάθεια στο GitHub UI, αλλά τελικά:
+- το merge ολοκληρώθηκε σωστά,
+- το `main` ενημερώθηκε,
+- το local repository συγχρονίστηκε επιτυχώς με `origin/main`,
+- έγινε branch cleanup και fetch prune χωρίς προβλήματα.
+
+### Next Step
+Επόμενα άμεσα βήματα:
+- υλοποίηση του επόμενου Django pass με καθαρό multi-page read-only structure,
+- οργάνωση ξεχωριστών pages / sections για overview, parks, artifact summaries και scope,
+- έναρξη του thesis writing pass με chapter / section planning και academic structure alignment.
+
+**Commit References:**
+- `e0f902c` — `feat(ui): refine forecasting interface structure and styling`
+- `350ed6d` — `Merge pull request #79 from Dionysis33/feat/local-django-demo`
