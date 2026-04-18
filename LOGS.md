@@ -1792,3 +1792,22 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 **Commit References:**
 - `e0f902c` — `feat(ui): refine forecasting interface structure and styling`
 - `350ed6d` — `Merge pull request #79 from Dionysis33/feat/local-django-demo`
+
+
+---
+
+
+## [18/04/2026] - Dependency Maintenance Pass and NB14 Release Publication
+
+Σήμερα ολοκληρώθηκε repository maintenance pass με επιτυχή merge σειράς safe Dependabot PRs (`platformdirs`, `async-lru`, `ipython`, `kiwisolver`, `greenlet`, `fonttools`, `torchaudio`, `attrs`, `jupyter-lsp`).
+
+Επιπλέον, επιλύθηκε το conflict μεταξύ `notebook` και `jupyterlab` μέσω ξεχωριστού compatibility fix PR:
+- `jupyterlab: 4.5.3 -> 4.5.6`
+- `notebook: 7.5.3 -> 7.5.5`
+
+Το fix επαληθεύτηκε local με `pip install -r requirements.txt`, `pip check`, `python -m jupyter lab --version`, και `python -m notebook --version`, και στη συνέχεια έγινε merge στο `main`.
+
+Τέλος, δημοσιεύθηκε το νέο thesis-facing release:
+`nb14-controlled-graph-refinement-and-post-nb14-realignment`
+
+Το σημερινό pass αφορά maintenance / compatibility / release publication και δεν εισάγει νέο forecasting benchmark stage ή νέο scientific result.
