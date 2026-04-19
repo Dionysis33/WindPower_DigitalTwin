@@ -1,0 +1,287 @@
+:root {
+    --wind-bg-top: #07264a;
+    --wind-bg-bottom: #03101f;
+    --wind-surface: rgba(7, 27, 58, 0.82);
+    --wind-surface-2: rgba(10, 37, 78, 0.88);
+    --wind-surface-3: rgba(14, 52, 104, 0.92);
+
+    --wind-border: rgba(55, 180, 255, 0.22);
+    --wind-border-strong: rgba(76, 214, 255, 0.42);
+
+    --wind-text: #f4fbff;
+    --wind-text-soft: #c9dbf7;
+    --wind-text-muted: #9fb7d9;
+
+    --wind-cyan: #19dcff;
+    --wind-cyan-2: #59e9ff;
+    --wind-blue: #3d8bff;
+    --wind-teal: #1fd3b0;
+    --wind-lime: #8cffb5;
+    --wind-gold: #ffd76a;
+
+    --wind-glow-cyan: 0 0 0 1px rgba(25, 220, 255, 0.18),
+                      0 0 24px rgba(25, 220, 255, 0.18),
+                      0 12px 40px rgba(4, 18, 42, 0.55);
+
+    --wind-glow-soft: 0 10px 30px rgba(2, 12, 28, 0.42);
+    --wind-radius-xl: 28px;
+    --wind-radius-lg: 20px;
+    --wind-radius-md: 14px;
+}
+
+body.theme-wind {
+    color: var(--wind-text);
+    background:
+        radial-gradient(circle at 18% 16%, rgba(30, 200, 255, 0.16), transparent 0 20%),
+        radial-gradient(circle at 70% 74%, rgba(31, 211, 176, 0.10), transparent 0 18%),
+        linear-gradient(180deg, var(--wind-bg-top) 0%, #04182f 45%, var(--wind-bg-bottom) 100%);
+}
+
+body.theme-wind .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    backdrop-filter: blur(18px);
+    background: rgba(3, 18, 37, 0.72);
+    border-bottom: 1px solid rgba(80, 200, 255, 0.10);
+    box-shadow: 0 10px 28px rgba(1, 10, 24, 0.24);
+}
+
+body.theme-wind .brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.82rem 1.3rem;
+    border-radius: 999px;
+    color: #bff5ff;
+    font-weight: 700;
+    background: linear-gradient(135deg, rgba(17, 95, 140, 0.82), rgba(10, 46, 92, 0.88));
+    border: 1px solid rgba(67, 216, 255, 0.34);
+    box-shadow: 0 0 0 1px rgba(22, 212, 255, 0.08), 0 8px 24px rgba(4, 28, 62, 0.42);
+}
+
+body.theme-wind .brand-title {
+    color: var(--wind-text);
+    text-decoration: none;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+body.theme-wind .top-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+body.theme-wind .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.85rem 1.25rem;
+    border-radius: 999px;
+    color: var(--wind-text-soft);
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.22s ease;
+    border: 1px solid transparent;
+}
+
+body.theme-wind .nav-link:hover {
+    color: #ffffff;
+    background: rgba(21, 87, 148, 0.28);
+    border-color: rgba(69, 213, 255, 0.22);
+    box-shadow: 0 8px 22px rgba(3, 20, 44, 0.34);
+}
+
+body.theme-wind .nav-link.is-active {
+    color: #ffffff;
+    background: linear-gradient(135deg, rgba(14, 104, 170, 0.60), rgba(8, 53, 113, 0.68));
+    border-color: rgba(83, 227, 255, 0.42);
+    box-shadow: 0 0 0 1px rgba(80, 223, 255, 0.14), 0 12px 34px rgba(5, 28, 61, 0.48);
+}
+
+body.theme-wind .hero-panel,
+body.theme-wind .hero-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--wind-radius-xl);
+    border: 1px solid rgba(61, 176, 255, 0.18);
+    background:
+        radial-gradient(circle at 16% 18%, rgba(26, 217, 255, 0.12), transparent 0 26%),
+        linear-gradient(135deg, rgba(8, 42, 92, 0.96), rgba(5, 28, 72, 0.94));
+    box-shadow: var(--wind-glow-soft);
+}
+
+body.theme-wind .hero-panel::before,
+body.theme-wind .hero-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 78% 50%, rgba(29, 220, 255, 0.12), transparent 0 8%, transparent 8.5%),
+        repeating-radial-gradient(circle at 78% 50%, rgba(98, 168, 255, 0.05) 0 2px, transparent 2px 22px);
+    pointer-events: none;
+    opacity: 0.95;
+}
+
+body.theme-wind .hero-panel::after,
+body.theme-wind .hero-card::after {
+    content: "";
+    position: absolute;
+    right: 3%;
+    top: 8%;
+    width: 360px;
+    height: 360px;
+    background:
+        conic-gradient(
+            from 18deg,
+            rgba(25, 220, 255, 0.00) 0deg 18deg,
+            rgba(25, 220, 255, 0.18) 18deg 38deg,
+            rgba(61, 139, 255, 0.00) 38deg 122deg,
+            rgba(61, 139, 255, 0.18) 122deg 144deg,
+            rgba(31, 211, 176, 0.00) 144deg 258deg,
+            rgba(31, 211, 176, 0.16) 258deg 278deg,
+            rgba(25, 220, 255, 0.00) 278deg 360deg
+        );
+    border-radius: 50%;
+    filter: blur(0.4px);
+    opacity: 0.70;
+    pointer-events: none;
+}
+
+body.theme-wind .hero-eyebrow,
+body.theme-wind .section-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.82rem 1.35rem;
+    border-radius: 999px;
+    color: #baf5ff;
+    font-weight: 800;
+    background: rgba(18, 102, 151, 0.28);
+    border: 1px solid rgba(72, 220, 255, 0.34);
+    box-shadow: 0 0 30px rgba(25, 220, 255, 0.08);
+}
+
+body.theme-wind .hero-panel h1,
+body.theme-wind .hero-title {
+    color: var(--wind-text);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    text-shadow: 0 2px 14px rgba(8, 25, 54, 0.28);
+}
+
+body.theme-wind .hero-subtitle,
+body.theme-wind .hero-copy {
+    max-width: 64ch;
+    color: var(--wind-text-soft);
+    font-size: 1.1rem;
+    line-height: 1.75;
+}
+
+body.theme-wind .card,
+body.theme-wind .info-card {
+    border-radius: var(--wind-radius-lg);
+    border: 1px solid rgba(54, 179, 255, 0.16);
+    background:
+        linear-gradient(180deg, rgba(4, 28, 63, 0.88), rgba(4, 21, 47, 0.92));
+    box-shadow: 0 14px 34px rgba(2, 10, 25, 0.34);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+body.theme-wind .card:hover,
+body.theme-wind .info-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(77, 220, 255, 0.28);
+    box-shadow: 0 20px 42px rgba(1, 12, 28, 0.40);
+}
+
+body.theme-wind .card h2,
+body.theme-wind .info-card h2 {
+    color: var(--wind-text);
+}
+
+body.theme-wind .section-label,
+body.theme-wind .metric-label,
+body.theme-wind .muted-text,
+body.theme-wind .count-note {
+    color: var(--wind-text-muted);
+}
+
+body.theme-wind .metric-card,
+body.theme-wind .stat-card {
+    border-radius: var(--wind-radius-md);
+    border: 1px solid rgba(70, 184, 255, 0.16);
+    background:
+        linear-gradient(180deg, rgba(18, 52, 105, 0.62), rgba(10, 34, 74, 0.80));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+body.theme-wind .metric-value,
+body.theme-wind .stat-value {
+    color: #ffffff;
+    font-weight: 900;
+    text-shadow: 0 0 18px rgba(25, 220, 255, 0.10);
+}
+
+body.theme-wind .status-pill.status-ok {
+    color: #062814;
+    font-weight: 800;
+    background: linear-gradient(135deg, #7ef7ae, #b8ffd1);
+    box-shadow: 0 0 18px rgba(126, 247, 174, 0.25);
+}
+
+body.theme-wind .status-pill.status-warn {
+    color: #402a00;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffd166, #ffe29a);
+    box-shadow: 0 0 18px rgba(255, 209, 102, 0.25);
+}
+
+body.theme-wind .park-badge,
+body.theme-wind .pill {
+    color: #f4fbff;
+    font-weight: 800;
+    background: linear-gradient(135deg, rgba(9, 92, 142, 0.44), rgba(6, 51, 100, 0.62));
+    border: 1px solid rgba(52, 213, 255, 0.34);
+    box-shadow: 0 0 18px rgba(25, 220, 255, 0.08);
+}
+
+body.theme-wind .claim-badge {
+    color: #fff4cf;
+    font-weight: 700;
+    background: linear-gradient(135deg, rgba(115, 88, 11, 0.28), rgba(78, 56, 8, 0.36));
+    border: 1px solid rgba(255, 209, 102, 0.26);
+}
+
+body.theme-wind .path-box {
+    color: #dff5ff;
+    background: rgba(3, 14, 31, 0.82);
+    border: 1px solid rgba(77, 205, 255, 0.16);
+}
+
+body.theme-wind .footer-note {
+    color: var(--wind-text-muted);
+    text-align: center;
+}
+body.theme-wind .metric-card:hover,
+body.theme-wind .park-badge:hover,
+body.theme-wind .claim-badge:hover,
+body.theme-wind .nav-link:hover {
+    transform: translateY(-2px);
+}
+
+body.theme-wind .metric-card,
+body.theme-wind .park-badge,
+body.theme-wind .claim-badge,
+body.theme-wind .nav-link {
+    transition: all 0.22s ease;
+}
+
+body.theme-wind .hero-panel {
+    box-shadow:
+        0 0 0 1px rgba(63, 199, 255, 0.08),
+        0 24px 50px rgba(2, 13, 31, 0.42),
+        0 0 60px rgba(25, 220, 255, 0.06);
+}
