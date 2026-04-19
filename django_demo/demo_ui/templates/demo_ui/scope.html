@@ -1,0 +1,106 @@
+{% extends "demo_ui/base.html" %}
+
+{% block title %}Scope | WindPower Forecasting Interface{% endblock %}
+{% block nav_scope %}is-active{% endblock %}
+{% block nav_scope_current %}aria-current="page"{% endblock %}
+
+{% block content %}
+<!-- Scope page: thesis-safe operational boundary and non-claims -->
+
+<section class="hero-card">
+    <span class="section-badge">Thesis-safe boundary</span>
+    <h1 class="hero-title">Scope</h1>
+    <p class="hero-copy">
+        This page defines the current operational boundary of the local interface
+        and the explicit non-claims that keep the presentation forecasting-first,
+        read-only, and methodologically conservative.
+    </p>
+</section>
+
+<section class="content-grid">
+    <!-- -----------------------------------------------------
+         Page summary
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Page summary</h2>
+            <span>Conservative framing</span>
+        </div>
+
+        <div class="pill-grid">
+            <span class="pill">{{ display_non_claims|length }} explicit non-claims</span>
+            <span class="pill">Forecasting-first scope</span>
+            <span class="pill">No overclaiming</span>
+        </div>
+
+        <p class="muted-text">
+            This page clarifies what the local interface currently supports and,
+            equally important, what it does not claim to implement at this stage
+            of the thesis.
+        </p>
+    </article>
+
+    <!-- -----------------------------------------------------
+         Explicit non-claims
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Strict non-claims</h2>
+            <span>{{ display_non_claims|length }} items</span>
+        </div>
+
+        {% if display_non_claims %}
+            <div class="pill-grid">
+                {% for item in display_non_claims %}
+                    <span class="claim-badge">{{ item }}</span>
+                {% endfor %}
+            </div>
+
+            <p class="muted-text">
+                These statements prevent the interface from being misinterpreted
+                as a completed digital twin, PHM platform, or production-ready
+                operational system.
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No explicit non-claims are currently available.
+            </p>
+        {% endif %}
+    </article>
+
+    <!-- -----------------------------------------------------
+         Operational boundary
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Current operational boundary</h2>
+            <span>Implemented limits</span>
+        </div>
+
+        <ul class="boundary-list">
+            <li>Local-only execution</li>
+            <li>Read-only loading of curated local artifacts</li>
+            <li>No retraining</li>
+            <li>No new benchmark stage</li>
+            <li>No completed digital twin / PHM claim</li>
+        </ul>
+    </article>
+
+    <!-- -----------------------------------------------------
+         Thesis interpretation note
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Interpretation note</h2>
+            <span>Presentation-safe</span>
+        </div>
+
+        <p class="muted-text">
+            The interface should be interpreted as a lightweight local presentation
+            layer for exported forecasting artifacts. It supports structured thesis
+            communication and inspection, but it does not represent a full
+            prognostics, diagnostics, or autonomous decision-making environment.
+        </p>
+    </article>
+</section>
+{% endblock %}

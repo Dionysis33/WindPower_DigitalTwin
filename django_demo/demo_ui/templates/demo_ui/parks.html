@@ -1,0 +1,71 @@
+{% extends "demo_ui/base.html" %}
+
+{% block title %}Parks | WindPower Forecasting Interface{% endblock %}
+{% block nav_parks %}is-active{% endblock %}
+{% block nav_parks_current %}aria-current="page"{% endblock %}
+
+{% block content %}
+<!-- Parks page: read-only selected park identifiers -->
+
+<section class="hero-card">
+    <span class="section-badge">Selected parks</span>
+    <h1 class="hero-title">Parks</h1>
+    <p class="hero-copy">
+        This page presents the wind parks currently included in the local demo bundle.
+        The view is manifest-driven, read-only, and intended for structured thesis inspection.
+    </p>
+</section>
+
+<section class="content-grid">
+    <!-- -----------------------------------------------------
+         Summary card
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Page summary</h2>
+            <span>Read-only</span>
+        </div>
+
+        <div class="pill-grid">
+            <span class="pill">{{ selected_parks|length }} parks</span>
+            <span class="pill">Source: demo manifest</span>
+            <span class="pill">Bundle: local export</span>
+        </div>
+
+        <p class="muted-text">
+            This page does not trigger forecasting, retraining, or artifact generation.
+            It only displays the park identifiers already included in the exported bundle.
+        </p>
+    </article>
+
+    <!-- -----------------------------------------------------
+         Main parks list card
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Selected parks</h2>
+            <span>{{ selected_parks|length }} parks</span>
+        </div>
+
+        {% if selected_parks %}
+            <p class="muted-text">
+                The following park identifiers are currently available for the lightweight local interface.
+            </p>
+
+            <div class="pill-grid">
+                {% for park in selected_parks %}
+                    <span class="pill">{{ park }}</span>
+                {% endfor %}
+            </div>
+
+            <p class="muted-text">
+                These identifiers are shown for artifact browsing and structured presentation only.
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No parks are currently available in the manifest.
+            </p>
+        {% endif %}
+    </article>
+</section>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "demo_ui/base.html" %}
+
+{% block title %}Artifacts | WindPower Forecasting Interface{% endblock %}
+{% block nav_artifacts %}is-active{% endblock %}
+{% block nav_artifacts_current %}aria-current="page"{% endblock %}
+
+{% block content %}
+<!-- Artifacts page: read-only exported artifact summaries -->
+
+<section class="hero-card">
+    <span class="section-badge">Artifact summaries</span>
+    <h1 class="hero-title">Artifacts</h1>
+    <p class="hero-copy">
+        This page summarizes the exported local artifact bundle that powers the
+        lightweight interface. The content is read-only and intended for
+        structured thesis presentation rather than pipeline execution.
+    </p>
+</section>
+
+<section class="content-grid">
+    <!-- -----------------------------------------------------
+         Page summary
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Page summary</h2>
+            <span>Read-only</span>
+        </div>
+
+        <div class="pill-grid">
+            <span class="pill">{{ artifact_counts|length }} metrics</span>
+            {% if manifest_exists %}
+                <span class="pill">Manifest available</span>
+            {% else %}
+                <span class="pill">Manifest unavailable</span>
+            {% endif %}
+            <span class="pill">Bundle: local export</span>
+        </div>
+
+        <p class="muted-text">
+            This page does not generate forecasts, diagnostics, or new benchmark outputs.
+            It only presents already exported artifact summaries from the local demo bundle.
+        </p>
+    </article>
+
+    <!-- -----------------------------------------------------
+         Artifact metrics
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Artifact overview</h2>
+            <span>{{ artifact_counts|length }} metrics</span>
+        </div>
+
+        {% if artifact_counts %}
+            <p class="muted-text">
+                The following summary metrics describe the currently exported local artifact set.
+            </p>
+
+            <div class="stats-grid">
+                {% for item in artifact_counts %}
+                    <div class="stat-card">
+                        <span class="stat-label">{{ item.label }}</span>
+                        <strong class="stat-value">{{ item.value }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <p class="muted-text">
+                These values are intended for presentation support and quick inspection only.
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No artifact summary metrics are currently available.
+            </p>
+        {% endif %}
+    </article>
+
+    <!-- -----------------------------------------------------
+         Boundary note
+    ------------------------------------------------------ -->
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Interpretation note</h2>
+            <span>Thesis-safe</span>
+        </div>
+
+        <p class="muted-text">
+            Artifact counts should be interpreted as exported interface summaries and not as a
+            new modeling stage, a production dashboard, or an autonomous digital twin system.
+        </p>
+    </article>
+</section>
+{% endblock %}

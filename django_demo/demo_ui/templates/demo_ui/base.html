@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}WindPower Forecasting Interface{% endblock %}</title>
+
     <link rel="stylesheet" href="{% static 'demo_ui/css/app.css' %}">
+    <link rel="stylesheet" href="{% static 'demo_ui/css/wind_theme.css' %}">
 </head>
-<body>
+<body class="theme-wind">
     <header class="site-header">
         <div class="site-shell header-inner">
             <div class="brand-wrap">
@@ -17,11 +19,26 @@
                 </a>
             </div>
 
-            <nav class="top-nav">
-                <a href="#overview">Overview</a>
-                <a href="#parks">Parks</a>
-                <a href="#artifacts">Artifacts</a>
-                <a href="#scope">Scope</a>
+            <nav class="top-nav" aria-label="Primary navigation">
+                <a class="nav-link {% block nav_overview %}{% endblock %}" href="{% url 'home' %}"
+                   {% block nav_overview_current %}{% endblock %}>
+                    Overview
+                </a>
+
+                <a class="nav-link {% block nav_parks %}{% endblock %}" href="{% url 'parks' %}"
+                   {% block nav_parks_current %}{% endblock %}>
+                    Parks
+                </a>
+
+                <a class="nav-link {% block nav_artifacts %}{% endblock %}" href="{% url 'artifacts' %}"
+                   {% block nav_artifacts_current %}{% endblock %}>
+                    Artifacts
+                </a>
+
+                <a class="nav-link {% block nav_scope %}{% endblock %}" href="{% url 'scope' %}"
+                   {% block nav_scope_current %}{% endblock %}>
+                    Scope
+                </a>
             </nav>
         </div>
     </header>

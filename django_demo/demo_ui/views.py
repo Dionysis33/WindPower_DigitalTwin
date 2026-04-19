@@ -7,42 +7,31 @@ from django.conf import settings
 from django.shortcuts import render
 
 
-def home_view(request):
+def _build_demo_context() -> dict:
     """
-    Render the local forecasting artifact interface.
+    Build shared template context for the local read-only demo interface.
 
-    This view only reads already exported local artifacts.
+    This helper only reads already exported local artifacts.
     It does not trigger model training, forecasting execution,
     diagnostics generation, or benchmark-writing workflows.
     """
 
-    # Resolve the local artifact directory configured in settings.py
     artifact_dir = Path(settings.DEMO_ARTIFACT_DIR)
-
-    # The manifest is the main entry point for the lightweight interface
     manifest_path = artifact_dir / "demo_manifest.json"
 
-    # Default empty state if the manifest is missing or malformed
     manifest = {}
     manifest_exists = manifest_path.exists()
 
-    # Read the manifest only if it exists
     if manifest_exists:
         try:
             manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         except Exception:
             manifest = {}
 
-    # ------------------------------------------------------------------
-    # Raw values loaded from the manifest
-    # ------------------------------------------------------------------
     raw_artifact_counts = manifest.get("artifact_counts", {}) or {}
     selected_parks = manifest.get("selected_parks", []) or []
     non_claims = manifest.get("non_claims", []) or []
 
-    # ------------------------------------------------------------------
-    # User-facing labels for summary metrics
-    # ------------------------------------------------------------------
     metric_label_map = {
         "benchmark_rows": "Benchmark rows",
         "prediction_rows": "Prediction rows",
@@ -59,9 +48,6 @@ def home_view(request):
         for key, value in raw_artifact_counts.items()
     ]
 
-    # ------------------------------------------------------------------
-    # Thesis-safe wording for explicit non-claims
-    # ------------------------------------------------------------------
     non_claim_label_map = {
         "not_completed_digital_twin": "Not a completed digital twin",
         "not_phm_platform": "Not a PHM platform",
@@ -77,10 +63,7 @@ def home_view(request):
         for item in non_claims
     ]
 
-    # ------------------------------------------------------------------
-    # Template context
-    # ------------------------------------------------------------------
-    context = {
+    return {
         "page_title": "WindPower Forecasting Interface",
         "artifact_dir": artifact_dir,
         "manifest_exists": manifest_exists,
@@ -89,4 +72,22 @@ def home_view(request):
         "display_non_claims": display_non_claims,
     }
 
+
+def home_view(request):
+    context = _build_demo_context()
     return render(request, "demo_ui/home.html", context)
+
+
+def parks_view(request):
+    context = _build_demo_context()
+    return render(request, "demo_ui/parks.html", context)
+
+
+def artifacts_view(request):
+    context = _build_demo_context()
+    return render(request, "demo_ui/artifacts.html", context)
+
+
+def scope_view(request):
+    context = _build_demo_context()
+    return render(request, "demo_ui/scope.html", context)

@@ -1,6 +1,8 @@
 {% extends "demo_ui/base.html" %}
 
-{% block title %}WindPower Forecasting Interface{% endblock %}
+{% block title %}Overview | WindPower Forecasting Interface{% endblock %}
+{% block nav_overview %}is-active{% endblock %}
+{% block nav_overview_current %}aria-current="page"{% endblock %}
 
 {% block content %}
 <section class="hero-panel" id="overview">
@@ -9,11 +11,12 @@
     <p class="hero-subtitle">
         This local interface provides read-only access to already exported forecasting results,
         diagnostic summaries, and selected pipeline artifacts for structured inspection.
+        The presentation remains thesis-safe, local-only, and explicitly non-overclaiming.
     </p>
 </section>
 
 <section class="dashboard-grid">
-    <article class="card" id="artifacts">
+    <article class="card" id="status">
         <h2>Interface status</h2>
 
         {% if manifest_exists %}
@@ -26,40 +29,66 @@
         <div class="path-box">{{ artifact_dir }}</div>
     </article>
 
-    <article class="card card-wide">
-        <h2>Artifact overview</h2>
-
-        <div class="metrics-grid">
-            {% for item in artifact_counts %}
-                <div class="metric-card">
-                    <div class="metric-label">{{ item.label }}</div>
-                    <div class="metric-value">{{ item.value }}</div>
-                </div>
-            {% endfor %}
+    <article class="card card-wide" id="artifacts">
+        <div class="card-header-row">
+            <h2>Artifact overview</h2>
+            <span class="count-note">{{ artifact_counts|length }} metrics</span>
         </div>
+
+        {% if artifact_counts %}
+            <div class="metrics-grid">
+                {% for item in artifact_counts %}
+                    <div class="metric-card">
+                        <div class="metric-label">{{ item.label }}</div>
+                        <div class="metric-value">{{ item.value }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="muted-text">No artifact summary metrics are currently available.</p>
+        {% endif %}
     </article>
 
-    <article class="card" id="parks">
+    <article class="card card-half" id="parks">
         <div class="card-header-row">
-            <h2>Selected parks</h2>
+            <h2>Selected parks preview</h2>
             <span class="count-note">{{ selected_parks|length }} parks</span>
         </div>
 
-        <div class="badge-grid">
-            {% for park in selected_parks %}
-                <span class="park-badge">{{ park }}</span>
-            {% endfor %}
-        </div>
+        {% if selected_parks %}
+            <div class="badge-grid">
+                {% for park in selected_parks|slice:":8" %}
+                    <span class="park-badge">{{ park }}</span>
+                {% endfor %}
+            </div>
+
+            {% if selected_parks|length > 8 %}
+                <p class="footer-note">Full park list is available on the Parks page.</p>
+            {% endif %}
+        {% else %}
+            <p class="muted-text">No parks are currently available in the manifest.</p>
+        {% endif %}
     </article>
 
-    <article class="card" id="scope">
-        <h2>Strict scope limitations</h2>
-
-        <div class="badge-grid">
-            {% for item in display_non_claims %}
-                <span class="claim-badge">{{ item }}</span>
-            {% endfor %}
+    <article class="card card-half" id="scope">
+        <div class="card-header-row">
+            <h2>Scope snapshot</h2>
+            <span class="count-note">{{ display_non_claims|length }} items</span>
         </div>
+
+        {% if display_non_claims %}
+            <div class="badge-grid">
+                {% for item in display_non_claims|slice:":4" %}
+                    <span class="claim-badge">{{ item }}</span>
+                {% endfor %}
+            </div>
+
+            {% if display_non_claims|length > 4 %}
+                <p class="footer-note">Complete scope boundary is available on the Scope page.</p>
+            {% endif %}
+        {% else %}
+            <p class="muted-text">No explicit non-claims are currently available.</p>
+        {% endif %}
     </article>
 
     <article class="card card-full">
