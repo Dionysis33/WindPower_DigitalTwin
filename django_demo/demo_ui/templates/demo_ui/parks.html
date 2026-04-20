@@ -5,22 +5,18 @@
 {% block nav_parks_current %}aria-current="page"{% endblock %}
 
 {% block content %}
-<!-- Parks page: read-only selected park identifiers -->
-
-<section class="hero-card">
-    <span class="section-badge">Selected parks</span>
-    <h1 class="hero-title">Parks</h1>
-    <p class="hero-copy">
+<section class="hero-panel" id="parks">
+    <div class="hero-eyebrow">Selected demo parks</div>
+    <h1>Parks</h1>
+    <p class="hero-subtitle">
         This page presents the wind parks currently included in the local demo bundle.
-        The view is manifest-driven, read-only, and intended for structured thesis inspection.
+        The content is exported, read-only, and intended for structured thesis inspection
+        rather than live pipeline execution or new analytical generation.
     </p>
 </section>
 
 <section class="content-grid">
-    <!-- -----------------------------------------------------
-         Summary card
-    ------------------------------------------------------ -->
-    <article class="info-card">
+    <article class="info-card info-card-wide">
         <div class="card-head">
             <h2>Page summary</h2>
             <span>Read-only</span>
@@ -28,44 +24,145 @@
 
         <div class="pill-grid">
             <span class="pill">{{ selected_parks|length }} parks</span>
-            <span class="pill">Source: demo manifest</span>
-            <span class="pill">Bundle: local export</span>
+            <span class="pill">Manifest-driven</span>
+            <span class="pill">Local export bundle</span>
         </div>
 
         <p class="muted-text">
             This page does not trigger forecasting, retraining, or artifact generation.
-            It only displays the park identifiers already included in the exported bundle.
+            It only presents park information already included in the exported demo bundle.
         </p>
     </article>
 
-    <!-- -----------------------------------------------------
-         Main parks list card
-    ------------------------------------------------------ -->
-    <article class="info-card">
+    <article class="info-card info-card-compact">
         <div class="card-head">
-            <h2>Selected parks</h2>
+            <h2>Boundary reminder</h2>
+            <span>Conservative framing</span>
+        </div>
+
+        <ul class="boundary-list">
+            <li>Read-only local interface</li>
+            <li>No notebook execution through Django</li>
+            <li>No retraining or new benchmark stage</li>
+            <li>No PHM or completed digital twin claim</li>
+        </ul>
+    </article>
+
+    <article class="info-card info-card-full">
+        <div class="card-head">
+            <h2>Export coverage snapshot</h2>
+            <span>{{ park_rows|length }} rows</span>
+        </div>
+
+        {% if park_rows %}
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Exported parks</span>
+                    <strong class="stat-value">{{ selected_parks|length }}</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Park summary rows</span>
+                    <strong class="stat-value">{{ park_rows|length }}</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Rows per park</span>
+                    <strong class="stat-value">{{ park_rows.0.demo_rows }}</strong>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label">Models per park</span>
+                    <strong class="stat-value">{{ park_rows.0.available_models }}</strong>
+                </div>
+            </div>
+
+            <p class="muted-text" style="margin-top: 1rem;">
+                Current exported time window in the lightweight demo bundle:
+                {{ park_rows.0.window_start }} → {{ park_rows.0.window_end }}
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No exported park summary rows are currently available.
+            </p>
+        {% endif %}
+    </article>
+
+    <article class="info-card info-card-full">
+        <div class="card-head">
+            <h2>Selected park identifiers</h2>
             <span>{{ selected_parks|length }} parks</span>
         </div>
 
         {% if selected_parks %}
-            <p class="muted-text">
-                The following park identifiers are currently available for the lightweight local interface.
-            </p>
-
             <div class="pill-grid">
                 {% for park in selected_parks %}
                     <span class="pill">{{ park }}</span>
                 {% endfor %}
             </div>
 
-            <p class="muted-text">
-                These identifiers are shown for artifact browsing and structured presentation only.
+            <p class="muted-text" style="margin-top: 1rem;">
+                These identifiers support artifact browsing and presentation-oriented inspection only.
             </p>
         {% else %}
             <p class="muted-text">
-                No parks are currently available in the manifest.
+                No parks are currently available in the exported manifest.
             </p>
         {% endif %}
+    </article>
+
+    <article class="info-card info-card-full">
+        <div class="card-head">
+            <h2>Per-park export summary</h2>
+            <span>Compact preview</span>
+        </div>
+
+        {% if park_rows %}
+            <div class="stats-grid">
+                {% for row in park_rows %}
+                    <div class="stat-card">
+                        <div class="stat-label">Park {{ row.park_id }}</div>
+                        <div class="muted-text">{{ row.demo_rows }} exported rows</div>
+                        <div class="muted-text">{{ row.available_models }} available models</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <p class="muted-text" style="margin-top: 1rem;">
+                The values above are derived from the exported demo park summary and should be read
+                as presentation metadata rather than a new diagnostics or benchmarking stage.
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No compact per-park preview is currently available.
+            </p>
+        {% endif %}
+    </article>
+
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Interpretation note</h2>
+            <span>Thesis-safe</span>
+        </div>
+
+        <p class="muted-text">
+            The parks shown here are the subset currently retained in the lightweight local demo bundle.
+            Their presence supports structured inspection of exported artifacts and does not imply
+            operational deployment, PHM functionality, or health-state inference.
+        </p>
+    </article>
+
+    <article class="info-card">
+        <div class="card-head">
+            <h2>Provenance note</h2>
+            <span>Artifact-based</span>
+        </div>
+
+        <p class="muted-text">
+            The exported park information is derived from the local demo bundle generated from canonical
+            forecasting and diagnostics artifacts. The page is therefore a presentation layer over already
+            exported notebook-derived summaries, not a live computation layer.
+        </p>
     </article>
 </section>
 {% endblock %}

@@ -126,8 +126,8 @@ a {
 /* ---------------------------------------------------------
    Shared hero blocks
    Notes:
-   - hero-panel is the large overview hero
-   - hero-card is the compact hero used on subpages
+   - hero-panel is the large overview-style hero
+   - hero-card is the compact hero used on lighter subpages
 ---------------------------------------------------------- */
 
 .hero-panel,
@@ -297,10 +297,12 @@ a {
 }
 
 .metric-value {
-    font-size: 1.9rem;
+    font-size: 1.55rem;
     font-weight: 800;
     letter-spacing: -0.03em;
-    line-height: 1;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
 .badge-grid {
@@ -360,6 +362,10 @@ a {
     border-radius: var(--radius-lg);
     padding: 1.7rem;
     min-width: 0;
+}
+
+.info-card-half {
+    grid-column: span 6;
 }
 
 .info-card-wide {
@@ -440,6 +446,7 @@ a {
 
 .muted-text {
     margin: 0;
+    max-width: 64ch;
     font-size: 0.98rem;
     line-height: 1.7;
 }
@@ -462,6 +469,36 @@ a {
 }
 
 /* ---------------------------------------------------------
+   Table-like summary blocks
+   Used for exported park / artifact preview sections
+---------------------------------------------------------- */
+
+.table-like-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.table-like-item {
+    border-radius: var(--radius-md);
+    padding: 1rem 1.1rem;
+    min-width: 0;
+}
+
+.table-like-title {
+    margin-bottom: 0.35rem;
+    font-size: 1.02rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.table-like-meta {
+    font-size: 0.96rem;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+}
+
+/* ---------------------------------------------------------
    Responsive behavior
 ---------------------------------------------------------- */
 
@@ -471,10 +508,16 @@ a {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .table-like-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     .card,
     .card-half,
     .card-wide,
+    .card-full,
     .info-card,
+    .info-card-half,
     .info-card-wide,
     .info-card-compact,
     .info-card-full {
@@ -535,6 +578,10 @@ a {
 
     .boundary-list {
         columns: 1;
+    }
+
+    .table-like-list {
+        grid-template-columns: 1fr;
     }
 }
 
