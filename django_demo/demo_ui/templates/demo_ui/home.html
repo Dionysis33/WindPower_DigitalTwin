@@ -16,20 +16,53 @@
 </section>
 
 <section class="dashboard-grid">
-    <article class="card" id="status">
-        <h2>Interface status</h2>
+    <article class="card card-half" id="status">
+        <div class="card-header-row">
+            <h2>Interface status</h2>
+            <span class="count-note">Read-only</span>
+        </div>
 
         {% if manifest_exists %}
-            <div class="status-pill status-ok">Manifest available</div>
+            <div class="status-pill">Manifest available</div>
         {% else %}
-            <div class="status-pill status-warn">Manifest not available</div>
+            <div class="status-pill">Manifest unavailable</div>
         {% endif %}
 
-        <div class="section-label">Artifact directory</div>
-        <div class="path-box">{{ artifact_dir }}</div>
+        <p>
+            The interface consumes already exported local demo artifacts.
+            It does not trigger training, notebook execution, or new benchmark generation.
+        </p>
     </article>
 
-    <article class="card card-wide" id="artifacts">
+    <article class="card card-half" id="benchmark-leader">
+        <div class="card-header-row">
+            <h2>Benchmark leader</h2>
+            <span class="count-note">
+                {% if benchmark_rows %}{{ benchmark_rows|length }} preview rows{% else %}Unavailable{% endif %}
+            </span>
+        </div>
+
+        {% if benchmark_leader %}
+            <div class="badge-grid">
+                <span class="park-badge">{{ benchmark_leader.model }}</span>
+                <span class="claim-badge">Rank {{ benchmark_leader.rank }}</span>
+            </div>
+
+            <ul class="boundary-list" style="margin-top: 1.25rem;">
+                <li>MAE: {{ benchmark_leader.mae }}</li>
+                <li>RMSE: {{ benchmark_leader.rmse }}</li>
+                <li>R²: {{ benchmark_leader.r2 }}</li>
+            </ul>
+
+            <p class="footer-note">
+                Exported benchmark snapshot only. Full artifact context is available on the Artifacts page.
+            </p>
+        {% else %}
+            <p>No exported benchmark preview is currently available.</p>
+        {% endif %}
+    </article>
+
+    <article class="card card-full" id="artifact-overview">
         <div class="card-header-row">
             <h2>Artifact overview</h2>
             <span class="count-note">{{ artifact_counts|length }} metrics</span>
@@ -45,32 +78,59 @@
                 {% endfor %}
             </div>
         {% else %}
-            <p class="muted-text">No artifact summary metrics are currently available.</p>
+            <p>No artifact summary metrics are currently available.</p>
         {% endif %}
     </article>
 
-    <article class="card card-half" id="parks">
+    <article class="card card-half" id="parks-preview">
         <div class="card-header-row">
             <h2>Selected parks preview</h2>
-            <span class="count-note">{{ selected_parks|length }} parks</span>
+            <span class="count-note">{{ park_rows|length }} exported rows</span>
         </div>
 
-        {% if selected_parks %}
+        {% if park_rows %}
             <div class="badge-grid">
-                {% for park in selected_parks|slice:":8" %}
-                    <span class="park-badge">{{ park }}</span>
+                {% for row in park_rows|slice:":5" %}
+                    <span class="park-badge">{{ row.park_id }}</span>
                 {% endfor %}
             </div>
 
-            {% if selected_parks|length > 8 %}
-                <p class="footer-note">Full park list is available on the Parks page.</p>
-            {% endif %}
+            <ul class="boundary-list" style="margin-top: 1.25rem;">
+                {% for row in park_rows|slice:":4" %}
+                    <li>Park {{ row.park_id }} · {{ row.demo_rows }} rows · {{ row.available_models }} models</li>
+                {% endfor %}
+            </ul>
+
+            <p class="footer-note">
+                Park-level preview is presentation-oriented and based on exported summary rows only.
+            </p>
         {% else %}
-            <p class="muted-text">No parks are currently available in the manifest.</p>
+            <p>No exported park summary is currently available.</p>
         {% endif %}
     </article>
 
-    <article class="card card-half" id="scope">
+    <article class="card card-half" id="regime-preview">
+        <div class="card-header-row">
+            <h2>Diagnostics preview</h2>
+            <span class="count-note">{{ regime_rows|length }} exported rows</span>
+        </div>
+
+        {% if regime_rows %}
+            <ul class="boundary-list">
+                {% for row in regime_rows|slice:":4" %}
+                    <li>{{ row.label }} — {{ row.mae }}</li>
+                {% endfor %}
+            </ul>
+
+            <p class="footer-note">
+                These are exported regime-oriented diagnostic summaries, not a new modeling stage.
+            </p>
+        {% else %}
+            <p>No exported regime summary is currently available.</p>
+        {% endif %}
+    </article>
+
+    <article class="card card-half" id="scope-snapshot">
         <div class="card-header-row">
             <h2>Scope snapshot</h2>
             <span class="count-note">{{ display_non_claims|length }} items</span>
@@ -84,26 +144,29 @@
             </div>
 
             {% if display_non_claims|length > 4 %}
-                <p class="footer-note">Complete scope boundary is available on the Scope page.</p>
+                <p class="footer-note">
+                    Complete scope boundary is available on the Scope page.
+                </p>
             {% endif %}
         {% else %}
-            <p class="muted-text">No explicit non-claims are currently available.</p>
+            <p>No explicit non-claims are currently available.</p>
         {% endif %}
     </article>
 
-    <article class="card card-full">
-        <h2>Current operational boundary</h2>
-        <ul class="boundary-list">
-            <li>Local-only execution</li>
-            <li>Read-only loading of curated local artifacts</li>
-            <li>No retraining</li>
-            <li>No new benchmark stage</li>
-            <li>No completed digital twin / PHM claim</li>
-        </ul>
+    <article class="card card-half" id="ui-note">
+        <div class="card-header-row">
+            <h2>Interpretation note</h2>
+            <span class="count-note">Thesis-safe</span>
+        </div>
+
+        {% if ui_notes %}
+            <p>{{ ui_notes }}</p>
+        {% else %}
+            <p>
+                Forecasting remains the implemented core. This interface is a lightweight local layer
+                for artifact browsing only.
+            </p>
+        {% endif %}
     </article>
 </section>
-
-<p class="footer-note">
-    Forecasting remains the implemented core. This interface is a lightweight local layer for artifact browsing only.
-</p>
 {% endblock %}

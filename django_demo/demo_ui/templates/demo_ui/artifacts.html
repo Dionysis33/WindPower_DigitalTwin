@@ -5,23 +5,17 @@
 {% block nav_artifacts_current %}aria-current="page"{% endblock %}
 
 {% block content %}
-<!-- Artifacts page: read-only exported artifact summaries -->
-
-<section class="hero-card">
-    <span class="section-badge">Artifact summaries</span>
-    <h1 class="hero-title">Artifacts</h1>
-    <p class="hero-copy">
-        This page summarizes the exported local artifact bundle that powers the
-        lightweight interface. The content is read-only and intended for
-        structured thesis presentation rather than pipeline execution.
+<section class="hero-panel" id="artifacts">
+    <div class="hero-eyebrow">Exported artifact bundle</div>
+    <h1>Artifacts</h1>
+    <p class="hero-subtitle">
+        This page summarizes the exported local artifact bundle that powers the lightweight interface.
+        The content is read-only and intended for structured thesis presentation rather than pipeline execution.
     </p>
 </section>
 
 <section class="content-grid">
-    <!-- -----------------------------------------------------
-         Page summary
-    ------------------------------------------------------ -->
-    <article class="info-card">
+    <article class="info-card info-card-wide">
         <div class="card-head">
             <h2>Page summary</h2>
             <span>Read-only</span>
@@ -29,11 +23,7 @@
 
         <div class="pill-grid">
             <span class="pill">{{ artifact_counts|length }} metrics</span>
-            {% if manifest_exists %}
-                <span class="pill">Manifest available</span>
-            {% else %}
-                <span class="pill">Manifest unavailable</span>
-            {% endif %}
+            <span class="pill">Manifest available</span>
             <span class="pill">Bundle: local export</span>
         </div>
 
@@ -43,20 +33,25 @@
         </p>
     </article>
 
-    <!-- -----------------------------------------------------
-         Artifact metrics
-    ------------------------------------------------------ -->
-    <article class="info-card">
+    <article class="info-card info-card-compact">
+        <div class="card-head">
+            <h2>Interpretation note</h2>
+            <span>Thesis-safe</span>
+        </div>
+
+        <p class="muted-text">
+            Artifact counts and previews should be interpreted as exported interface summaries
+            and not as a new modeling stage, a production dashboard, or an autonomous digital twin system.
+        </p>
+    </article>
+
+    <article class="info-card info-card-full">
         <div class="card-head">
             <h2>Artifact overview</h2>
             <span>{{ artifact_counts|length }} metrics</span>
         </div>
 
         {% if artifact_counts %}
-            <p class="muted-text">
-                The following summary metrics describe the currently exported local artifact set.
-            </p>
-
             <div class="stats-grid">
                 {% for item in artifact_counts %}
                     <div class="stat-card">
@@ -66,8 +61,8 @@
                 {% endfor %}
             </div>
 
-            <p class="muted-text">
-                These values are intended for presentation support and quick inspection only.
+            <p class="muted-text" style="margin-top: 1rem;">
+                These values describe the currently exported local artifact set and support quick presentation-oriented inspection.
             </p>
         {% else %}
             <p class="muted-text">
@@ -76,19 +71,166 @@
         {% endif %}
     </article>
 
-    <!-- -----------------------------------------------------
-         Boundary note
-    ------------------------------------------------------ -->
+    <article class="info-card info-card-full">
+        <div class="card-head">
+            <h2>Exported files catalog</h2>
+            <span>{{ exported_files|length }} files</span>
+        </div>
+
+        {% if exported_files %}
+            <div class="table-like-list">
+                {% for item in exported_files %}
+                    <div class="table-like-item">
+                        <div class="table-like-title">{{ item.label }}</div>
+                        <div class="table-like-meta">{{ item.filename }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <p class="muted-text" style="margin-top: 1rem;">
+                Filenames are shown as bundle-level references only. The page intentionally avoids exposing raw local filesystem paths.
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No exported file references are currently available.
+            </p>
+        {% endif %}
+    </article>
+
+    <article class="info-card info-card-wide">
+        <div class="card-head">
+            <h2>Benchmark preview</h2>
+            <span>{{ benchmark_rows|length }} exported rows</span>
+        </div>
+
+        {% if benchmark_rows %}
+            <div class="stats-grid">
+                {% for row in benchmark_rows %}
+                    <div class="stat-card">
+                        <span class="stat-label">{{ row.model }}</span>
+                        <strong class="stat-value">#{{ row.rank }}</strong>
+                        <div class="muted-text">MAE {{ row.mae }}</div>
+                        <div class="muted-text">RMSE {{ row.rmse }}</div>
+                        <div class="muted-text">R² {{ row.r2 }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <p class="muted-text" style="margin-top: 1rem;">
+                This preview is derived from the exported benchmark summary and should be interpreted as a compact presentation snapshot.
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No exported benchmark preview is currently available.
+            </p>
+        {% endif %}
+    </article>
+
+    <article class="info-card info-card-compact">
+        <div class="card-head">
+            <h2>Benchmark leader</h2>
+            <span>Preview</span>
+        </div>
+
+        {% if benchmark_leader %}
+            <div class="pill-grid">
+                <span class="pill">{{ benchmark_leader.model }}</span>
+                <span class="pill">Rank {{ benchmark_leader.rank }}</span>
+            </div>
+
+            <ul class="boundary-list" style="margin-top: 1rem;">
+                <li>MAE {{ benchmark_leader.mae }}</li>
+                <li>RMSE {{ benchmark_leader.rmse }}</li>
+                <li>R² {{ benchmark_leader.r2 }}</li>
+            </ul>
+        {% else %}
+            <p class="muted-text">
+                No benchmark leader is currently available.
+            </p>
+        {% endif %}
+    </article>
+
+    <article class="info-card info-card-full">
+        <div class="card-head">
+            <h2>Diagnostics preview</h2>
+            <span>{{ regime_rows|length }} exported rows</span>
+        </div>
+
+        {% if regime_rows %}
+            <div class="table-like-list">
+                {% for row in regime_rows %}
+                    <div class="table-like-item">
+                        <div class="table-like-title">{{ row.label }}</div>
+                        <div class="table-like-meta">{{ row.model }}</div>
+                        <div class="table-like-meta">MAE {{ row.mae }}</div>
+                        <div class="table-like-meta">RMSE {{ row.rmse }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <p class="muted-text" style="margin-top: 1rem;">
+                These exported rows summarize regime-oriented diagnostics and should not be read as a new live analysis stage.
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No exported diagnostics preview is currently available.
+            </p>
+        {% endif %}
+    </article>
+
+    <article class="info-card info-card-full">
+        <div class="card-head">
+            <h2>Case-study metadata preview</h2>
+            <span>{{ case_rows|length }} rows</span>
+        </div>
+
+        {% if case_rows %}
+            <div class="table-like-list">
+                {% for row in case_rows %}
+                    <div class="table-like-item">
+                        <div class="table-like-title">Park {{ row.park_id }} · case {{ row.case_order }}</div>
+                        <div class="table-like-meta">{{ row.selection_reason }}</div>
+                        <div class="table-like-meta">{{ row.available_models }} models</div>
+                        <div class="table-like-meta">{{ row.window_start }} → {{ row.window_end }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <p class="muted-text" style="margin-top: 1rem;">
+                This metadata preview is artifact-derived and intended for communication support only.
+            </p>
+        {% else %}
+            <p class="muted-text">
+                No case-study metadata preview is currently available.
+            </p>
+        {% endif %}
+    </article>
+
     <article class="info-card">
         <div class="card-head">
-            <h2>Interpretation note</h2>
-            <span>Thesis-safe</span>
+            <h2>Bundle provenance</h2>
+            <span>Artifact-based</span>
         </div>
 
         <p class="muted-text">
-            Artifact counts should be interpreted as exported interface summaries and not as a
-            new modeling stage, a production dashboard, or an autonomous digital twin system.
+            The artifact bundle is generated from canonical forecasting and diagnostics outputs and then presented
+            here through a local read-only interface layer.
         </p>
+    </article>
+
+    <article class="info-card">
+        <div class="card-head">
+            <h2>UI note</h2>
+            <span>Presentation-safe</span>
+        </div>
+
+        {% if ui_notes %}
+            <p class="muted-text">{{ ui_notes }}</p>
+        {% else %}
+            <p class="muted-text">
+                This interface remains a lightweight artifact browser for thesis-ready inspection and structured presentation.
+            </p>
+        {% endif %}
     </article>
 </section>
 {% endblock %}
