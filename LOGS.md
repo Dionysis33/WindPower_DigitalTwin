@@ -1912,3 +1912,14 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - Issue `#94`: ολοκληρωμένο / merged
 - Local branch cleanup: ολοκληρώθηκε μετά το merge
 - Repository state: `main` updated και working tree clean
+
+
+---
+
+
+## [21/04/2026] - NB01 Realignment & Small Repo Maintenance
+
+- Ολοκληρώθηκε το thesis-safe realignment του `01_data_acquisition.ipynb` ως exploratory / historical-context notebook.
+- Καθαρίστηκαν markdown, scope framing, `.env` / token handling, timestamp parsing και deterministic exploratory CSV export.
+- Έγινε merge το PR του issue `#96` και ολοκληρώθηκε το branch cleanup.
+- Έγινε επίσης merge μικρό Dependabot PR (`nbconvert` update) με επιτυχή checks.
