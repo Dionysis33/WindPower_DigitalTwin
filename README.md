@@ -4,18 +4,19 @@
 [![License](https://img.shields.io/badge/license-AGPL--v3-green.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/python-3.12-blue.svg)](https://www.python.org/)
 
-Research repository για **spatio-temporal wind power forecasting** πάνω στο **DaKS / Kassel synthetic wind power dataset**, με pipeline που συνδυάζει:
+Research repository για **spatio-temporal wind power forecasting** πάνω στο **DaKS / Kassel synthetic wind power dataset**.
 
-- physics-aware preprocessing,
-- leakage-aware baseline benchmarking,
-- downstream residual diagnostics,
-- park-level diagnostics,
-- graph-ready contract verification και graph-model input packaging,
-- πρώτο actual graph-based forecasting baseline,
-- graph ablation / spatial sensitivity analysis,
-- και controlled graph refinement follow-up με benchmark-safe, forecasting-first και non-overclaiming framing.
+Υποστηρίζει ένα **forecasting-first, reproducible και thesis-ready pipeline** με έμφαση σε:
 
-> Current focus: πρώτα ένα καθαρό, reproducible και benchmark-safe forecasting backbone, μετά diagnostics-aware και condition-awareness-oriented interpretation, στη συνέχεια cautious graph-based forecasting evaluation μέσω baseline, ablation και controlled refinement stages, και αργότερα προσεκτική επέκταση προς broader PHM-oriented και digital-twin-oriented research directions.
+- raw validation,
+- validated-only downstream EDA,
+- feature engineering,
+- leakage-aware temporal splitting,
+- baseline benchmarking,
+- downstream residual and park-level diagnostics,
+- και cautious graph-aware extension με benchmark-safe και non-overclaiming framing.
+
+> Current focus: ένα καθαρό και repository-consistent forecasting backbone, σαφής διάκριση ανάμεσα σε canonical benchmark artifacts, thesis-facing figures και local rerun outputs, και προσεκτική επέκταση από downstream diagnostics και graph-aware forecasting evaluation προς broader PHM-oriented και digital-twin-oriented future research directions.
 
 ---
 
@@ -27,19 +28,19 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 
 Στην current canonical μορφή του, το implemented workflow περιλαμβάνει:
 
-- strict raw validation του DaKS dataset,
-- validated-only και coverage-aware downstream EDA,
-- feature engineering με temporal, autoregressive και spatial information,
-- leakage-aware outlier handling και temporal split,
+- strict raw validation,
+- validated-only and coverage-aware downstream EDA,
+- feature engineering,
+- leakage-aware outlier handling and temporal split,
 - baseline benchmarking,
-- advanced tabular baseline benchmarking,
+- advanced tabular baselines,
 - downstream residual diagnostics,
-- park-level diagnostics και thesis-consolidation layer,
+- park-level diagnostics and thesis-oriented consolidation,
 - graph data-interface / split-to-graph contract / artifact verification,
 - graph-model input packaging / data object preparation,
-- πρώτο actual graph-based forecasting baseline,
+- first graph-based forecasting baseline,
 - graph ablation / spatial sensitivity follow-up,
-- και controlled graph refinement follow-up πάνω στο post-`NB13` graph evidence.
+- και controlled graph refinement follow-up.
 
 Η current implemented baseline ladder περιλαμβάνει:
 
@@ -49,46 +50,45 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - **XGBoost**
 - **MLP**
 
-### Current graph-based extension
+### Current graph-aware extension
 
-Πάνω στο benchmarked forecasting stack, το project έχει πλέον επτά implemented downstream / graph-extension stages:
+Πάνω στο benchmarked forecasting stack, το repository περιλαμβάνει πλέον ένα implemented downstream / graph-aware extension path που εκτείνεται από:
 
-- `NB08`: row-level residual diagnostics και operating-regime-aware inspection
-- `NB09`: park-level diagnostics και thesis-consolidation layer
-- `NB10`: strict graph data-interface / split-to-graph contract / artifact-verification layer
-- `NB11`: strict graph-model input packaging / data object preparation layer
-- `NB12`: first actual graph-based forecasting baseline
-- `NB13`: graph ablation / spatial sensitivity analysis as strict follow-up of `NB12`
-- `NB14`: controlled graph refinement follow-up as strict post-`NB13` benchmark-safe extension
+- `NB08` residual diagnostics
+- `NB09` park-level diagnostics and thesis consolidation
+- `NB10` graph data-interface / split-to-graph contract / artifact verification
+- `NB11` graph-model input packaging / data object preparation
+- `NB12` first graph-based forecasting baseline
+- `NB13` graph ablation / spatial sensitivity follow-up
+- `NB14` controlled graph refinement follow-up
 
-Αυτά τα stages:
+Αυτό το extension path:
 
-- χρησιμοποιούν canonical exported artifacts και benchmark-safe evaluation logic,
-- διατηρούν validation-only model selection και test-only final reporting όπου υπάρχει model fitting,
-- επεκτείνουν το repository από graph-readiness σε actual graph-based forecasting experimentation και controlled graph follow-up evaluation,
-- αλλά παραμένουν forecasting-first και non-overclaiming,
-- και **δεν** τεκμηριώνουν ακόμη validated graph superiority έναντι του current benchmark backbone.
+- χρησιμοποιεί canonical exported artifacts και benchmark-safe evaluation logic,
+- διατηρεί validation-only model selection και test-only final reporting όπου υπάρχει model fitting,
+- επεκτείνει το repository από downstream diagnostics και graph-readiness σε cautious graph-based forecasting evaluation,
+- αλλά παραμένει forecasting-first και non-overclaiming,
+- και **δεν** τεκμηριώνει ακόμη validated graph superiority έναντι του canonical benchmark backbone.
 
 ### Current interpretation boundary
 
 Στο παρόν στάδιο, το **forecasting** παραμένει ο implemented core άξονας του repository.
 
-Τα `NB08`–`NB14`:
+Τα downstream diagnostics και τα graph-aware stages του current workflow πρέπει να διαβάζονται ως:
 
-- **δεν** παρουσιάζουν το repository ως completed PHM system,
-- **δεν** συνιστούν validated anomaly detection, fault diagnosis ή RUL module,
-- **δεν** τεκμηριώνουν validated GNN / Graph-Mamba superiority,
-- **δεν** μετατρέπουν το repository σε completed graph-learning benchmark beyond the current cautious baseline, ablation και controlled refinement evidence,
-- και **δεν** συνιστούν completed digital twin implementation.
+- benchmark-safe extensions του forecasting pipeline,
+- cautious diagnostics-aware και condition-awareness-oriented interpretation layers,
+- και methodological infrastructure για επόμενη research extension,
 
-Το `NB14` πρέπει να διαβάζεται ως:
+όχι ως completed PHM system, validated anomaly-detection or fault-diagnosis module, validated graph superiority result, ή completed digital twin implementation.
+
+Ειδικά το `NB14` πρέπει να διαβάζεται ως:
 
 - controlled graph refinement follow-up,
 - narrow-scope post-`NB13` graph-only extension,
-- benchmark-safe comparison stage,
-- και non-overclaiming evidence consolidation step,
+- benchmark-safe evidence-consolidation step,
 
-όχι ως νέο broad graph benchmark suite ή graph superiority validation stage.
+και όχι ως broad graph benchmark suite ή graph superiority validation stage.
 
 ---
 
@@ -98,15 +98,15 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 
 Το project βασίζεται στο **DaKS / Kassel synthetic wind power dataset**.
 
-Το current active pipeline χρησιμοποιεί raw per-park CSV pairs της μορφής:
+Το current canonical pipeline χρησιμοποιεί raw per-park CSV pairs της μορφής:
 
 - `data_input_<park_id>.csv` για weather / NWP variables
 - `data_target_<park_id>.csv` για power targets
 - `meta.csv` για park metadata και spatial information
 
-### Canonical raw validation note
+### Canonical raw validation authority
 
-Η **canonical authority** για:
+Η canonical authority για:
 
 - raw decoding,
 - timestamp parsing verification,
@@ -114,27 +114,23 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 - duplicate timestamp inspection,
 - και input-target alignment
 
-είναι το:
+είναι το `02_kassel_exploration.ipynb`, το οποίο λειτουργεί ως **canonical raw validation gate** του repository.
 
-- `02_kassel_exploration.ipynb`
+### Operational helper clarification
 
-Το notebook αυτό λειτουργεί ως **canonical raw validation gate** του repository.
+Ο `KasselLoader` χρησιμοποιείται ως **operational helper** για loading και downstream feature-preparation convenience.
 
-### Operational helper note
+Δεν πρέπει να αντιμετωπίζεται ως canonical methodological authority του project.
 
-Ο `KasselLoader` χρησιμοποιείται ως **operational helper** για loading / feature-preparation convenience σε downstream στάδια.
+### Historical exploratory context
 
-Δεν πρέπει να αντιμετωπίζεται ως η **canonical strict raw validation authority** του project.
-
-### Renewables.ninja
-
-Το `Renewables.ninja` ανήκει στην πρώιμη exploratory φάση του project και διατηρείται μόνο ως historical context.
+Το `Renewables.ninja` ανήκει στην πρώιμη exploratory φάση του repository και διατηρείται μόνο ως historical context.
 
 Δεν αποτελεί active primary data source του current canonical forecasting pipeline.
 
 ---
 
-## Implemented Pipeline
+## Canonical Implemented Pipeline
 
 ### 1. Canonical raw validation (`NB02`)
 
@@ -264,7 +260,7 @@ Research repository για **spatio-temporal wind power forecasting** πάνω �
 
 ### Split protocol note
 
-Η active split strategy είναι strict temporal split:
+Η active split strategy παραμένει **strict temporal split**:
 
 - **Train:** up to `2019-12-31 23:00:00`
 - **Validation:** up to `2020-06-30 23:00:00`
@@ -286,7 +282,12 @@ data/processed/baseline_metrics.csv
 
 ---
 
-## Repository Structure
+## Current Public Repository Structure
+
+The following tree reflects the **current public repository structure**.
+
+It should be read as the **currently tracked public tree** of the repository, not as the full local workspace layout.  
+Proposed artifact subfolders discussed in `docs/DATA.md` belong to the current cleanup pass and should not be interpreted as already created unless they are explicitly added in a later step.
 
 ```text
 WindPower_DigitalTwin/
@@ -298,10 +299,8 @@ WindPower_DigitalTwin/
 │   ├── dependabot.yml
 │   └── pull_request_template.md
 ├── data/
-│   └── processed/
-│       └── baseline_metrics.csv
+├── django_demo/
 ├── docs/
-├── models/
 ├── notebooks/
 │   ├── 01_data_acquisition.ipynb
 │   ├── 02_kassel_exploration.ipynb
@@ -317,9 +316,8 @@ WindPower_DigitalTwin/
 │   ├── 12_first_graph_based_forecasting_baseline.ipynb
 │   ├── 13_graph_ablation_and_spatial_sensitivity_analysis.ipynb
 │   └── 14_controlled_graph_refinement_followup.ipynb
-├── reports/
-│   └── figures/
 ├── scripts/
+│   └── export_demo_bundle.py
 ├── src/
 │   ├── data/
 │   ├── features/
@@ -341,74 +339,110 @@ WindPower_DigitalTwin/
 
 ## Notebook Guide
 
+Το παρακάτω guide συνοψίζει τον ρόλο κάθε notebook μέσα στο **current canonical workflow** του repository.
+
 ### `01_data_acquisition.ipynb`
 
-Early exploratory notebook για external-data experiments.  
+Historical exploratory notebook για external-data experiments.
+
 Δεν αποτελεί μέρος του current canonical forecasting pipeline.
 
 ### `02_kassel_exploration.ipynb`
 
-Canonical raw validation gate του DaKS pipeline.
+Canonical raw validation authority του DaKS pipeline.
+
+Καλύπτει:
+
+- raw decoding,
+- timestamp parsing verification,
+- temporal ordering checks,
+- duplicate timestamp inspection,
+- και strict input-target alignment ανά `park_id`.
 
 ### `03_eda_master.ipynb`
 
 Canonical validated-only EDA stage που λειτουργεί πάνω στο upstream validation contract του `NB02` και στο canonical validated / `NB04`-eligible cohort.
 
+Δεν αποτελεί raw validation ή cleaning notebook.
+
 ### `04_feature_engineering_and_graph_construction.ipynb`
 
-Feature engineering, spatial metadata integration, graph-ready artifacts και export του engineered dataset.
-
-### `05_outliers_and_split.ipynb`
-
-Leakage-aware outlier handling, temporal split και export των canonical train / validation / test artifacts.
-
-### `06_baseline_modeling.ipynb`
-
-Baseline modeling και diagnostics για:
-
-- Persistence
-- Linear Regression
-- test-only benchmark reporting
-- forecasting-oriented residual analysis
-- actual-vs-predicted plots
-
-### `07_advanced_baselines_and_importance.ipynb`
-
-Advanced tabular baselines και diagnostics για:
-
-- Random Forest
-- XGBoost
-- MLP
-- validation-only model selection
-- test-only benchmark update
-- residual plots
-- feature-importance analysis
-- prediction export για downstream diagnostics
-
-### `08_residual_diagnostics_and_operating_regimes.ipynb`
-
-Strict downstream diagnostics notebook που λειτουργεί πάνω στα exported baseline predictions.
+Canonical feature-engineering stage του workflow.
 
 Καλύπτει:
 
-- cross-model residual diagnostics
-- operating-regime-aware error slicing
-- regime-wise benchmark interpretation
-- και health-aware / PHM-aware discussion χωρίς overclaiming
+- temporal feature engineering,
+- cyclical time encoding,
+- lag / rolling features,
+- spatial metadata integration,
+- graph-ready artifact construction,
+- και export του engineered dataset.
+
+### `05_outliers_and_split.ipynb`
+
+Canonical leakage-aware split stage του workflow.
+
+Καλύπτει:
+
+- leakage-aware outlier handling,
+- strict temporal split,
+- και export των canonical:
+  - `train_final.csv`
+  - `val_final.csv`
+  - `test_final.csv`
+
+### `06_baseline_modeling.ipynb`
+
+Baseline modeling notebook για τα πρώτα implemented reference models.
+
+Καλύπτει:
+
+- Persistence,
+- Linear Regression,
+- baseline comparison,
+- test-only benchmark reporting,
+- forecasting-oriented residual analysis,
+- και actual-vs-predicted plots.
+
+### `07_advanced_baselines_and_importance.ipynb`
+
+Advanced tabular baseline notebook του implemented benchmark stack.
+
+Καλύπτει:
+
+- Random Forest,
+- XGBoost,
+- MLP,
+- validation-only model selection,
+- test-only benchmark update,
+- residual plots,
+- feature-importance analysis,
+- και prediction export για downstream diagnostics.
+
+### `08_residual_diagnostics_and_operating_regimes.ipynb`
+
+Strict downstream residual diagnostics notebook πάνω στα exported baseline predictions.
+
+Καλύπτει:
+
+- cross-model residual diagnostics,
+- operating-regime-aware error slicing,
+- regime-wise benchmark interpretation,
+- και cautious health-aware / PHM-aware discussion χωρίς overclaiming.
 
 Δεν αποτελεί νέο modeling stage.
 
 ### `09_park_level_diagnostics_and_thesis_consolidation.ipynb`
 
-Strict downstream park-level diagnostics και thesis-consolidation notebook που λειτουργεί πάνω στο canonical test-only evaluation space.
+Strict downstream park-level diagnostics και thesis-consolidation notebook πάνω στο canonical test-only evaluation space.
 
 Καλύπτει:
 
-- per-park diagnostic aggregation
-- bias / spread / difficulty inspection across parks
-- comparative case-study selection
-- thesis-ready consolidation του diagnostics layer
-- και cautious health-aware / PHM-aware interpretation χωρίς overclaiming
+- per-park diagnostic aggregation,
+- bias / spread / difficulty inspection across parks,
+- comparative case-study selection,
+- thesis-ready consolidation του diagnostics layer,
+- και cautious health-aware / PHM-aware interpretation χωρίς overclaiming.
 
 Δεν αποτελεί νέο modeling stage.
 
@@ -418,10 +452,10 @@ Strict graph data-interface / split-to-graph contract / artifact-verification no
 
 Καλύπτει:
 
-- graph-ready data-interface verification
-- split-to-graph contract checks
-- graph artifact consistency checks
-- benchmark-safe readiness for future graph-based forecasting work
+- graph-ready data-interface verification,
+- split-to-graph contract checks,
+- graph artifact consistency checks,
+- και benchmark-safe readiness for future graph-based forecasting work.
 
 Δεν αποτελεί νέο graph-training stage.
 
@@ -431,12 +465,12 @@ Strict graph-model input packaging / data object preparation notebook.
 
 Καλύπτει:
 
-- deterministic loading των canonical split και graph artifacts
-- feature-role και node-role manifesting
-- coverage-aware graph-model input packaging
-- `observed_mask`-aware tensor preparation
-- portable serialized graph-ready dataset export
-- benchmark-safe handoff προς future graph-based forecasting work
+- deterministic loading των canonical split και graph artifacts,
+- feature-role και node-role manifesting,
+- coverage-aware graph-model input packaging,
+- `observed_mask`-aware tensor preparation,
+- portable serialized graph-ready dataset export,
+- και benchmark-safe handoff προς future graph-based forecasting work.
 
 Δεν αποτελεί training notebook.
 Δεν αποτελεί benchmarking notebook.
@@ -445,19 +479,19 @@ Strict graph-model input packaging / data object preparation notebook.
 
 ### `12_first_graph_based_forecasting_baseline.ipynb`
 
-First actual graph-based forecasting notebook του repository πάνω στα canonical packaged graph artifacts του `NB11`.
+First actual graph-based forecasting baseline του repository πάνω στα canonical packaged graph artifacts του `NB11`.
 
 Καλύπτει:
 
-- fail-fast integrity checks για τα packaged graph inputs
-- snapshot-level graph dataset construction
-- benchmark-safe DataLoader materialization
-- minimal graph-based forecasting baseline execution
-- validation-only model selection
-- test-only final reporting
-- compact graph-baseline export layer
+- fail-fast integrity checks για τα packaged graph inputs,
+- snapshot-level graph dataset construction,
+- benchmark-safe DataLoader materialization,
+- minimal graph-based forecasting baseline execution,
+- validation-only model selection,
+- test-only final reporting,
+- και compact graph-baseline export layer.
 
-Το `NB12` αποτελεί implemented graph-based forecasting evidence, αλλά δεν τεκμηριώνει graph superiority έναντι του current tabular benchmark backbone.
+Αποτελεί implemented graph-based forecasting evidence, αλλά δεν τεκμηριώνει validated graph superiority έναντι του canonical tabular benchmark backbone.
 
 ### `13_graph_ablation_and_spatial_sensitivity_analysis.ipynb`
 
@@ -465,31 +499,31 @@ Strict follow-up notebook του `NB12` για graph ablation / spatial sensitiv
 
 Καλύπτει:
 
-- canonical artifact loading και fail-fast integrity checks
-- explicit experiment registry με frozen `NB12`-compatible training configuration
-- deterministic topology variants
-- topology-aware dataset / DataLoader materialization
-- controlled GCN execution με validation-only model selection και test-only final reporting
-- compact export layer για validation summary, test metrics, training history και reference comparison
+- canonical artifact loading και fail-fast integrity checks,
+- explicit experiment registry με frozen `NB12`-compatible training configuration,
+- deterministic topology variants,
+- topology-aware dataset / DataLoader materialization,
+- controlled GCN execution με validation-only model selection και test-only final reporting,
+- και compact export layer για validation summary, test metrics, training history και reference comparison.
 
-Το `NB13` δείχνει sensitivity στην topology choice και μικρό spatial gain, αλλά δεν στηρίζει strong graph superiority claims και δεν βελτιώνει το `NB12` reference στο primary benchmark criterion (`test MAE`).
+Αποτελεί topology-aware follow-up evidence, αλλά δεν στηρίζει strong graph superiority claims.
 
 ### `14_controlled_graph_refinement_followup.ipynb`
 
-Strict post-`NB13` controlled graph refinement notebook που λειτουργεί ως narrow-scope benchmark-safe follow-up μέσα στην established `local_pruned_graph` family.
+Strict post-`NB13` controlled graph refinement notebook που λειτουργεί ως narrow-scope benchmark-safe follow-up.
 
 Καλύπτει:
 
-- canonical artifact loading και read-only reference policy
-- strict comparison boundary μόνο απέναντι σε `NB12` reference και `NB13` best configuration
-- predeclared experiment registry γύρω από controlled pruning-strength refinement
-- deterministic refined edge-bundle construction
-- validation-only model selection
-- test-only final reporting για το validation-selected experiment
-- strict reference comparison απέναντι σε `NB12` και `NB13`
-- και final sanity test για benchmark-contract integrity
+- canonical artifact loading και read-only reference policy,
+- strict comparison boundary μόνο απέναντι σε `NB12` reference και `NB13` best configuration,
+- predeclared experiment registry γύρω από controlled pruning-strength refinement,
+- deterministic refined edge-bundle construction,
+- validation-only model selection,
+- test-only final reporting για το validation-selected experiment,
+- strict reference comparison απέναντι σε `NB12` και `NB13`,
+- και final sanity test για benchmark-contract integrity.
 
-Το `NB14` αποτελεί controlled graph refinement evidence-consolidation stage, αλλά δεν συνιστά broad graph benchmark suite, δεν τεκμηριώνει graph superiority claim, και δεν μετατρέπει το repository σε sequence-model, PHM ή completed digital twin implementation stage.
+Αποτελεί controlled graph refinement follow-up evidence-consolidation stage, αλλά δεν συνιστά broad graph benchmark suite, validated graph superiority result, PHM stage, ή completed digital twin implementation stage.
 
 ---
 
@@ -553,16 +587,25 @@ Processed outputs generated by the notebooks are stored under:
 data/processed/
 ```
 
-Typical exported artifacts include:
+At the current public repository state:
 
-- `final_feature_engineered_dataset.csv`
-- `adjacency_matrix.npy`
-- `train_final.csv`
-- `val_final.csv`
-- `test_final.csv`
-- `baseline_metrics.csv`
+- `data/processed/baseline_metrics.csv` is the **canonical tracked benchmark artifact**
+- canonical pipeline outputs such as
+  - `final_feature_engineered_dataset.csv`
+  - `train_final.csv`
+  - `val_final.csv`
+  - `test_final.csv`
+  may be produced reproducibly during notebook reruns
+- additional prediction, diagnostics, graph-ready, verification, packaging, and graph-experiment artifacts may also be produced locally depending on the notebook stage
 
-Additional graph-ready and diagnostics artifacts may also be produced locally during reruns, depending on the notebook stage.
+For thesis-safe artifact handling, it is important to distinguish between:
+
+- the **public tracked benchmark authority**
+- **selected thesis / report-facing figures**
+- **local rerun / diagnostics artifacts**
+- and **local-only model artifacts**
+
+A more detailed artifact policy and proposed organization for this cleanup pass are documented in `docs/DATA.md`.
 
 ---
 
@@ -586,62 +629,63 @@ Recommended canonical execution order:
 
 Important execution notes:
 
-- `NB02` is the canonical raw validation authority.
-- `NB03` should be executed only after the upstream validation outputs of `NB02` are available.
-- Downstream notebooks should follow the validated / `NB04`-eligible contract established upstream.
-- `NB08` είναι **strict downstream residual diagnostics extension** πάνω στα exported baseline predictions.
-- `NB09` είναι **strict downstream park-level diagnostics / thesis-consolidation extension** πάνω στο canonical test-only evaluation space.
-- `NB10` είναι **strict graph data-interface / split-to-graph contract / artifact-verification extension** και όχι νέο graph-training notebook.
-- `NB11` είναι **strict graph-model input packaging / data object preparation extension** και όχι training / benchmarking notebook.
-- Neither `NB08`, `NB09`, `NB10`, nor `NB11` introduces a new predictive model.
-- `NB12` είναι το **first actual graph-based forecasting baseline** πάνω στα packaged graph artifacts του `NB11`.
-- `NB13` είναι **strict graph ablation / spatial sensitivity follow-up** του `NB12`, με frozen benchmark-safe training configuration.
-- Neither `NB12` nor `NB13` should be described as validated graph superiority evidence; they provide cautious graph-based forecasting evidence and topology-sensitivity analysis only.
-- `NB14` είναι **strict controlled graph refinement follow-up** του `NB13`, ως narrow-scope benchmark-safe graph-only extension.
-- Neither `NB12`, `NB13`, nor `NB14` should be described as validated graph superiority evidence; they provide cautious graph-based forecasting evidence, topology-sensitivity analysis, and controlled refinement follow-up only.
+- `NB02` is the canonical raw validation authority of the repository.
+- `NB03` should run only after the upstream validation outputs of `NB02` are available and should continue only with the validated / `NB04`-eligible cohort.
+- Downstream notebooks should preserve the established validation, split, and artifact contracts of the canonical workflow.
+- `NB08` is a **strict downstream residual-diagnostics extension** on top of the exported baseline predictions and does not introduce a new predictive model.
+- `NB09` is a **strict downstream park-level diagnostics / thesis-consolidation extension** on top of the canonical test-only evaluation space and does not introduce a new predictive model.
+- `NB10` is a **strict graph data-interface / split-to-graph contract / artifact-verification stage** and not a graph-training notebook.
+- `NB11` is a **strict graph-model input packaging / data object preparation stage** and not a training or benchmarking notebook.
+- `NB12` is the **first actual graph-based forecasting baseline** of the repository on top of the packaged graph artifacts of `NB11`.
+- `NB13` is a **strict graph ablation / spatial sensitivity follow-up** of `NB12`, with frozen benchmark-safe training configuration.
+- `NB14` is a **strict controlled graph refinement follow-up** of `NB13`, as a narrow-scope benchmark-safe graph-only extension.
+- `NB12`, `NB13`, and `NB14` should be described as **cautious graph-based forecasting evidence** and not as validated graph superiority evidence.
 
 ---
 
 ## Current Research Direction
 
-Το repository ακολουθεί πλέον την εξής καθαρή ερευνητική γραμμή:
+The repository currently follows a **forecasting-first research direction** with a staged extension path from benchmarked forecasting toward diagnostics-aware, graph-aware, and later PHM-oriented research.
 
-**forecasting-first benchmark pipeline -> downstream residual diagnostics -> park-level diagnostics consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> graph ablation / spatial sensitivity follow-up -> controlled graph refinement follow-up -> cautious pathway toward condition-awareness-oriented interpretation and future PHM-oriented research extension**
+Current implemented direction:
 
-Αυτό σημαίνει ότι:
+- forecasting remains the implemented operational core
+- the implemented tabular baselines define the benchmark backbone
+- `NB08` extends the benchmark stack with row-level and operating-regime-aware residual diagnostics
+- `NB09` extends the diagnostics layer with park-level consolidation and thesis-oriented interpretation
+- `NB10` provides graph data-interface / split-to-graph contract / artifact verification
+- `NB11` provides graph-model input packaging / data object preparation
+- `NB12` provides the first actual graph-based forecasting baseline
+- `NB13` provides graph ablation / spatial sensitivity follow-up
+- `NB14` provides controlled graph refinement follow-up within a benchmark-safe and narrow-scope comparison setting
 
-- το forecasting είναι ο current implemented core
-- τα implemented tabular baselines αποτελούν το benchmark backbone
-- το `NB08` λειτουργεί ως row-level / regime-aware diagnostics layer
-- το `NB09` λειτουργεί ως park-level diagnostics και thesis-consolidation layer
-- το `NB10` λειτουργεί ως graph-readiness / contract-verification layer
-- το `NB11` λειτουργεί ως graph-model input packaging / data-object-preparation layer
-- το `NB12` λειτουργεί ως πρώτο actual graph-based forecasting baseline
-- το `NB13` λειτουργεί ως graph ablation / spatial sensitivity layer για strict post-`NB12` follow-up evaluation
-- το `NB14` λειτουργεί ως controlled graph refinement layer για strict post-`NB13` benchmark-safe follow-up evaluation
-- το digital twin framing διατηρείται σε research / future-integration επίπεδο
-- και broader graph redesign, sequence-based models, Mamba / Graph-Mamba, καθώς και deployed PHM / digital twin implementation παραμένουν future work
+Interpretation boundary:
+
+- the digital-twin framing currently remains at the level of research direction and future integration
+- the implemented graph stages should be read as cautious graph-based forecasting evidence, not as validated graph superiority
+- broader graph redesign, sequence-based models, Mamba / Graph-Mamba, and deployed PHM / digital twin implementation remain future work
 
 ---
 
 ## Diagnostics and PHM-Oriented Framing
 
-Τα forecasting residuals και τα park-level diagnostic patterns μπορούν να λειτουργήσουν ως diagnostic signal candidates για:
+The current repository supports a **forecasting-first benchmark pipeline** enriched with downstream residual diagnostics, park-level diagnostics, graph-contract verification, graph-model input packaging, a first graph-based forecasting baseline, graph ablation / spatial sensitivity follow-up, and controlled graph refinement follow-up.
 
-- residual analysis
-- condition-awareness-oriented inspection
-- diagnostic insights
-- και μελλοντική PHM / prognostics discussion
+Within this framing:
 
-Ωστόσο, στο current repository state αυτό **δεν** ισοδυναμεί με:
+- forecasting residuals and park-level diagnostic patterns may be interpreted as **diagnostic signal candidates**
+- the current diagnostics layer may support **condition-awareness-oriented inspection**
+- and the implemented workflow may serve as a **methodologically sound foundation** for future prognostics / PHM-oriented research extension
+
+However, in the current repository state, this should **not** be interpreted as:
 
 - validated fault diagnosis
-- completed anomaly detector
+- completed anomaly detection
 - remaining useful life estimation
-- completed PHM system
-- ή deployed digital twin service
+- completed PHM functionality
+- or deployed digital twin implementation
 
-Η σωστή ακαδημαϊκή θέση του repository είναι ότι ένα αυστηρά benchmarked forecasting pipeline, εμπλουτισμένο με downstream residual και park-level diagnostics, graph-contract verification, graph-model input packaging, πρώτο graph-based forecasting baseline, graph ablation / spatial sensitivity analysis και controlled graph refinement follow-up, μπορεί να στηρίξει condition-awareness-oriented interpretation και να αποτελέσει μεθοδολογικά ορθό υπόβαθρο για μελλοντικές prognostics / PHM-oriented επεκτάσεις χωρίς overclaiming.
+The correct academic interpretation is that the implemented forecasting, diagnostics, and graph-aware stages provide a cautious and non-overclaiming bridge from benchmarked forecasting toward condition-awareness-oriented interpretation and future PHM-oriented research.
 
 ---
 
@@ -649,68 +693,67 @@ Important execution notes:
 
 ### Planned next
 
-Το άμεσο επόμενο βήμα μετά το current documentation / framing alignment δεν είναι ούτε νέο packaging stage, ούτε το πρώτο graph-based forecasting stage, ούτε νέο controlled graph refinement stage, επειδή αυτά έχουν ήδη υλοποιηθεί στα `NB11`, `NB12` και `NB14`.
+After the current documentation and framing alignment pass, the immediate planned next step is **not** a new graph-packaging stage, a first graph-based forecasting stage, or a new controlled graph-refinement stage, because these have already been implemented in `NB11`, `NB12`, and `NB14`.
 
-Το planned next είναι:
+The planned next direction is:
 
-- documentation-consistent consolidation του post-`NB14` public repository story
-- και στη συνέχεια scope-safe planning μόνο για broader graph refinement ή επόμενο graph-related step, εφόσον αυτό δικαιολογείται από το current benchmark evidence και χωρίς premature superiority claims
+- documentation-consistent consolidation of the post-`NB14` public repository story
+- repository-safe artifact organization and thesis-facing cleanup
+- and only then scope-safe planning for a broader graph-related next step, if justified by the current benchmark evidence and without premature superiority claims
 
 ### Future work
 
-Τα παρακάτω παραμένουν future work / research extension:
+The following remain **future work / research extension**:
 
 - broader graph redesign
 - stronger graph-based forecasting claims only if supported by new evidence
 - sequence-based forecasting models
 - Mamba / Graph-Mamba experimentation
 - stronger digital-twin integration
-- deployed PHM / digital twin implementation
 - broader prognostics / PHM-oriented modeling
+- and deployed PHM / digital twin implementation
 
 ---
 
 ## Known Notes / Limitations
 
-- Το current benchmark core παραμένει **forecasting-first**, με tabular baselines ως established benchmark backbone.
-- Το `NB08` είναι diagnostics stage και όχι νέο forecasting model.
-- Το `NB09` είναι park-level diagnostics / thesis-consolidation stage και όχι νέο forecasting model.
-- Το `NB10` είναι graph contract verification stage και όχι graph model training stage.
-- Το `NB11` είναι graph-model input packaging / data object preparation stage και όχι graph training ή graph benchmarking stage.
-- Το `NB12` είναι implemented graph-based forecasting baseline, αλλά δεν τεκμηριώνει graph superiority έναντι του canonical benchmark backbone.
-- Το `NB13` είναι topology-aware graph ablation / spatial sensitivity stage, αλλά το observed spatial gain είναι μικρό και δεν αρκεί για strong superiority claims.
-- Το `NB13` δεν βελτιώνει το `NB12` reference στο primary benchmark criterion (`test MAE`).
-- Το `NB14` είναι strict controlled graph refinement follow-up μέσα στην established post-`NB13` graph evidence line, αλλά δεν συνιστά broad graph benchmark suite και δεν τεκμηριώνει graph superiority claim.
-- Το `NB14` επίσης δεν βελτιώνει ούτε το `NB12` reference ούτε το `NB13` best run στο `test MAE`, άρα πρέπει να διαβάζεται ως benchmark-safe evidence consolidation και όχι ως stronger graph validation stage.
-- Τα residual diagnostics, τα park-level diagnostics και τα graph follow-up stages υποστηρίζουν diagnostics-aware / health-aware interpretation, αλλά δεν συνιστούν validated anomaly detector, fault diagnosis module ή RUL framework.
-- Το `mamba-ssm` μπορεί να είναι δύσκολο να γίνει build σε Windows, οπότε Google Colab ή Linux είναι λογικό environment για future sequence-model experiments.
-- Μεγάλα raw και processed αρχεία εξαιρούνται σκόπιμα από το git. Το canonical public benchmark artifact είναι το `data/processed/baseline_metrics.csv`.
+- The current benchmark core remains **forecasting-first**, with the implemented tabular baselines serving as the established benchmark backbone.
+- `NB08` is a downstream residual-diagnostics stage and not a new forecasting model.
+- `NB09` is a park-level diagnostics / thesis-consolidation stage and not a new forecasting model.
+- `NB10` is a graph data-interface / split-to-graph contract / artifact-verification stage and not a graph-training stage.
+- `NB11` is a graph-model input packaging / data object preparation stage and not a graph-training or graph-benchmarking stage.
+- `NB12` is an implemented graph-based forecasting baseline, but it does **not** establish validated graph superiority over the canonical benchmark backbone.
+- `NB13` is a topology-aware graph ablation / spatial sensitivity follow-up stage; the observed spatial gain remains limited and does not support strong superiority claims.
+- `NB13` does not improve the `NB12` reference on the primary benchmark criterion (`test MAE`).
+- `NB14` is a strict controlled graph-refinement follow-up within the established post-`NB13` evidence line, but it does **not** constitute a broad graph benchmark suite or a validated graph-superiority result.
+- `NB14` also does not improve either the `NB12` reference or the `NB13` best run on `test MAE`, so it should be read as benchmark-safe evidence consolidation rather than stronger graph validation.
+- Residual diagnostics, park-level diagnostics, and graph follow-up stages may support diagnostics-aware / health-aware interpretation, but they do **not** constitute a validated anomaly detector, fault-diagnosis module, RUL framework, or completed PHM system.
+- `mamba-ssm` may be difficult to build on Windows, so Google Colab or Linux is a more practical environment for future sequence-model experiments.
+- Large raw files, rerun-dependent processed outputs, prediction dumps, diagnostics bundles, graph exports, and model binaries should generally remain local-only; the canonical public benchmark artifact is `data/processed/baseline_metrics.csv`.
 
 ---
 
 ## Logs and Progress Tracking
 
-Η repository progress tracking διαχωρίζεται πλέον σε:
+Repository progress tracking is organized into:
 
 ```text
 LOGS.md
 LOGS_ARCHIVE.md
 ```
 
-- `LOGS.md` κρατά το active canonical methodological log του current forecasting pipeline.
-- `LOGS_ARCHIVE.md` κρατά historical exploratory, superseded ή legacy entries.
+- `LOGS.md` is the **active canonical methodological log** of the current forecasting-first pipeline.
+- `LOGS_ARCHIVE.md` stores **historical, exploratory, superseded, or legacy entries** that should not be treated as the active repository authority.
 
-Για current thesis-ready repository state, ως active authority πρέπει να αντιμετωπίζεται το `LOGS.md`.
+For the current thesis-ready repository state, `LOGS.md` should be treated as the active reference point for methodological progress and pipeline status.
 
 ---
 
 ## Contributing
 
-Please read:
+[![Contributing](https://img.shields.io/badge/Contributing-Guide-blue.svg)](./CONTRIBUTING.md)
 
-```text
-CONTRIBUTING.md
-```
+Please read [`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
 Important contribution principles include:
 
@@ -724,6 +767,8 @@ Important contribution principles include:
 
 ## License
 
-This project is released under the AGPL-3.0 license.
+[![License](https://img.shields.io/badge/License-AGPL--3.0-green.svg)](./LICENSE)
 
-See `LICENSE` for details.
+This repository is released under the AGPL-3.0 license.
+
+See [`LICENSE`](./LICENSE) for the full license text.
