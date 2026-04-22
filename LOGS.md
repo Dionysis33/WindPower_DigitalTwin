@@ -1923,3 +1923,74 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - Καθαρίστηκαν markdown, scope framing, `.env` / token handling, timestamp parsing και deterministic exploratory CSV export.
 - Έγινε merge το PR του issue `#96` και ολοκληρώθηκε το branch cleanup.
 - Έγινε επίσης merge μικρό Dependabot PR (`nbconvert` update) με επιτυχή checks.
+
+
+---
+
+
+## [22/04/2026] - Thesis-Safe Artifact Policy Realignment & `src/data` Source-Tracking Cleanup
+
+### Ολοκληρωμένες Ενέργειες:
+1. **Artifact-policy realignment στο repository level**
+   - Ολοκληρώθηκε το thesis-safe artifact-organization pass για το repository.
+   - Ευθυγραμμίστηκαν:
+     - `.gitignore`
+     - `README.md`
+     - `docs/DATA.md`
+   - Ορίστηκε καθαρότερα η διάκριση ανάμεσα σε:
+     - canonical tracked benchmark artifact
+     - selected thesis / report-facing figures
+     - local rerun / diagnostics artifacts
+     - local-only model artifacts
+
+2. **`.gitignore` alignment με το current artifact policy**
+   - Το `.gitignore` καθαρίστηκε ώστε να μη βασίζεται πλέον σε overly broad ignore patterns τύπου γενικού `data/` / `*.csv` logic.
+   - Διατηρήθηκε tracked το:
+     - `data/processed/baseline_metrics.csv`
+       ως canonical public benchmark artifact.
+   - Τα raw / interim data, τα περισσότερα processed rerun outputs, diagnostics bundles, graph exports και local model binaries παραμένουν local-only by default.
+
+3. **Documentation consistency pass**
+   - Το `README.md` και το `docs/DATA.md` ευθυγραμμίστηκαν με το ίδιο artifact-handling contract.
+   - Αποσαφηνίστηκε ότι:
+     - το `reports/figures/` είναι curated thesis-facing / report-facing χώρος
+     - και δεν πρέπει να λειτουργεί ως γενικός notebook dump φάκελος.
+
+4. **Source-tracking cleanup για το `src/data/` package**
+   - Έγινε separate μικρό cleanup pass για το previously untracked source package κάτω από:
+     - `src/data/__init__.py`
+     - `src/data/kassel_loader.py`
+   - Το package πλέον tracked κανονικά ως source code και όχι ως local artifact space.
+   - Κατά τη διάρκεια του pass διορθώθηκε και malformed package filename πριν το final tracking.
+
+### Scientific / Repository Interpretation:
+Η σημερινή πρόοδος ήταν **repository-consistency, reproducibility και artifact-governance oriented**.
+
+Δεν έγινε:
+- νέο benchmark run
+- νέο model training
+- νέο notebook rerun
+- αλλαγή metrics
+- αλλαγή canonical benchmark protocol
+- νέο diagnostics claim
+- νέο scientific claim
+
+Το forecasting παραμένει ο implemented operational core του repository, ενώ η σημερινή αλλαγή περιορίστηκε σε cleaner artifact handling, safer tracked-vs-local separation και source-tracking completeness.
+
+### Practical Note:
+Το `data/processed/baseline_metrics.csv` παραμένει η canonical tracked benchmark authority.
+
+Αντίθετα, μεγάλα processed rerun datasets, prediction dumps, diagnostics bundles, graph exports και model binaries παραμένουν local-only by default εκτός αν κάποιο artifact προαχθεί ρητά σε tracked thesis-facing ή canonical θέση.
+
+Επιπλέον, ο `KasselLoader` συνεχίζει να αντιμετωπίζεται ως operational helper και όχι ως canonical raw-validation authority του project.
+
+### Planned Next:
+Επόμενο βήμα είναι narrow implementation follow-up για materialization της thesis-safe artifact structure / export-destination discipline όπου χρειάζεται, χωρίς ακόμα notebook reruns, benchmark changes ή νέο modeling scope.
+
+### Future Work:
+Παραμένουν ξεχωριστά future work:
+- broader graph redesign
+- stronger graph-based forecasting claims μόνο αν υποστηριχθούν από νέα evidence
+- sequence-based models
+- Mamba / Graph-Mamba experimentation
+- broader PHM-oriented και digital-twin-oriented extensions
