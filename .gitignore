@@ -158,19 +158,37 @@ cython_debug/
 
 # 1) Raw / interim data remain local-only
 data/raw/**
+!data/raw/
 !data/raw/.gitkeep
+
 data/interim/**
+!data/interim/
 !data/interim/.gitkeep
 
 # 2) Processed outputs remain local-only by default,
 #    except for the canonical tracked benchmark artifact
+#    and empty tracked directory placeholders for intended export destinations.
 data/processed/**
 !data/processed/
 !data/processed/baseline_metrics.csv
 
+# Intended local rerun / prediction export destinations
+!data/processed/predictions/
+!data/processed/predictions/.gitkeep
+
+# Intended local diagnostics export destinations
+!data/processed/diagnostics/
+!data/processed/diagnostics/.gitkeep
+
+# Intended graph-ready / graph-verification / graph-packaging export destinations
+!data/processed/graph/
+!data/processed/graph/.gitkeep
+
 # 3) Local-only model artifacts
 models/local/**
+!models/local/
 !models/local/.gitkeep
+
 models/*.h5
 models/*.keras
 models/*.joblib
