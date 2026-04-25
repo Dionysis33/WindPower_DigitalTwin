@@ -58,7 +58,10 @@ Dataset source:
   Για report-facing ή thesis-facing figures.
 
 Η current public repository structure παραμένει σχετικά απλή στα top-level paths.  
-Η πιο λεπτομερής artifact organization που περιγράφεται παρακάτω αποτελεί **proposed thesis-safe organization** στο πλαίσιο του current cleanup / organization pass και όχι πλήρως εγκατεστημένη current structure σε κάθε subfolder.
+Η πιο λεπτομερής artifact organization που περιγράφεται παρακάτω έχει πλέον materialized ως repository-visible folder / placeholder structure στο πλαίσιο του current cleanup / organization pass.
+
+Αυτό δεν σημαίνει ότι τα rerun outputs γίνονται tracked artifacts.  
+Σημαίνει μόνο ότι τα intended export destinations είναι πλέον σαφή, repository-visible και συνεπή με την artifact policy.
 
 ## Artifact storage policy
 
@@ -113,6 +116,7 @@ Local rerun / diagnostics artifacts είναι outputs που:
 - graph-ready exports,
 - graph contract verification outputs,
 - graph packaging outputs,
+- graph experiment exports,
 - και άλλα notebook-native rerun bundles.
 
 Αυτά τα outputs πρέπει να αντιμετωπίζονται ως **reproducible local artifacts by default**, εκτός αν κάποιο συγκεκριμένο artifact προαχθεί ρητά σε canonical ή thesis-facing θέση.
@@ -121,7 +125,7 @@ Local rerun / diagnostics artifacts είναι outputs που:
 
 Τα model binaries, checkpoints και training-state files πρέπει να παραμένουν local-only by default.
 
-Αυτά ανήκουν εννοιολογικά στο model-artifact space του repository και σε πιο καθαρή organization μπορούν να τοποθετούνται κάτω από local-only substructure όπως:
+Αυτά ανήκουν εννοιολογικά στο model-artifact space του repository και μπορούν να τοποθετούνται κάτω από local-only substructure όπως:
 
 - `models/local/`
 
@@ -131,32 +135,36 @@ Local rerun / diagnostics artifacts είναι outputs που:
 - `.pkl`
 - `.pt`
 - `.pth`
+- `.ckpt`
 - training history files
 - model-specific manifests για local inspection
 
 Τα artifacts αυτά **δεν** αποτελούν benchmark authority και **δεν** πρέπει να συγχέονται με report-facing outputs.
 
-## Proposed artifact organization for this cleanup pass
+## Materialized artifact organization for this cleanup pass
 
-Η ακόλουθη δομή είναι η **proposed thesis-safe organization** των artifacts στο πλαίσιο του current cleanup pass.
+Η ακόλουθη δομή είναι η **materialized thesis-safe organization** των intended artifact destinations στο πλαίσιο του current cleanup pass.
+
+Η δημιουργία των φακέλων δεν σημαίνει ότι τα rerun outputs γίνονται tracked artifacts.  
+Σημαίνει μόνο ότι τα export destinations είναι πλέον repository-visible και συνεπή με την artifact policy.
 
 ### `data/processed/`
 
 Το `data/processed/` παραμένει ο κύριος χώρος για reproducible processed outputs της pipeline.
 
-Προτεινόμενη λογική:
+Materialized λογική:
 
 - `data/processed/baseline_metrics.csv`  
-  Canonical tracked benchmark artifact
+  Canonical tracked benchmark artifact.
 
 - `data/processed/predictions/`  
-  Local rerun prediction exports
+  Intended destination για local rerun prediction exports.
 
 - `data/processed/diagnostics/`  
-  Local rerun diagnostics bundles και case-study exports
+  Intended destination για local rerun diagnostics bundles και case-study exports.
 
 - `data/processed/graph/`  
-  Graph-ready, graph-verification, packaging και graph-experiment local outputs
+  Intended destination για graph-ready, graph-verification, graph-packaging και graph-experiment local outputs.
 
 Root-level processed CSVs όπως:
 
@@ -172,7 +180,7 @@ Root-level processed CSVs όπως:
 
 Το `reports/figures/` είναι ο curated χώρος για thesis-facing / report-facing figures.
 
-Προτεινόμενη λογική subfolders:
+Materialized thesis-facing subfolders:
 
 - `reports/figures/benchmark/`
 - `reports/figures/diagnostics/`
@@ -186,11 +194,13 @@ Root-level processed CSVs όπως:
 - χρήσιμες για thesis ή docs,
 - και intentionally selected.
 
+Το `reports/figures/` δεν πρέπει να χρησιμοποιείται ως automatic notebook dump directory.
+
 ### `models/`
 
 Το `models/` πρέπει να φιλοξενεί μόνο machine artifacts και όχι reporting artifacts.
 
-Προτεινόμενη λογική subfolder:
+Materialized local-only subfolder:
 
 - `models/local/`
 
@@ -234,8 +244,24 @@ Root-level processed CSVs όπως:
 - notebook-local figures,
 - και άλλα thesis-supporting diagnostic outputs.
 
-Αυτό δεν σημαίνει ότι όλο το directory πρέπει να versioned/tracked δημόσια.  
+Αυτό δεν σημαίνει ότι όλο το directory πρέπει να versioned / tracked δημόσια.  
 Η default αντιμετώπιση του είναι **local rerun / diagnostics bundle**.
+
+### Local graph-related exports
+
+Graph-related local exports μπορεί να περιλαμβάνουν:
+
+- graph-ready artifacts,
+- graph contract verification outputs,
+- graph packaging outputs,
+- graph baseline outputs,
+- graph ablation outputs,
+- controlled graph refinement outputs,
+- serialized graph datasets,
+- graph-model prediction dumps,
+- και graph-specific run manifests.
+
+Αυτά πρέπει να αντιμετωπίζονται ως **local rerun artifacts by default**, εκτός αν κάποιο μικρό, επιλεγμένο artifact προαχθεί ρητά σε thesis-facing ή documentation-facing θέση.
 
 ## What should remain tracked vs local-only
 
@@ -246,16 +272,20 @@ Root-level processed CSVs όπως:
 - `data/processed/baseline_metrics.csv`
 - selected thesis-facing figures στο `reports/figures/`
 - μικρά manifests ή policy-facing text files όταν χρειάζονται για reproducibility
+- `.gitkeep` placeholders που κάνουν τα intended export destinations repository-visible
 
 ### Should remain local-only by default
 
 Κατά κανόνα πρέπει να μένουν local-only:
 
+- raw dataset files,
 - μεγάλα processed datasets,
 - train / validation / test rerun CSVs,
 - full prediction dumps,
 - diagnostics bundles,
 - graph intermediate exports,
+- graph packaging artifacts,
+- graph model outputs,
 - notebook-native figure dumps,
 - model binaries / checkpoints / weights.
 
@@ -305,6 +335,7 @@ Root-level processed CSVs όπως:
 - **Consistent feature space across splits**
 - **Reproducible preprocessing**
 - **Explicit export of final artifacts**
+- **Benchmark-safe reporting**
 
 Ιδιαίτερα σημαντικό είναι ότι ο καθαρισμός outliers και τα thresholds για clipping υπολογίζονται με στατιστικά που προέρχονται από το **train split**, ώστε να αποφεύγεται leakage προς validation / test.
 
@@ -351,13 +382,15 @@ Root-level processed CSVs όπως:
 Η default συμπεριφορά των notebooks πρέπει να είναι η εξής:
 
 - να γράφουν rerun datasets, predictions και diagnostics outputs στο `data/processed/...`
-- να κρατούν notebook-local figures στο local diagnostic/export context
-- και να προάγουν μόνο επιλεγμένες figures στο `reports/figures/...`
+- να κρατούν notebook-local figures στο local diagnostic / export context
+- να προάγουν μόνο επιλεγμένες figures στο `reports/figures/...`
+- και να κρατούν model binaries / checkpoints κάτω από `models/local/` όταν χρειάζονται για local inspection
 
 Με άλλα λόγια:
 
 - **default = local rerun export**
 - **selected only = thesis/report-facing promotion**
+- **model binaries = local-only model artifact space**
 
 Αυτό βοηθά να μη μετατραπεί το repository σε dump όλων των notebook outputs.
 
@@ -370,7 +403,8 @@ Root-level processed CSVs όπως:
 3. Έλεγξε το configuration στο `src/config.py`.
 4. Τρέξε τα notebooks με τη σωστή σειρά.
 5. Επιβεβαίωσε ότι δημιουργούνται ξανά τα canonical processed outputs.
-6. Αν χρειάζεσαι thesis-facing figures, επίλεξε και προώθησε μόνο τις κατάλληλες figures στο `reports/figures/`.
+6. Χρησιμοποίησε το `data/processed/baseline_metrics.csv` ως canonical benchmark authority.
+7. Αν χρειάζεσαι thesis-facing figures, επίλεξε και προώθησε μόνο τις κατάλληλες figures στο `reports/figures/`.
 
 ## Data governance / reproducibility note
 
@@ -385,4 +419,22 @@ Root-level processed CSVs όπως:
   - canonical benchmark authority,
   - thesis-facing selected artifacts,
   - local rerun outputs,
+  - local graph / diagnostics exports,
   - και local-only model artifacts.
+
+## Scope boundary for this artifact-organization pass
+
+Το current artifact-organization pass είναι repository-structure και documentation-governance αλλαγή.
+
+Δεν εισάγει:
+
+- notebook rerun,
+- νέο benchmark,
+- νέο model training,
+- αλλαγή στο canonical benchmark protocol,
+- αλλαγή στο `data/processed/baseline_metrics.csv`,
+- νέο diagnostics claim,
+- νέο graph superiority claim,
+- ή νέο PHM / digital twin claim.
+
+Η αλλαγή περιορίζεται στο να κάνει τα intended artifact destinations πιο καθαρά, thesis-safe και repository-visible χωρίς να αλλάζει το scientific meaning των υπάρχοντων artifacts.

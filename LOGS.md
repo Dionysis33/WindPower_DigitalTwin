@@ -1994,3 +1994,49 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - sequence-based models
 - Mamba / Graph-Mamba experimentation
 - broader PHM-oriented και digital-twin-oriented extensions
+
+
+---
+
+
+## [25/04/2026] - Thesis-Safe Artifact Folder Structure Materialization
+
+### Ολοκληρωμένες Ενέργειες:
+1. Materialized η thesis-safe artifact folder structure που είχε ήδη οριστεί στο artifact-policy pass.
+2. Δημιουργήθηκαν tracked placeholder destinations για:
+   - `data/raw/`
+   - `data/interim/`
+   - `data/processed/predictions/`
+   - `data/processed/diagnostics/`
+   - `data/processed/graph/`
+   - `reports/figures/benchmark/`
+   - `reports/figures/diagnostics/`
+   - `reports/figures/park_level/`
+   - `reports/figures/graph/`
+   - `models/local/`
+3. Ενημερώθηκε η `.gitignore` ώστε τα intended `data/processed/` subfolders να μπορούν να έχουν tracked `.gitkeep` placeholders, ενώ τα actual rerun outputs παραμένουν local-only by default.
+4. Έγινε documentation wording update στο `docs/DATA.md` ώστε η artifact structure να περιγράφεται πλέον ως materialized και όχι απλώς proposed.
+
+### Scientific / Repository Interpretation:
+Η σημερινή αλλαγή είναι repository-organization και artifact-governance pass.
+
+Δεν έγινε:
+- notebook rerun,
+- νέο benchmark,
+- νέο model training,
+- αλλαγή στο `data/processed/baseline_metrics.csv`,
+- νέο diagnostics claim,
+- νέο graph superiority claim,
+- ή νέο PHM / digital twin claim.
+
+Το forecasting-first benchmark backbone παραμένει αμετάβλητο.
+
+### Practical Note:
+Το `data/processed/baseline_metrics.csv` παραμένει η canonical tracked benchmark authority.
+
+Τα μεγάλα processed datasets, prediction dumps, diagnostics bundles, graph exports και model binaries παραμένουν local-only by default. Το `reports/figures/` παραμένει curated thesis-facing / report-facing χώρος και όχι notebook dump directory.
+
+### Validation:
+- Επιβεβαιώθηκε ότι τα `.gitkeep` placeholders είναι trackable.
+- Επιβεβαιώθηκε ότι rerun-style outputs κάτω από `data/processed/` και `models/local/` παραμένουν ignored.
+- Δεν εκτελέστηκαν notebooks.
