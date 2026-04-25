@@ -21,7 +21,7 @@ cycler==0.12.1
 debugpy==1.8.20
 decorator==5.2.1
 defusedxml==0.7.1
-entsoe-py==0.7.10
+entsoe-py==0.8.0
 et_xmlfile==2.0.0
 executing==2.2.1
 fastjsonschema==2.21.2
