@@ -77,7 +77,7 @@ notebook==7.5.5
 notebook_shim==0.2.4
 numpy==2.4.2
 openpyxl==3.1.5
-packaging==26.0
+packaging==26.2
 pandas==3.0.1
 pandocfilters==1.5.1
 parso==0.8.5
