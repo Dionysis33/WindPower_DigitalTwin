@@ -2040,3 +2040,41 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - Επιβεβαιώθηκε ότι τα `.gitkeep` placeholders είναι trackable.
 - Επιβεβαιώθηκε ότι rerun-style outputs κάτω από `data/processed/` και `models/local/` παραμένουν ignored.
 - Δεν εκτελέστηκαν notebooks.
+
+
+---
+
+
+## [26/04/2026] - Dependency Hygiene Micro-Checks and Repository Health Verification
+
+### Ολοκληρωμένες Ενέργειες:
+1. Ολοκληρώθηκε μικρό dependency-maintenance pass μέσω merged Dependabot PRs για minor / patch dependency updates.
+2. Πραγματοποιήθηκε local synchronization του `main` με `origin/main` μετά τα merges.
+3. Εκτελέστηκαν βασικοί repository health checks:
+   - `git status --short`
+   - `python -m pip check`
+   - `python -m flake8 . --exclude=venv,.venv,__pycache__,.git --count --select=E9,F63,F7,F82 --show-source --statistics`
+4. Επιβεβαιώθηκε ότι:
+   - δεν υπάρχουν broken Python requirements,
+   - δεν υπάρχουν critical syntax / import-level flake8 errors στα επιλεγμένα checks,
+   - το working tree παρέμεινε καθαρό μετά την επαναφορά μη σκόπιμης τοπικής αλλαγής στο `requirements.txt`.
+
+### Scientific / Repository Interpretation:
+Η σημερινή εργασία δεν εισάγει νέο modeling, νέο benchmark, νέο notebook result ή νέο diagnostics claim.
+
+Αποτελεί καθαρό repository maintenance βήμα που υποστηρίζει:
+- dependency hygiene,
+- CI confidence,
+- reproducibility stability,
+- και καθαρή συνέχεια πριν από το επόμενο thesis-writing ή documentation-focused issue.
+
+### Practical Note:
+Δεν δημιουργήθηκε νέο `requirements.dev.txt`, ώστε να μη μεταβληθεί πρόωρα το dependency-management design του repository.
+
+### Next Step:
+Επόμενο βήμα είναι η συνέχιση του open issue `#110`:
+
+`[DOCS] Start thesis chapter-writing backbone from forecasting-first repository state`
+
+Το issue αυτό λειτουργεί ως η πρώτη focused μετάβαση από το finalized forecasting-first repository state προς ακαδημαϊκή συγγραφή της πτυχιακής.  
+Η εργασία πρέπει να παραμείνει documentation / thesis-writing only, χωρίς νέο modeling, benchmark rerun, notebook rerun, diagnostics claim ή graph claim.
