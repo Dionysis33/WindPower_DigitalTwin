@@ -25,7 +25,7 @@ entsoe-py==0.8.0
 et_xmlfile==2.0.0
 executing==2.2.1
 fastjsonschema==2.21.2
-filelock==3.21.0
+filelock==3.29.0
 fonttools==4.62.1
 fqdn==1.5.1
 frozenlist==1.8.0
