@@ -2078,3 +2078,72 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 
 Το issue αυτό λειτουργεί ως η πρώτη focused μετάβαση από το finalized forecasting-first repository state προς ακαδημαϊκή συγγραφή της πτυχιακής.  
 Η εργασία πρέπει να παραμείνει documentation / thesis-writing only, χωρίς νέο modeling, benchmark rerun, notebook rerun, diagnostics claim ή graph claim.
+
+
+---
+
+
+## [27/04/2026] - Post-NB14 Documentation Governance and Template Alignment
+
+### Context
+
+Ολοκληρώθηκε ένα μικρό documentation-only alignment pass μετά το post-NB14 README update.
+
+Στόχος ήταν τα governance-facing docs και τα GitHub templates να παραμένουν συνεπή με το current repository state:
+
+- forecasting-first implemented core
+- benchmark-safe diagnostics
+- cautious graph-aware extension through `NB14`
+- local Django demo as read-only thesis-facing presentation support
+- PHM / digital twin as future-oriented framing, not completed deployed functionality
+
+### Completed documentation work
+
+1. **Governance docs alignment**
+   - Ευθυγραμμίστηκαν τα governance-facing documents:
+     - `CONTRIBUTING.md`
+     - `SECURITY.md`
+     - `CODE_OF_CONDUCT.md`
+   - Το `CONTRIBUTING.md` πλέον ακολουθεί το canonical workflow μέχρι `NB14`.
+   - Το `SECURITY.md` αποσαφηνίζει ότι το `django_demo/` είναι local-only, read-only, non-production thesis-facing helper.
+   - Το `CODE_OF_CONDUCT.md` ενισχύθηκε με academic integrity, fair attribution, AI-assisted research και non-overclaiming wording.
+
+2. **GitHub issue / PR template alignment**
+   - Ευθυγραμμίστηκαν τα GitHub templates:
+     - `.github/pull_request_template.md`
+     - `.github/ISSUE_TEMPLATE/experiment-note.md`
+     - `.github/ISSUE_TEMPLATE/question.md`
+     - `.github/ISSUE_TEMPLATE/bug_report.md`
+   - Τα templates πλέον υποστηρίζουν καλύτερα:
+     - documentation-only PRs
+     - no-rerun / no-result-change cases
+     - post-NB14 graph-aware wording
+     - local Django demo non-production boundary
+     - implemented / planned-next / future-work separation
+
+### Scope discipline
+
+Οι αλλαγές ήταν αυστηρά documentation-only.
+
+Δεν έγιναν αλλαγές σε:
+
+- code
+- notebooks
+- benchmark protocol
+- model training
+- metrics
+- artifacts
+- results
+- repository structure
+- scientific scope
+
+### GitHub references
+
+- Issue `#116`: governance docs alignment
+- PR `#117`: merged governance docs update
+- Issue `#118`: GitHub templates alignment
+- PR `#119`: merged template update
+
+### Result
+
+Το repository documentation και τα GitHub templates είναι πλέον πιο συνεπή με το post-NB14 public repository story, χωρίς να εισάγουν overclaiming για PHM, anomaly detection, fault diagnosis, graph superiority, production monitoring ή deployed digital twin functionality.
