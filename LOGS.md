@@ -2147,3 +2147,94 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 ### Result
 
 Το repository documentation και τα GitHub templates είναι πλέον πιο συνεπή με το post-NB14 public repository story, χωρίς να εισάγουν overclaiming για PHM, anomaly detection, fault diagnosis, graph superiority, production monitoring ή deployed digital twin functionality.
+
+
+---
+
+
+## [28/04/2026] - Thesis writing preparation, evidence audit and dissertation structure alignment
+
+### Ολοκληρωμένες Ενέργειες
+
+1. **Μετάβαση από proposal σε dissertation writing**
+   - Ξεκίνησε η πρακτική μετάβαση από το αρχικό research proposal στη δομή της τελικής πτυχιακής εργασίας.
+   - Ενημερώθηκε το thesis cover page ώστε να αντανακλά το CLD6001 Undergraduate Research Project και το current forecasting-first thesis framing.
+   - Προτάθηκε νέο dissertation filename:
+     - `CLD6001_Dissertation_Dionysis_Alexopoulos_2331909.docx`
+
+2. **Έλεγχος διαθέσιμου thesis evidence**
+   - Συγκεντρώθηκαν και ελέγχθηκαν τα βασικά repository evidence artifacts που θα υποστηρίξουν τη συγγραφή:
+     - canonical `baseline_metrics.csv`
+     - NB08 residual diagnostics exports
+     - NB09 park-level diagnostics exports
+     - NB09 case-study figures
+     - NB12 first graph-based forecasting baseline outputs
+     - NB13 graph ablation / spatial sensitivity outputs
+     - notebooks `NB01`–`NB14`
+     - core docs / logs / scope files
+
+3. **Baseline benchmark evidence confirmed**
+   - Επιβεβαιώθηκε ότι το `data/processed/baseline_metrics.csv` παραμένει το canonical benchmark artifact για final test-set baseline reporting.
+   - Το XGBoost καταγράφηκε ως best-performing implemented tabular baseline με βάση το MAE, χωρίς να εισαχθεί claim γενικής model superiority.
+
+4. **Residual και park-level diagnostics evidence confirmed**
+   - Επιβεβαιώθηκε ότι τα NB08 και NB09 outputs είναι επαρκή για thesis-facing residual diagnostics και park-level analysis.
+   - Τα NB09 case-study figures επιλέχθηκαν ως κατάλληλα για qualitative / diagnostic interpretation δύσκολων ή high-bias parks.
+
+5. **Graph-aware extension evidence reviewed**
+   - Ελέγχθηκαν τα NB12 και NB13 graph-related outputs.
+   - Το NB13 επιβεβαιώθηκε ως strict follow-up sensitivity analysis του NB12, με validation-only model selection και test-only final reporting.
+   - Τα graph results θα παρουσιαστούν ως cautious graph-aware extension και όχι ως validated graph superiority claim.
+
+6. **Literature and source-bank readiness**
+   - Επιβεβαιώθηκε ότι υπάρχει επαρκές source-bank foundation για την τελική συγγραφή:
+     - academic journal / conference / preprint sources
+     - academic books
+     - dataset paper
+     - forecasting, preprocessing, residual diagnostics, graph-aware και PHM / Digital Twin future-work sources
+   - Το bibliography work παραμένει σε audit phase για Harvard references, DOI / official links, source type verification και chapter mapping.
+
+7. **Thesis table of contents alignment**
+   - Προτάθηκε αντικατάσταση του proposal-style table of contents με dissertation-style structure:
+     - Περίληψη
+     - Εισαγωγή
+     - Βιβλιογραφική Ανασκόπηση
+     - Μεθοδολογία
+     - Διαδικασία Ανάπτυξης
+     - Αναλυτική Περιγραφή του Τεχνικού Artefact
+     - Αποτελέσματα / Ευρήματα και Ανάλυση
+     - Συμπεράσματα
+     - Βιβλιογραφικές Αναφορές
+     - Παραρτήματα
+
+### Thesis-safe Boundary
+
+Δεν έγινε νέο model training, νέο notebook rerun, νέο benchmark, νέα diagnostics experiment ή αλλαγή στο artifact structure.
+
+Το current thesis framing παραμένει:
+
+> forecasting-first, leakage-aware, benchmark-safe wind power forecasting pipeline πάνω στο DaKS / Kassel synthetic wind power dataset, με downstream residual diagnostics, park-level diagnostics και cautious graph-aware extensions.
+
+Δεν εισήχθησαν claims για:
+
+- completed PHM system
+- anomaly detection module
+- fault diagnosis
+- RUL estimation
+- production digital twin
+- deployed monitoring platform
+- validated graph superiority
+- implemented Mamba / Graph-Mamba model
+
+### Επόμενο Βήμα
+
+Να δημιουργηθεί το chapter evidence map:
+
+- thesis chapter
+- repository evidence
+- academic sources
+- selected figures / tables
+- thesis-safe claims
+- claims to avoid
+
+και στη συνέχεια να ξεκινήσει η πραγματική συγγραφή των κεφαλαίων.
