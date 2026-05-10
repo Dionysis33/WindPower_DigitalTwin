@@ -2106,7 +2106,7 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
      - `CODE_OF_CONDUCT.md`
    - Το `CONTRIBUTING.md` πλέον ακολουθεί το canonical workflow μέχρι `NB14`.
    - Το `SECURITY.md` αποσαφηνίζει ότι το `django_demo/` είναι local-only, read-only, non-production thesis-facing helper.
-   - Το `CODE_OF_CONDUCT.md` ενισχύθηκε με academic integrity, fair attribution, AI-assisted research και non-overclaiming wording.
+   - Το `CODE_OF_CONDUCT.md` ενισχύθηκε με academic integrity, fair attribution, responsible research practice και non-overclaiming wording.
 
 2. **GitHub issue / PR template alignment**
    - Ευθυγραμμίστηκαν τα GitHub templates:
