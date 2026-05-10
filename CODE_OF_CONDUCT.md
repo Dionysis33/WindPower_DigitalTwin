@@ -55,11 +55,11 @@ Because this repository is part of an academic research workflow, contributors a
 - appropriate citation of external datasets and prior work,
 - transparent distinction between evidence, interpretation, and future claims,
 - careful reporting of benchmark results,
-- and responsible use of software tools, including AI-assisted tools where relevant.
+- and responsible use of research, development, and documentation tools where relevant.
 
-AI-assisted or software-assisted research support should not be used to misrepresent authorship, fabricate results, invent citations, or make unsupported scientific claims.
+Research, development, or documentation support tools should not be used to misrepresent authorship, fabricate results, invent citations, or make unsupported scientific claims.
 
-Where academic or institutional policy requires disclosure of AI-assisted work, contributors are expected to follow that policy.
+Where academic or institutional policy requires disclosure of external support, contributors are expected to follow that policy.
 
 ---
 
