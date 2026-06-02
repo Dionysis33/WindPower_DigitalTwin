@@ -21,6 +21,7 @@
 - Ολοκληρώθηκε repository provenance / metadata string check.
 - Ολοκληρώθηκε preprocessing correlation audit για leakage-aware feature-correlation review.
 - Ολοκληρώθηκε XGBoost small-grid tuning audit: δεν βελτίωσε το existing canonical XGBoost baseline και δεν αντικαθιστά το benchmark row.
+- Ολοκληρώθηκε MLP neural-network subset audit: επιβεβαιώνει reproducible subset pipeline, όχι full-dataset benchmark replacement.
 
 ## In progress
 
@@ -45,6 +46,7 @@
 | Park-level diagnostics notebook | `notebooks/09_park_level_diagnostics_and_thesis_consolidation.ipynb` | Tracked, large | Υποψήφια τεκμηρίωση για consolidation |
 | Preprocessing correlation audit | `docs/PREPROCESSING_AUDIT.md`; `scripts/audit_preprocessing_correlations.py`; `reports/figures/diagnostics/preprocessing_target_correlation_top20.png` | Reproducible audit artifact | Supports leakage-aware preprocessing checks and feature-correlation review |
 | XGBoost small-grid tuning | `docs/XGBOOST_TUNING_AUDIT.md`; `scripts/tune_xgboost_small_grid.py`; local-only CSVs κάτω από `data/processed/diagnostics/baseline_tuning/` | Reproducible tuning audit, όχι benchmark replacement | Supports baseline sensitivity/tuning discussion; το existing XGBoost row παραμένει το benchmark |
+| Neural-network subset audit | `docs/NN_SUBSET_EXPERIMENT_AUDIT.md`; `scripts/run_nn_subset_experiments.py`; local-only CSVs κάτω από `data/processed/diagnostics/nn_subset/` | Reproducible subset audit, όχι benchmark replacement | Supports neural-network readiness discussion; δεν υποστηρίζει model-performance improvement claim |
 | Raw/interim/local model data | `.gitkeep` placeholders only | Clean | Δεν αποτελεί committed evidence |
 
 ## Claims allowed in manuscript
@@ -81,8 +83,8 @@
 
 ### 3. Neural-network experiments
 
-- Στόχος: Να αξιολογηθούν μόνο όσα neural-network experiments μπορούν να τεκμηριωθούν καθαρά και να αναπαραχθούν.
-- Output: Minimal results table ή decision note για inclusion/exclusion.
+- Στόχος: Να κρατηθεί το completed MLP subset audit ως readiness evidence χωρίς benchmark overclaiming.
+- Output: `docs/NN_SUBSET_EXPERIMENT_AUDIT.md` με subset metrics, training setup και interpretation boundary.
 - Προτεραιότητα: Μεσαία.
 - Μπορεί να μείνει εκτός αν δεν προλάβω: Νέα architectures χωρίς σταθερό evaluation path.
 

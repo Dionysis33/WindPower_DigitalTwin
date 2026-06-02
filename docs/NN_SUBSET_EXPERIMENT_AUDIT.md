@@ -47,6 +47,19 @@ Smoke/capped runs γράφουν ξεχωριστά prefixed outputs και έχ
 
 Όλα τα generated CSVs κάτω από `data/processed/**` είναι local-only generated outputs. Το `data/processed/baseline_metrics.csv` δεν γίνεται overwrite.
 
+## Full subset result summary
+
+| Κατηγορία | Τιμή |
+| --- | --- |
+| Run mode | `subset` |
+| Selected parks | `00183`, `00198`, `00303`, `00427` |
+| Data support | train rows `31,276`; validation rows `2,880`; test rows `17,180`; numeric features `41`; common parks `256` |
+| Training setup | PyTorch tabular MLP; hidden dims `64,32`; learning rate `0.001`; weight decay `1e-05`; batch size `1024`; epochs requested `30`; best epoch `20`; best validation loss MSE `0.014916`; device `cpu`; elapsed seconds `45.67` |
+| Validation metrics | MAE `0.076672`; RMSE `0.122131`; R2 `0.856115` |
+| Test metrics | MAE `0.084520`; RMSE `0.131781`; R2 `0.870832` |
+
+Το completed MLP subset audit δείχνει ότι το tabular neural-network subset pipeline τρέχει reproducibly με deterministic park subset, train-only scaling, validation-selected epoch και one-time test evaluation. Το αποτέλεσμα δεν είναι full-dataset benchmark replacement και δεν πρέπει να συγκρίνεται ως ισοδύναμο με το `data/processed/baseline_metrics.csv`. Δεν τεκμηριώνεται model-performance improvement από αυτό το audit. Τα generated CSV outputs παραμένουν local-only κάτω από `data/processed/**`, δεν είναι committed, και το `baseline_metrics.csv` δεν έγινε overwrite.
+
 ## Commands
 
 Smoke test:
