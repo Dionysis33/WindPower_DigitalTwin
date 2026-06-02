@@ -110,7 +110,7 @@ Send2Trash==2.1.0
 setuptools==82.0.1
 six==1.17.0
 soupsieve==2.8.3
-SQLAlchemy==2.0.46
+SQLAlchemy==2.0.49
 stack-data==0.6.3
 sympy==1.14.0
 terminado==0.18.1
