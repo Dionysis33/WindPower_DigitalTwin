@@ -27,8 +27,6 @@ share/python-wheels/
 MANIFEST
 
 # PyInstaller
-# Usually these files are written by a python script from a template
-# before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -55,17 +53,17 @@ cover/
 *.mo
 *.pot
 
-# Django stuff
+# Django
 *.log
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-# Flask stuff
+# Flask
 instance/
 .webassets-cache
 
-# Scrapy stuff
+# Scrapy
 .scrapy
 
 # Sphinx documentation
@@ -86,13 +84,13 @@ ipython_config.py
 # .python-version
 
 # pipenv
-#Pipfile.lock
+# Pipfile.lock
 
 # UV
-#uv.lock
+# uv.lock
 
 # poetry
-#poetry.lock
+# poetry.lock
 
 # pdm
 .pdm.toml
@@ -102,14 +100,14 @@ ipython_config.py
 # PEP 582
 __pypackages__/
 
-# Celery stuff
+# Celery
 celerybeat-schedule
 celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
 
-# Environments
+# Local environments
 .env
 .venv
 env/
@@ -118,7 +116,7 @@ ENV/
 env.bak/
 venv.bak/
 
-# Editor / IDE
+# Editor / IDE settings
 .vscode/
 .spyderproject
 .spyproject
@@ -133,10 +131,10 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# Pyre type checker
+# Pyre
 .pyre/
 
-# pytype static type analyzer
+# pytype
 .pytype/
 
 # Cython debug symbols
@@ -145,18 +143,14 @@ cython_debug/
 # Ruff
 .ruff_cache/
 
-# PyPI configuration file
+# PyPI configuration
 .pypirc
 
-# Cursor
-.cursorignore
-.cursorindexingignore
-
 # ---------------------------------------------------------
-# THESIS-SAFE ARTIFACT POLICY
+# LOCAL ARTIFACT POLICY
 # ---------------------------------------------------------
 
-# 1) Raw / interim data remain local-only
+# 1) Keep source and temporary data local-only
 data/raw/**
 !data/raw/
 !data/raw/.gitkeep
@@ -165,26 +159,25 @@ data/interim/**
 !data/interim/
 !data/interim/.gitkeep
 
-# 2) Processed outputs remain local-only by default,
-#    except for the canonical tracked benchmark artifact
-#    and empty tracked directory placeholders for intended export destinations.
+# 2) Keep generated outputs local-only by default,
+#    except for selected tracked reference files and placeholders.
 data/processed/**
 !data/processed/
 !data/processed/baseline_metrics.csv
 
-# Intended local rerun / prediction export destinations
+# Local prediction outputs
 !data/processed/predictions/
 !data/processed/predictions/.gitkeep
 
-# Intended local diagnostics export destinations
+# Local diagnostic outputs
 !data/processed/diagnostics/
 !data/processed/diagnostics/.gitkeep
 
-# Intended graph-ready / graph-verification / graph-packaging export destinations
+# Local graph outputs
 !data/processed/graph/
 !data/processed/graph/.gitkeep
 
-# 3) Local-only model artifacts
+# 3) Keep local model artifacts out of version control
 models/local/**
 !models/local/
 !models/local/.gitkeep
@@ -198,6 +191,5 @@ models/*.pth
 models/*.ckpt
 models/*.onnx
 
-# 4) Selected thesis / report-facing figures under reports/figures/
-#    stay trackable by default.
-#    Do not use reports/figures/ as a notebook dump folder.
+# 4) Keep selected report figures trackable.
+#    Avoid using this folder as a general dump location.
