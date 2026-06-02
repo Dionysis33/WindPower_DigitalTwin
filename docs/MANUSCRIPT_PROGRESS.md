@@ -20,6 +20,7 @@
 - Ελέγχθηκαν generated/cache files και local artifact paths.
 - Ολοκληρώθηκε repository provenance / metadata string check.
 - Ολοκληρώθηκε preprocessing correlation audit για leakage-aware feature-correlation review.
+- Ολοκληρώθηκε XGBoost small-grid tuning audit: δεν βελτίωσε το existing canonical XGBoost baseline και δεν αντικαθιστά το benchmark row.
 
 ## In progress
 
@@ -29,7 +30,7 @@
 
 ## Pending experiments
 
-- Επιβεβαίωση των τελικών baseline metrics από committed ή reproducible artifacts.
+- Τελική επιλογή manuscript wording για τα baseline metrics με βάση committed ή reproducible artifacts.
 - Έλεγχος graph-readiness και graph-model inputs πριν από οποιοδήποτε manuscript claim.
 - Επανέλεγχος residual diagnostics και PHM-relevant ευρημάτων για tables/figures.
 - Απόφαση για το ποια processed outputs πρέπει να μείνουν tracked και ποια να αναπαράγονται.
@@ -43,6 +44,7 @@
 | Residual diagnostics notebook | `notebooks/08_residual_diagnostics_and_operating_regimes.ipynb` | Tracked, large | Υποψήφια diagnostic τεκμηρίωση |
 | Park-level diagnostics notebook | `notebooks/09_park_level_diagnostics_and_thesis_consolidation.ipynb` | Tracked, large | Υποψήφια τεκμηρίωση για consolidation |
 | Preprocessing correlation audit | `docs/PREPROCESSING_AUDIT.md`; `scripts/audit_preprocessing_correlations.py`; `reports/figures/diagnostics/preprocessing_target_correlation_top20.png` | Reproducible audit artifact | Supports leakage-aware preprocessing checks and feature-correlation review |
+| XGBoost small-grid tuning | `docs/XGBOOST_TUNING_AUDIT.md`; `scripts/tune_xgboost_small_grid.py`; local-only CSVs κάτω από `data/processed/diagnostics/baseline_tuning/` | Reproducible tuning audit, όχι benchmark replacement | Supports baseline sensitivity/tuning discussion; το existing XGBoost row παραμένει το benchmark |
 | Raw/interim/local model data | `.gitkeep` placeholders only | Clean | Δεν αποτελεί committed evidence |
 
 ## Claims allowed in manuscript
@@ -72,8 +74,8 @@
 
 ### 2. Baseline tuning
 
-- Στόχος: Να ελεγχθεί αν τα baseline settings είναι επαρκώς τεκμηριωμένα και αν χρειάζεται μικρό tuning πριν το manuscript.
-- Output: Verified baseline metrics και σαφής αναφορά στο artifact που τα υποστηρίζει.
+- Στόχος: Να τεκμηριωθεί ότι το μικρό XGBoost tuning audit δεν αντικαθιστά το canonical benchmark row.
+- Output: `docs/XGBOOST_TUNING_AUDIT.md` με σύγκριση tuned XGBoost και existing canonical XGBoost.
 - Προτεραιότητα: Υψηλή.
 - Μπορεί να μείνει εκτός αν δεν προλάβω: Μεγάλο hyperparameter sweep χωρίς άμεση manuscript αξία.
 

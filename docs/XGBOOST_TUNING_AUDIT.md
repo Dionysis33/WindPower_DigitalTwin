@@ -50,6 +50,24 @@ Smoke/capped runs γράφουν ξεχωριστά prefixed outputs και έχ
 
 Τα generated CSVs μένουν local-only κάτω από `data/processed/**` και δεν αντικαθιστούν το `baseline_metrics.csv`.
 
+## Full-run result summary
+
+Selected validation configuration:
+
+- `config_id`: `3`
+- `n_estimators`: `400`
+- `max_depth`: `8`
+- `learning_rate`: `0.03`
+- `subsample`: `0.8`
+- `colsample_bytree`: `0.8`
+
+| Model / artifact | Validation MAE | Validation RMSE | Validation R2 | Test MAE | Test RMSE | Test R2 | Χρήση |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| Selected tuned XGBoost small-grid run | `0.050490` | `0.093525` | `0.854611` | `0.065765` | `0.113958` | `0.859204` | Reproducible tuning audit |
+| Existing canonical XGBoost baseline (`baseline_metrics.csv`) | n/a | n/a | n/a | `0.065750` | `0.113494` | `0.860348` | Benchmark row |
+
+Το small validation-selected XGBoost tuning run δεν βελτίωσε το existing canonical XGBoost baseline στο test split. Η διαφορά είναι μικρή, αλλά τα test metrics του tuned configuration είναι ελαφρώς χειρότερα σε MAE, RMSE και R2 από το tracked `baseline_metrics.csv`. Επομένως το existing XGBoost baseline παραμένει το benchmark row. Το tuning run παραμένει χρήσιμο ως reproducible sensitivity/tuning audit και όχι ως benchmark replacement. Δεν τεκμηριώνεται model-performance improvement, τα full-run CSVs παραμένουν local-only generated outputs κάτω από `data/processed/**` και δεν είναι committed, και το `baseline_metrics.csv` δεν έγινε overwrite.
+
 ## Commands
 
 Smoke test:
