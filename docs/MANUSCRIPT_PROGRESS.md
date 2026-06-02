@@ -19,6 +19,7 @@
 - Επιβεβαιώθηκε το experiment branch.
 - Ελέγχθηκαν generated/cache files και local artifact paths.
 - Ολοκληρώθηκε repository provenance / metadata string check.
+- Ολοκληρώθηκε preprocessing correlation audit για leakage-aware feature-correlation review.
 
 ## In progress
 
@@ -41,6 +42,7 @@
 | Baseline modeling notebook | `notebooks/06_baseline_modeling.ipynb` | Tracked, large | Να χρησιμοποιηθεί μόνο μετά από verification των outputs |
 | Residual diagnostics notebook | `notebooks/08_residual_diagnostics_and_operating_regimes.ipynb` | Tracked, large | Υποψήφια diagnostic τεκμηρίωση |
 | Park-level diagnostics notebook | `notebooks/09_park_level_diagnostics_and_thesis_consolidation.ipynb` | Tracked, large | Υποψήφια τεκμηρίωση για consolidation |
+| Preprocessing correlation audit | `docs/PREPROCESSING_AUDIT.md`; `scripts/audit_preprocessing_correlations.py`; `reports/figures/diagnostics/preprocessing_target_correlation_top20.png` | Reproducible audit artifact | Supports leakage-aware preprocessing checks and feature-correlation review |
 | Raw/interim/local model data | `.gitkeep` placeholders only | Clean | Δεν αποτελεί committed evidence |
 
 ## Claims allowed in manuscript
