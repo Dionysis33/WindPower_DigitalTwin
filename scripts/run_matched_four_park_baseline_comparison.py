@@ -24,6 +24,11 @@ import numpy as np
 import pandas as pd
 
 
+# ---------------------------------------------------------------------------
+# Repository path/config resolution
+# ---------------------------------------------------------------------------
+# Resolve paths through src.config when available, while keeping this script
+# runnable as a standalone local audit utility from the repository checkout.
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
@@ -35,6 +40,7 @@ except ImportError:
 
 
 def cfg_value(name: str, fallback):
+    """Return a project config value, falling back for standalone execution."""
     if cfg is None:
         return fallback
     return getattr(cfg, name, fallback)
@@ -57,6 +63,11 @@ DEFAULT_OUTPUT_DIR = (
     DATA_PROCESSED / "diagnostics" / "matched_four_park_baseline"
 )
 
+# ---------------------------------------------------------------------------
+# Fixed four-park evidence settings
+# ---------------------------------------------------------------------------
+# These settings define the matched local evidence space. They must remain
+# separate from the canonical full-dataset benchmark in baseline_metrics.csv.
 SELECTED_PARKS = ["00183", "00198", "00303", "00427"]
 EXPECTED_ROW_COUNTS = {
     "train": 31_276,
@@ -119,7 +130,11 @@ MLP_TRAIN_BATCH_SIZE = 4096
 MLP_EVAL_BATCH_SIZE = 8192
 
 
+# ---------------------------------------------------------------------------
+# CLI entrypoint configuration
+# ---------------------------------------------------------------------------
 def parse_args() -> argparse.Namespace:
+    """Parse CLI flags without reading data, fitting models, or writing files."""
     parser = argparse.ArgumentParser(
         description=(
             "Run local matched four-park baseline metrics for the same parks "
@@ -154,12 +169,14 @@ def parse_args() -> argparse.Namespace:
 
 
 def resolve_output_dir(path: Path) -> Path:
+    """Resolve the local diagnostics output directory without creating it."""
     if path.is_absolute():
         return path
     return ROOT / path
 
 
 def output_paths(output_dir: Path) -> dict[str, Path]:
+    """Format the three local CSV output paths; this does not write files."""
     return {
         "validation": output_dir / "matched_four_park_baseline_validation_metrics.csv",
         "selected_test": output_dir / "matched_four_park_baseline_selected_test_metrics.csv",
@@ -168,6 +185,7 @@ def output_paths(output_dir: Path) -> dict[str, Path]:
 
 
 def require_existing_file(path: Path, label: str) -> None:
+    """Validate that a required input artifact exists before reading it."""
     if not path.exists():
         raise FileNotFoundError(f"Missing required {label}: {path}")
     if not path.is_file():
@@ -175,14 +193,20 @@ def require_existing_file(path: Path, label: str) -> None:
 
 
 def normalize_park_id(series: pd.Series) -> pd.Series:
+    """Normalize park identifiers to the zero-padded string contract."""
     return series.astype(str).str.replace(".0", "", regex=False).str.zfill(5)
 
 
 def read_header(path: Path) -> pd.Index:
+    """Read only a CSV header for schema validation; no data rows are loaded."""
     return pd.read_csv(path, nrows=0).columns
 
 
+# ---------------------------------------------------------------------------
+# Safety/leakage checks
+# ---------------------------------------------------------------------------
 def validate_headers(headers: dict[str, pd.Index]) -> None:
+    """Check required split columns and identical schemas across splits."""
     required = {
         TARGET_COLUMN,
         PARK_ID_COLUMN,
@@ -213,6 +237,12 @@ def read_filtered_split(
     split_name: str,
     selected_parks: list[str],
 ) -> pd.DataFrame:
+    """Read one split and filter it to the fixed selected parks.
+
+    This function reads processed split data, normalizes park IDs, parses
+    timestamps, and returns deterministic row order. It does not fit models or
+    write outputs.
+    """
     selected = set(selected_parks)
     frames: list[pd.DataFrame] = []
 
@@ -244,6 +274,12 @@ def validate_selected_split(
     split_name: str,
     expected_flag_values: set[int],
 ) -> None:
+    """Validate the selected split support and temporal backbone.
+
+    The checks preserve the existing temporal split contract: exact row counts,
+    exact selected parks, no duplicate `(park_id, timestamp)` keys, expected
+    `test_flag` values, and monotonic timestamps within each park.
+    """
     if df.empty:
         raise ValueError(f"The selected {split_name} split is empty.")
 
@@ -295,6 +331,7 @@ def validate_selected_split(
 
 
 def validate_no_cross_split_overlap(split_frames: dict[str, pd.DataFrame]) -> None:
+    """Ensure train, validation, and test have disjoint park-time keys."""
     keys = {
         split_name: df[[PARK_ID_COLUMN, TIMESTAMP_COLUMN]].drop_duplicates()
         for split_name, df in split_frames.items()
@@ -317,7 +354,16 @@ def validate_no_cross_split_overlap(split_frames: dict[str, pd.DataFrame]) -> No
             )
 
 
+# ---------------------------------------------------------------------------
+# Feature contract
+# ---------------------------------------------------------------------------
 def infer_numeric_features(train_df: pd.DataFrame) -> tuple[list[str], list[str]]:
+    """Infer learned numeric feature columns from train only.
+
+    Target, identifiers, split flags, baseline prediction, and `turbine` are
+    excluded before numeric feature inference to avoid leakage and preserve the
+    NB06/NB07 feature contract.
+    """
     candidate_features = [
         column for column in train_df.columns if column not in BLOCKED_FEATURE_COLUMNS
     ]
@@ -348,6 +394,11 @@ def validate_feature_contract(
     split_frames: dict[str, pd.DataFrame],
     numeric_features: list[str],
 ) -> None:
+    """Validate train-inferred numeric features across all three splits.
+
+    This checks availability, numeric dtype, nulls, and finite values without
+    using validation or test statistics to choose features.
+    """
     required = {TARGET_COLUMN, *numeric_features}
     for split_name, df in split_frames.items():
         missing = sorted(required - set(df.columns))
@@ -379,6 +430,11 @@ def validate_feature_contract(
 
 
 def load_and_validate_subset() -> tuple[dict[str, pd.DataFrame], list[str], list[str]]:
+    """Load processed splits and run all non-model validation checks.
+
+    The returned feature list is inferred from train only. No models are fit and
+    no output files are written by this function.
+    """
     for label, path in [
         ("train split", TRAIN_PATH),
         ("validation split", VAL_PATH),
@@ -415,10 +471,12 @@ def split_xy(
     df: pd.DataFrame,
     numeric_features: list[str],
 ) -> tuple[pd.DataFrame, pd.Series]:
+    """Split a validated dataframe into feature matrix and target vector."""
     return df[numeric_features].copy(), df[TARGET_COLUMN].copy()
 
 
 def compute_metrics(y_true: pd.Series | np.ndarray, y_pred: np.ndarray) -> dict[str, float]:
+    """Compute the shared MAE, RMSE, and R2 metric set."""
     from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
     y_true_array = np.asarray(y_true, dtype=np.float64)
@@ -432,16 +490,25 @@ def compute_metrics(y_true: pd.Series | np.ndarray, y_pred: np.ndarray) -> dict[
 
 
 def config_to_json(config: dict[str, Any] | None) -> str:
+    """Format a model configuration for CSV output without changing it."""
     if config is None:
         return "fixed"
     return json.dumps(config, sort_keys=True)
 
 
+# ---------------------------------------------------------------------------
+# Persistence baseline logic
+# ---------------------------------------------------------------------------
 def build_seeded_persistence(
     previous_split_df: pd.DataFrame,
     current_split_df: pd.DataFrame,
     pred_col: str = "Persistence_Pred",
 ) -> pd.DataFrame:
+    """Build full-support persistence predictions for one evaluation split.
+
+    The first row for each park is seeded from the previous split's last target
+    value, matching NB06 behavior and avoiding row trimming in validation/test.
+    """
     prev_sorted = (
         previous_split_df.sort_values(
             [PARK_ID_COLUMN, TIMESTAMP_COLUMN],
@@ -492,6 +559,7 @@ def validation_row(
     metrics: dict[str, float],
     selection_rule: str,
 ) -> dict[str, Any]:
+    """Format one validation metrics row for local diagnostics CSV output."""
     return {
         "run_mode": "matched_four_park",
         "evidence_status": "local matched-subset evidence; not benchmark replacement",
@@ -517,6 +585,7 @@ def selected_test_row(
     selection_rule: str,
     comparability_note: str,
 ) -> dict[str, Any]:
+    """Format one selected-test row after final one-time test evaluation."""
     return {
         "run_mode": "matched_four_park",
         "evidence_status": "local matched-subset evidence; not benchmark replacement",
@@ -545,6 +614,7 @@ def selected_test_row(
 
 
 def select_best_validation_row(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    """Select a validation row by the NB07 metric ordering."""
     return (
         pd.DataFrame(rows)
         .sort_values(["MAE", "RMSE", "R2"], ascending=[True, True, False], kind="mergesort")
@@ -558,6 +628,11 @@ def evaluate_persistence(
     numeric_features: list[str],
     row_counts: dict[str, int],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Evaluate the fixed persistence baseline.
+
+    This fits no learned model. It reports validation metrics and one final
+    test evaluation using the seeded persistence logic.
+    """
     val_eval = build_seeded_persistence(split_frames["train"], split_frames["validation"])
     test_eval = build_seeded_persistence(split_frames["validation"], split_frames["test"])
 
@@ -595,6 +670,9 @@ def evaluate_persistence(
     return validation_rows, test_row
 
 
+# ---------------------------------------------------------------------------
+# Learned baseline evaluation
+# ---------------------------------------------------------------------------
 def evaluate_linear_regression(
     X_train: pd.DataFrame,
     y_train: pd.Series,
@@ -605,6 +683,11 @@ def evaluate_linear_regression(
     numeric_features: list[str],
     row_counts: dict[str, int],
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Fit and evaluate the fixed Linear Regression baseline.
+
+    The model is fit on the matched train subset, reported on validation, and
+    evaluated once on the matched test subset.
+    """
     from sklearn.linear_model import LinearRegression
 
     model = LinearRegression()
@@ -651,6 +734,11 @@ def evaluate_random_forest(
     row_counts: dict[str, int],
     seed: int,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Evaluate Random Forest with validation-only config selection.
+
+    Each candidate is fit on train and scored on validation. The selected
+    configuration is refit on train and evaluated once on test.
+    """
     from sklearn.ensemble import RandomForestRegressor
 
     selection_rule = "validation MAE asc, validation RMSE asc, validation R2 desc"
@@ -707,6 +795,11 @@ def evaluate_xgboost(
     row_counts: dict[str, int],
     seed: int,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Evaluate XGBoost with validation-only config selection.
+
+    The canonical benchmark is not read or updated; this function only returns
+    local validation rows and the one-time selected test row.
+    """
     from xgboost import XGBRegressor
 
     selection_rule = "validation MAE asc, validation RMSE asc, validation R2 desc"
@@ -764,7 +857,11 @@ def evaluate_xgboost(
     return rows, test_row
 
 
+# ---------------------------------------------------------------------------
+# MLP training/selection
+# ---------------------------------------------------------------------------
 def set_mlp_reproducibility(seed: int) -> None:
+    """Set PyTorch and NumPy seeds for reproducible local MLP fitting."""
     import torch
 
     random.seed(seed)
@@ -778,6 +875,7 @@ def set_mlp_reproducibility(seed: int) -> None:
 
 
 def build_mlp_model(input_dim: int, hidden_dims: tuple[int, ...], dropout: float):
+    """Construct the NB07-style tabular MLP architecture."""
     import torch.nn as nn
 
     layers: list[Any] = []
@@ -798,6 +896,7 @@ def make_loader(
     shuffle: bool,
     seed: int,
 ):
+    """Create a PyTorch DataLoader without writing artifacts."""
     import torch
     from torch.utils.data import DataLoader, TensorDataset
 
@@ -818,6 +917,7 @@ def make_loader(
 
 
 def run_mlp_epoch(model, loader, criterion, device, optimizer=None) -> float:
+    """Run one MLP train or evaluation epoch and return average MSE loss."""
     is_train = optimizer is not None
     model.train(mode=is_train)
     total_loss = 0.0
@@ -843,6 +943,7 @@ def run_mlp_epoch(model, loader, criterion, device, optimizer=None) -> float:
 
 
 def predict_mlp(model, loader, device) -> np.ndarray:
+    """Generate MLP predictions for an existing loader without fitting."""
     import torch
 
     model.eval()
@@ -865,6 +966,11 @@ def train_mlp_with_early_stopping(
     config: dict[str, Any],
     seed: int,
 ) -> tuple[Any, float, int, Any]:
+    """Fit one MLP config using validation-only early stopping.
+
+    The selected state is held in memory only. No checkpoint, model binary, or
+    canonical benchmark artifact is written.
+    """
     import torch
     import torch.nn as nn
 
@@ -933,6 +1039,12 @@ def evaluate_mlp(
     row_counts: dict[str, int],
     seed: int,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Evaluate the NB07-style MLP with train-only scaling.
+
+    StandardScaler is fit only on the matched train subset and applied to
+    validation/test. Config/epoch selection uses validation loss, and the final
+    selected model is evaluated once on the matched test subset.
+    """
     from sklearn.preprocessing import StandardScaler
 
     scaler = StandardScaler()
@@ -1035,6 +1147,12 @@ def run_models(
     numeric_features: list[str],
     seed: int,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Run all five baseline families and collect local metrics tables.
+
+    This is the only function that fits models across the full baseline set.
+    It returns dataframes for output writing and does not touch canonical
+    benchmark artifacts.
+    """
     X_train, y_train = split_xy(split_frames["train"], numeric_features)
     X_val, y_val = split_xy(split_frames["validation"], numeric_features)
     X_test, y_test = split_xy(split_frames["test"], numeric_features)
@@ -1104,6 +1222,9 @@ def run_models(
     return validation_df, selected_test_df
 
 
+# ---------------------------------------------------------------------------
+# Output writing and manifest policy
+# ---------------------------------------------------------------------------
 def build_manifest(
     args: argparse.Namespace,
     output_files: dict[str, Path],
@@ -1113,6 +1234,11 @@ def build_manifest(
     elapsed_seconds: float,
     dry_run: bool,
 ) -> pd.DataFrame:
+    """Build the local run manifest dataframe.
+
+    The manifest records selected parks, row counts, feature policy, output
+    paths, and the rule that baseline_metrics.csv is not overwritten.
+    """
     rows = {
         "script": "scripts/run_matched_four_park_baseline_comparison.py",
         "run_mode": "dry_run" if dry_run else "matched_four_park",
@@ -1157,6 +1283,7 @@ def print_dry_run_report(
     numeric_features: list[str],
     non_numeric_excluded: list[str],
 ) -> None:
+    """Print the validated model/output plan without fitting or writing CSVs."""
     print("Dry run complete. No models were fitted and no CSVs were written.")
     print(f"Selected parks: {', '.join(SELECTED_PARKS)}")
     for split_name in ["train", "validation", "test"]:
@@ -1183,13 +1310,18 @@ def write_outputs(
     selected_test_df: pd.DataFrame,
     manifest_df: pd.DataFrame,
 ) -> None:
+    """Write local diagnostics CSVs only under the configured output directory."""
     output_files["validation"].parent.mkdir(parents=True, exist_ok=True)
     validation_df.to_csv(output_files["validation"], index=False)
     selected_test_df.to_csv(output_files["selected_test"], index=False)
     manifest_df.to_csv(output_files["manifest"], index=False)
 
 
+# ---------------------------------------------------------------------------
+# CLI entrypoint
+# ---------------------------------------------------------------------------
 def main() -> None:
+    """Coordinate CLI execution, preserving dry-run and local-output boundaries."""
     args = parse_args()
     run_start = time.perf_counter()
     output_dir = resolve_output_dir(args.output_dir)
