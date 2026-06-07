@@ -20,6 +20,20 @@ The tracked `data/processed/baseline_metrics.csv` artifact is the repository's c
 
 XGBoost has the lowest MAE only within this canonical comparable tabular benchmark space.
 
+## Matched four-park row-level baseline evidence
+
+The matched four-park baseline audit now documents controlled row-level baseline evidence for the same selected parks used in the neural subset audits: `docs/MATCHED_FOUR_PARK_BASELINE_COMPARISON_AUDIT.md`.
+
+The selected test metrics below provide row-level tabular context on parks `00183`, `00198`, `00303`, and `00427`. They are separate from the canonical full-dataset benchmark above and are not directly equivalent to the recurrent sequence-window setup used by the GRU and LSTM audits.
+
+| Evidence space | Model | Test MAE | Test RMSE | Test R2 |
+|---|---:|---:|---:|---:|
+| Matched four-park row-level baseline | XGBoost | 0.07916488214900315 | 0.13048056280434156 | 0.8733693976256192 |
+| Matched four-park row-level baseline | Persistence | 0.08079669733592597 | 0.1474239474217667 | 0.8383472483419506 |
+| Matched four-park row-level baseline | Random Forest | 0.08389790455769289 | 0.13389992624988545 | 0.8666454906497136 |
+| Matched four-park row-level baseline | MLP | 0.08538023613281545 | 0.13285203467352433 | 0.868724569689501 |
+| Matched four-park row-level baseline | Linear Regression | 0.08787732510386184 | 0.13507058489456872 | 0.8643035171583309 |
+
 ## Controlled four-park neural subset evidence
 
 The following neural metrics are documented controlled four-park subset evidence only. These rows are not ranked against the canonical baseline rows above.
@@ -35,6 +49,9 @@ The following neural metrics are documented controlled four-park subset evidence
 | Comparison | Directly comparable? | Reason | Allowed wording | Disallowed wording |
 |---|---|---|---|---|
 | Canonical baseline model vs canonical baseline model | Yes | Rows share the same canonical final test-set benchmark artifact and metric definitions. | "Within `data/processed/baseline_metrics.csv`, XGBoost has the lowest MAE among the recorded canonical baseline rows." | "XGBoost is superior to all future or non-canonical models." |
+| Matched four-park row-level baseline model vs matched four-park row-level baseline model | Yes, within the matched row-level baseline evidence space only | Rows share the same four selected parks and row-level tabular framing documented in `docs/MATCHED_FOUR_PARK_BASELINE_COMPARISON_AUDIT.md`. | "Within the matched four-park row-level baseline table, XGBoost has the lowest selected test MAE." | "The matched four-park row-level table proves model superiority across the canonical and neural sequence evaluation spaces." |
+| Matched four-park row-level baseline rows vs canonical full-dataset baseline rows | No | The matched rows are controlled four-park row-level evidence, while `baseline_metrics.csv` remains the canonical full-dataset benchmark artifact for the implemented tabular baseline ladder. | "The matched four-park baseline table provides controlled subset context without changing the canonical benchmark ranking." | "The matched four-park rows replace or revise the canonical full-dataset benchmark." |
+| Matched four-park row-level baseline rows vs GRU/LSTM sequence subsets | Limited | The rows use the same selected parks, but the matched baseline table is row-level tabular evidence while GRU/LSTM use 24-step sequence windows. | "The matched row-level baseline table gives controlled context for the same four parks but is not directly equivalent to the recurrent sequence-window setup." | "The matched row-level baseline rows and GRU/LSTM rows form one fully equivalent ranking." |
 | GRU vs LSTM controlled sequence subset | Yes, within the controlled sequence subset only | Both runs use the same four parks, feature count, lookback length, sequence framing, validation-selected state, and one test evaluation. | "In the controlled four-park sequence subset, GRU and LSTM can be compared as local sequence evidence." | "The GRU or LSTM result changes the canonical benchmark ranking." |
 | Neural subset models vs canonical full-dataset baseline rows | No | The neural audits use controlled four-park subset evidence, while `baseline_metrics.csv` is the canonical final test-set benchmark artifact for the implemented tabular baseline ladder. | "The neural subset audits support neural-pipeline readiness and motivate matched or full-dataset follow-up experiments." | "The neural subset rows outperform or underperform the canonical baseline rows in the same benchmark." |
 | Graph/diagnostic evidence vs canonical benchmark rows | No | Graph and diagnostic outputs are supporting or local rerun evidence unless explicitly promoted; they do not redefine `data/processed/baseline_metrics.csv`. | "Graph and diagnostic evidence can inform interpretation and future work while preserving the canonical benchmark boundary." | "Graph or diagnostic outputs replace the canonical benchmark table or prove graph superiority." |
@@ -46,6 +63,8 @@ The following neural metrics are documented controlled four-park subset evidence
 
 "The MLP, GRU, and LSTM audits provide controlled four-park neural evidence on parks `00183`, `00198`, `00303`, and `00427`, using train-only preprocessing and validation-selected model states followed by one test evaluation."
 
+"The matched four-park row-level baseline audit provides controlled tabular baseline context on the same selected parks, while remaining separate from both the canonical full-dataset benchmark and the GRU/LSTM recurrent sequence-window evidence."
+
 "These neural subset metrics should not be merged into the canonical full benchmark ranking or used to claim superiority over XGBoost, MLP, or other baseline rows. They support neural-pipeline readiness and motivate future comparable full-benchmark or matched-subset experiments."
 
 ## Limitations and next steps
@@ -53,11 +72,13 @@ The following neural metrics are documented controlled four-park subset evidence
 Current limitations:
 
 - The neural evidence is controlled four-park subset evidence, not a full-dataset benchmark replacement.
+- The matched four-park baseline evidence is controlled row-level subset evidence, not a full-dataset benchmark replacement.
 - The tabular MLP subset row and the GRU/LSTM sequence subset rows use different input framing.
+- The matched row-level baseline table and the GRU/LSTM sequence subset rows use different input framing.
 - Graph and diagnostic evidence remain outside the canonical tabular benchmark ranking unless a future artifact is explicitly promoted and reviewed.
 
 Next steps:
 
-- Matched four-park baseline comparison.
+- Use the matched four-park baseline audit as controlled row-level context for manuscript discussion.
 - Optional full-dataset neural scaling for the best feasible neural model.
 - Manuscript table integration after comparability review.
