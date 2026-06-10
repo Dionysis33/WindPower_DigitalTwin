@@ -7,7 +7,7 @@
 - Flattened-window XGBoost.
 - Pure PyTorch PatchTST-Lite Transformer.
 
-Το audit είναι scaffold-first. Τα προεπιλεγμένα flags δεν εκτελούν training, test evaluation ή exports. Τα αποτελέσματα που θα συμπληρωθούν μετά από χειροκίνητο full local run είναι local-only diagnostics και δεν αντικαθιστούν το canonical full benchmark.
+Το audit καταγράφει το ολοκληρωμένο full local run του NB19. Τα αποτελέσματα είναι controlled four-park subset evidence, προκύπτουν από local-only diagnostics και δεν αντικαθιστούν το canonical full benchmark.
 
 ## Purpose And Scope
 
@@ -54,7 +54,8 @@
 
 | split | park_id | segment_id | segment_start_timestamp | segment_end_timestamp | segment_rows | lookback_steps | windows |
 |---|---|---:|---|---|---:|---:|---:|
-| pending | pending | pending | pending | pending | pending | 24 | pending |
+
+Η segment-level table παραμένει local diagnostic output. Τα aggregate full-run counts τεκμηριώνονται παρακάτω.
 
 ## Flattened-Window XGBoost
 
@@ -136,44 +137,60 @@ Ranking policy:
 
 ## Window Counts
 
-| Split | Windows | Notes |
-|---|---:|---|
-| train | pending | fill after full local run |
-| validation | pending | fill after full local run |
-| test | pending | fill after full local run |
+| Split | Windows | Segments |
+|---|---:|---:|
+| train | 30988 | 12 |
+| validation | 2784 | 4 |
+| test | 16892 | 12 |
 
 ## XGBoost Validation Metrics
 
 | validation_rank | config_id | n_estimators | max_depth | learning_rate | subsample | colsample_bytree | MAE | RMSE | R2 |
 |---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| pending | pending | pending | pending | pending | pending | pending | pending | pending | pending |
+| 1 | 1 | 300 | 4 | 0.03 | 0.8 | 0.8 | 0.087767 | 0.141316 | 0.807329 |
+| 2 | 5 | 500 | 4 | 0.03 | 0.8 | 0.8 | 0.088975 | 0.143156 | 0.802278 |
+| 3 | 2 | 300 | 4 | 0.05 | 0.8 | 0.8 | 0.089685 | 0.144014 | 0.799900 |
+| 4 | 3 | 300 | 6 | 0.03 | 0.8 | 0.8 | 0.090797 | 0.145876 | 0.794692 |
+| 5 | 6 | 500 | 4 | 0.05 | 0.8 | 0.8 | 0.091393 | 0.146467 | 0.793027 |
+| 6 | 7 | 500 | 6 | 0.03 | 0.8 | 0.8 | 0.091983 | 0.147083 | 0.791283 |
+| 7 | 4 | 300 | 6 | 0.05 | 0.8 | 0.8 | 0.092314 | 0.146653 | 0.792500 |
+| 8 | 8 | 500 | 6 | 0.05 | 0.8 | 0.8 | 0.094016 | 0.147888 | 0.788991 |
 
 ## XGBoost Selected Test Metrics
 
 | model | config_id | test_evaluations | MAE | RMSE | R2 |
 |---|---:|---:|---:|---:|---:|
-| Flattened-window XGBoost | pending | pending | pending | pending | pending |
+| Flattened-window XGBoost | 1 | 1 | 0.096008 | 0.150826 | 0.831309 |
 
 ## PatchTST Training History Summary
 
-| model_id | best_epoch | best_val_loss_mse | epochs_ran | train_windows_used | val_windows_used |
-|---|---:|---:|---:|---:|---:|
-| pending | pending | pending | pending | pending | pending |
+| model_id | epochs_ran | best_epoch | best_val_loss_mse | train_windows_used | val_windows_used | selection_metric |
+|---|---:|---:|---:|---:|---:|---|
+| `patchtst_lite_p4_s2_d64_h4_l2_do0_1` | 28 | 23 | 0.02957333031313858 | 30988 | 2784 | validation MAE primary, RMSE ascending, R2 descending |
 
 ## PatchTST Validation Metrics
 
 | validation_rank | model | model_id | best_epoch | MAE | RMSE | R2 |
 |---:|---|---|---:|---:|---:|---:|
-| pending | PatchTST-Lite Transformer | pending | pending | pending | pending | pending |
+| 1 | PatchTST-Lite Transformer | `patchtst_lite_p4_s2_d64_h4_l2_do0_1` | 23 | 0.110098 | 0.171969 | 0.714678 |
 
 ## PatchTST Selected Test Metrics
 
-| model | model_id | test_evaluations | MAE | RMSE | R2 |
-|---|---|---:|---:|---:|---:|
-| PatchTST-Lite Transformer | pending | pending | pending | pending | pending |
+| model | model_id | best_epoch | test_evaluations | MAE | RMSE | R2 |
+|---|---|---:|---:|---:|---:|---:|
+| PatchTST-Lite Transformer | `patchtst_lite_p4_s2_d64_h4_l2_do0_1` | 23 | 1 | 0.117405 | 0.173865 | 0.775838 |
+
+## Concise Interpretation
+
+- Το NB19 είναι controlled four-park subset evidence μόνο.
+- Και τα δύο μοντέλα χρησιμοποίησαν τα ίδια train-only-scaled, gap-safe `[24, 41]` windows.
+- Σε αυτό το subset, το Flattened-window XGBoost είχε καλύτερα validation και test metrics από το PatchTST-Lite.
+- Το αποτέλεσμα δεν αποτελεί canonical full benchmark replacement.
+- Δεν τεκμηριώνεται γενικός ισχυρισμός Transformer inferiority ή γενική XGBoost superiority.
+- Κανένα generated CSV, checkpoint, model binary ή αλλαγή στο `data/processed/baseline_metrics.csv` δεν αποτελεί μέρος αυτού του audit update.
 
 ## Manuscript Interpretation Boundary
 
 Το NB19 παρέχει controlled four-park subset evidence μόνο για τα parks `00183`, `00198`, `00303` και `00427`. Δεν αποτελεί αντικατάσταση του canonical full benchmark και δεν πρέπει να συγχωνευθεί στο `data/processed/baseline_metrics.csv`.
 
-Πριν υπολογιστούν και ελεγχθούν πραγματικά metrics, δεν τεκμηριώνεται ισχυρισμός υπεροχής για το XGBoost, το PatchTST-Lite ή οποιαδήποτε άλλη sequence architecture. Το πείραμα είναι χρήσιμο ως reproducible matched-subset sequence evidence και ως βάση για μελλοντικό full benchmark follow-up.
+Τα full-run metrics δείχνουν ότι, στο συγκεκριμένο matched subset, το Flattened-window XGBoost υπερείχε του PatchTST-Lite σε validation και selected test MAE/RMSE/R2. Αυτό πρέπει να παρουσιαστεί μόνο ως subset-specific sequence evidence. Δεν τεκμηριώνει γενική κατωτερότητα Transformer models, γενική υπεροχή XGBoost ή αλλαγή στο canonical full-dataset benchmark.
