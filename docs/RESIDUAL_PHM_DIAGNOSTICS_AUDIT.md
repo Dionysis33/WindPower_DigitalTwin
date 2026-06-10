@@ -6,7 +6,42 @@
 
 The experiment is a diagnostic interpretation layer on top of forecasting outputs. It does not introduce a new neural architecture, does not replace the canonical benchmark, and does not claim a deployed PHM or production monitoring system.
 
-Full empirical NB20 diagnostics have not yet been executed in this scaffold commit; result tables are generated only during local full-run execution.
+Full empirical NB20 diagnostics were executed locally after the scaffold commit. The generated CSVs and figures remain local-only ignored artifacts; this audit document records the manuscript-relevant summary.
+
+## Full Run Results
+
+NB20 was executed locally in full diagnostics mode with `SMOKE_MODE=False`, `RUN_FULL_DIAGNOSTICS=True`, `EXPORT_RESULTS=True`, and `FULL_EXPORT_RESIDUAL_RECORDS=False`. The selected diagnostic prediction source was `canonical_split_column:Baseline_Prediction`. The controlled fallback model was not trained.
+
+The run produced 182,998 validation residual rows and 1,086,336 test residual rows across 256 parks. Test evaluation was performed once after validation-derived threshold calibration.
+
+Overall residual metrics were:
+
+| Split | MAE | RMSE | R2 | Mean residual | p95 absolute error | Warning rate |
+|---|---:|---:|---:|---:|---:|---:|
+| validation | 0.141838 | 0.242520 | 0.022388 | -0.048917 | 0.585 | 0.185543 |
+| test | 0.159999 | 0.257644 | 0.280317 | -0.068756 | 0.613 | 0.252162 |
+
+The test split produced 60,282 warning events. These events are interpreted as broad residual-screening signals rather than rare fault alarms.
+
+The full run generated 16 local-only CSV files and 11 local-only figures under `data/processed/diagnostics/residual_phm_diagnostics/`. These artifacts remain ignored by Git and are not committed.
+
+Generated figures:
+
+- `residual_distribution_validation_test.png`
+- `park_level_mae_top20.png`
+- `park_level_warning_rate_top20.png`
+- `rolling_residual_top3_parks.png`
+- `warning_event_timeline_top3_parks.png`
+- `operating_regime_abs_error.png`
+- `residual_vs_predicted_power.png`
+- `spatial_residual_map_if_latlong.png`
+- `temporal_warning_rate_by_hour.png`
+- `temporal_abs_error_by_month.png`
+- `metadata_vs_warning_rate.png`
+
+Interpretation boundary: these results are residual diagnostics over the upstream canonical split-level `Baseline_Prediction`. They are not confirmed turbine faults, not fault diagnosis, not a deployed PHM system, and not a replacement for the canonical benchmark. Optional model-comparison CSVs indicate that stronger existing predictors such as XGBoost, MLP, Random Forest, persistence, and linear regression may have lower test residuals, but those optional test prediction files were not used to derive validation thresholds and NB20 did not select a best model using test data.
+
+Manuscript-safe interpretation: NB20 demonstrates that validation-calibrated residual diagnostics can convert forecast errors into condition-monitoring-oriented evidence. The high test warning rate and the large number of warning events should be interpreted as broad residual screening signals rather than rare fault alarms. Park-level rankings, operating-regime summaries, and persistence diagnostics are the most useful outputs for manuscript discussion, because they identify where forecast behavior is systematically violated over time.
 
 ## 2. Motivation From Literature
 
