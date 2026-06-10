@@ -193,3 +193,10 @@ models/*.onnx
 
 # 4) Keep selected report figures trackable.
 #    Avoid using this folder as a general dump location.
+
+# ---------------------------------------------------------
+# LOCAL-ONLY LITERATURE MATERIALS
+# ---------------------------------------------------------
+# Academic papers, PDFs, and reading notes used only as local research context.
+# These files must stay outside GitHub.
+literature_local/
