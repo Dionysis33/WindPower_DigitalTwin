@@ -137,7 +137,7 @@ Metadata and spatial summaries use validation metadata under safe defaults. Vali
 
 NB20 remains the baseline-residual diagnostic reference. NB21 should be compared to NB20 only after a controlled full run. The comparison should focus on whether stronger-model residuals reduce broad residual noise while preserving interpretable persistent deviations.
 
-No empirical NB21 values are recorded in this scaffold audit. Full-run values should be added only after the scaffold has been executed intentionally with full-run flags.
+The controlled full run on 2026-06-11 records NB21 strong-model residual diagnostics under the NB21 export directory only. The exported `strong_residual_phm_comparison_boundary.csv` remains a boundary table, not a numeric NB20-vs-NB21 comparison table. It explicitly keeps NB20 comparison items in a diagnostic-evidence frame and does not convert warning flags into fault labels.
 
 ## 11. Artifact Policy
 
@@ -176,22 +176,130 @@ The full run should be performed only after the scaffold commit, with notebook o
 
 Safe-default execution should not use test data for diagnostic setup beyond path, schema, and temporal availability checks. A full run must be enabled explicitly before test residuals are generated.
 
-## 13. Full-Run Result Placeholders
+## 13. Full-Run Results (2026-06-11)
 
-The following values are intentionally pending:
+The controlled full run used:
 
-| Result | Status |
-|---|---|
-| Selected residual model | Pending full run |
-| Train MAE/RMSE/R2 | Pending full run |
-| Validation MAE/RMSE/R2 | Pending full run |
-| Test MAE/RMSE/R2 | Pending full run |
-| Train-validation MAE gap | Pending full run |
-| Validation-test MAE gap | Pending full run |
-| Validation thresholds | Pending full run |
-| Test warning rate | Pending full run |
-| Park-level residual ranking | Pending full run |
-| NB20 comparison summary | Pending full run |
+| Flag | Value |
+|---|---:|
+| `SMOKE_MODE` | `False` |
+| `RUN_FULL_DIAGNOSTICS` | `True` |
+| `EXPORT_RESULTS` | `True` |
+| `FULL_EXPORT_RESIDUAL_RECORDS` | `False` |
+| `RANDOM_STATE` | `42` |
+
+The selected residual source model was `XGBRegressor` with no fallback reason recorded.
+
+### Model Metrics
+
+`strong_residual_phm_model_metrics.csv`:
+
+| Split | Rows | MAE | RMSE | R2 | Status |
+|---|---:|---:|---:|---:|---|
+| train | 1,982,736 | 0.056222 | 0.101874 | 0.857458 | evaluated |
+| validation | 182,998 | 0.050777 | 0.093881 | 0.853504 | evaluated |
+| test | 1,086,336 | 0.066216 | 0.114639 | 0.857516 | evaluated |
+
+The metric export records `train_validation_MAE_gap = -0.005445` and `validation_test_MAE_gap = 0.015440`. No separate `strong_residual_phm_overfit_audit.csv` or model-fit-audit CSV is present in the output directory; model-fit review is therefore limited to the gap fields in `strong_residual_phm_model_metrics.csv`.
+
+### Validation-Derived Thresholds
+
+`strong_residual_phm_threshold_policy.csv`:
+
+| residual_mean | residual_std | abs_error_q90 | abs_error_q95 | abs_error_q99 | residual_median | residual_mad | rolling_MAE_24_q95 |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| -0.001814 | 0.093863 | 0.139009 | 0.210602 | 0.383183 | -0.004240 | 0.018691 | 0.143057 |
+
+`strong_residual_phm_threshold_per_park.csv` contains 256 parks. Validation support ranges from 191 to 720 rows per park. Across parks, `abs_error_q95` has mean 0.191660, min 0.029381 at park 1550, and max 0.395608 at park 2985. `rolling_MAE_24_q95` has mean 0.122974, min 0.028470 at park 7341, and max 0.233049 at park 1490.
+
+### Park-Level Diagnostics
+
+`strong_residual_phm_park_level_summary.csv` contains 512 rows: 256 validation park summaries and 256 test park summaries.
+
+| Split | Parks | Rows | Mean park MAE | Min park MAE | Max park MAE | Mean park warning rate | Min warning rate | Max warning rate |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| validation | 256 | 182,998 | 0.050747 | 0.007697 | 0.128171 | 0.210831 | 0.081944 | 0.552778 |
+| test | 256 | 1,086,336 | 0.066163 | 0.023573 | 0.120913 | 0.326094 | 0.145285 | 0.543190 |
+
+Highest validation MAE parks were 183, 5792, 2985, 5426, and 1832. Highest test MAE parks were 5792, 5078, 2985, 891, and 4271. Highest test warning-rate parks were 4024, 4271, 3987, 5792, and 5078. These are residual diagnostic rankings only.
+
+### Warning Events
+
+`strong_residual_phm_warning_event_summary.csv` contains 112,651 contiguous candidate warning events.
+
+| Split | Events | Parks | Total duration rows | Mean duration rows | Max duration rows | Mean event abs error | Max abs error |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| validation | 15,095 | 256 | 38,621 | 2.558529 | 48 | 0.157485 | 0.985002 |
+| test | 97,556 | 256 | 354,467 | 3.633472 | 285 | 0.160725 | 0.976800 |
+
+Dominant warning reasons:
+
+| Split | `robust_z_gt_3` | `abs_q95` | `rolling_mae_24_q95` |
+|---|---:|---:|---:|
+| validation | 12,546 | 1,995 | 554 |
+| test | 76,645 | 15,176 | 5,735 |
+
+The longest test event was park 13901 from 2020-02-15 16:00:00 to 2020-02-27 12:00:00 with 285 rows and dominant reason `rolling_mae_24_q95`. This is a candidate residual-warning episode, not a confirmed fault.
+
+### Operating Regimes
+
+`strong_residual_phm_operating_regime_summary.csv` uses validation-derived bins from `Wind_Speed_100m_ms`.
+
+| Split | Regime bin | Rows | MAE | Mean residual | Warning rate |
+|---|---|---:|---:|---:|---:|
+| validation | `(-inf, 2.656]` | 45,750 | 0.020334 | -0.001146 | 0.062492 |
+| validation | `(2.656, 5.225]` | 45,749 | 0.034417 | -0.000401 | 0.116112 |
+| validation | `(5.225, 8.228]` | 45,749 | 0.054426 | -0.002726 | 0.217273 |
+| validation | `(8.228, inf]` | 45,750 | 0.093930 | -0.002983 | 0.448306 |
+| test | `(-inf, 2.656]` | 205,112 | 0.020754 | -0.000790 | 0.072190 |
+| test | `(2.656, 5.225]` | 229,088 | 0.037860 | 0.000647 | 0.153723 |
+| test | `(5.225, 8.228]` | 255,026 | 0.062969 | 0.000426 | 0.305090 |
+| test | `(8.228, inf]` | 397,110 | 0.108142 | 0.000126 | 0.570718 |
+
+### Temporal Diagnostics
+
+`strong_residual_phm_temporal_summary.csv` contains 193 month-hour groups. Test has 168 groups and validation has 25 groups. Test group-level MAE ranges up to 0.106833 and warning rate ranges up to 0.584605. The highest test warning rates occur in February midday and afternoon groups, with the top group at month 2, hour 11: MAE 0.102637 and warning rate 0.584605.
+
+### Directional Bias
+
+`strong_residual_phm_directional_bias_summary.csv` contains 512 park-split rows.
+
+| Split | Parks | Mean of park mean residuals | Min park mean residual | Max park mean residual | Mean positive residual rate |
+|---|---:|---:|---:|---:|---:|
+| validation | 256 | -0.001868 | -0.020391 | 0.020145 | 0.374533 |
+| test | 256 | 0.000085 | -0.017678 | 0.028904 | 0.404930 |
+
+The largest positive test mean residual is park 7374 at 0.028904. The most negative test mean residual is park 891 at -0.017678.
+
+### Residual Persistence
+
+`strong_residual_phm_residual_persistence_summary.csv` contains 512 park-split rows.
+
+| Split | Parks | Mean residual lag-1 autocorr | Min residual lag-1 autocorr | Max residual lag-1 autocorr | Mean abs-error lag-1 autocorr | Mean rolling MAE-24 | Max rolling MAE-72 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| validation | 256 | -0.073634 | -0.383709 | 0.320956 | 0.446195 | 0.050887 | 0.410507 |
+| test | 256 | -0.072004 | -0.213625 | 0.176110 | 0.434354 | 0.066121 | 0.463569 |
+
+### Metadata And Spatial Summary
+
+`strong_residual_phm_metadata_spatial_summary.csv` contains 256 parks. Across parks, mean MAE is 0.058455, min MAE is 0.017048, max MAE is 0.121133, mean warning rate is 0.268462, min warning rate is 0.132979, and max warning rate is 0.472436. The top metadata/spatial MAE parks are 5792, 2985, 5426, 183, and 5078. The coordinate coverage spans latitude 47.375 to 55.000 and longitude 6.000 to 14.9375.
+
+### Self-Checks And Export Audit
+
+`strong_residual_phm_self_checks.csv` records 10 checks, all passed:
+
+- `smoke_requires_no_full_run`
+- `no_full_residual_export_by_default`
+- `test_not_used_in_default_work_subset`
+- `no_split_provenance_features`
+- `no_model_checkpoint_target`
+- `baseline_metrics_not_planned`
+- `requirements_not_planned`
+- `export_dir_is_nb21_only`
+- `all_planned_exports_use_nb21_prefix`
+- `exactly_one_test_evaluation_path_when_full`
+
+`strong_residual_phm_export_audit.csv` records 19 planned paths, all with `will_write=True`, and zero full residual record exports. The output directory therefore contains only summary/audit CSVs and no residual-row dump.
 
 ## 14. Manuscript-Safe Interpretation Boundary
 
