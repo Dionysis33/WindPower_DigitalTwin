@@ -115,7 +115,7 @@ stack-data==0.6.3
 sympy==1.14.0
 terminado==0.18.1
 threadpoolctl==3.6.0
-tinycss2==1.4.0
+tinycss2==1.5.1
 torch==2.10.0
 torch-geometric==2.8.0
 torchaudio==2.11.0
