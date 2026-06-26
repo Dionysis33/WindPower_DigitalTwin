@@ -2,55 +2,60 @@
 
 Thank you for your interest in contributing to **WindPower_DigitalTwin**.
 
-This repository is a **research repository** for **spatio-temporal wind power forecasting** on the **DaKS / Kassel synthetic wind power dataset**.
+This repository is a **forecasting-first research repository** for **spatio-temporal wind power forecasting** on the **DaKS / Kassel synthetic wind power dataset**. It supports a reproducible, thesis-ready workflow with downstream residual diagnostics, graph-aware methodological extensions, controlled subset evidence, and cautious future PHM / digital-twin-oriented research.
 
-It supports a **forecasting-first, reproducible, thesis-ready pipeline** and broader research development around:
+The current implementation should be read as a **forecasting and diagnostics research pipeline**, not as a completed PHM system, anomaly detector, fault-diagnosis module, RUL estimator, production digital twin, deployed monitoring platform, or operational forecasting service.
 
-- benchmark-safe wind power forecasting,
-- downstream residual diagnostics,
-- park-level diagnostic interpretation,
-- graph data-interface verification,
-- graph-model input packaging,
-- cautious graph-based forecasting experimentation,
-- controlled graph refinement follow-up,
-- and future health-aware / PHM-oriented research extensions.
+At the current stage, the repository is maintained primarily by the author. External contributions are welcome when they preserve the scientific structure, reproducibility requirements, artifact policy, and scope boundaries of the project.
 
-The current implementation should be understood as a **forecasting and diagnostics research pipeline**, not as a completed PHM system, anomaly-detection system, fault-diagnosis module, RUL estimator, production digital twin, deployed monitoring platform, or operational forecasting service.
+---
 
-At the current stage, the repository is maintained primarily by the author. External contributions are welcome, but they must respect the scientific structure, reproducibility requirements, artifact policy, and scope boundaries of the project.
+## Quick Navigation
+
+| Area | Purpose |
+|---|---|
+| [Contribution Principles](#contribution-principles) | Core rules for reproducible and claim-safe changes |
+| [Useful Contributions](#useful-contributions) | Changes that fit the repository's current direction |
+| [Workflow and Evidence Rules](#workflow-and-evidence-rules) | Canonical notebook order, benchmark authority, and evidence boundaries |
+| [Development Guidelines](#development-guidelines) | Branches, commits, code style, and notebook discipline |
+| [Data and Artifact Policy](#data-and-artifact-policy) | Dataset, generated artifact, and local-output expectations |
+| [Documentation and PR Checklist](#documentation-and-pr-checklist) | Required review points before opening a pull request |
 
 ---
 
 ## Contribution Principles
 
-Please make sure that every contribution follows these principles.
+Every contribution should preserve or improve:
+
+- reproducibility,
+- temporal leakage prevention,
+- benchmark-safe reporting,
+- clear implemented / planned / future distinctions,
+- artifact safety,
+- local demo non-production wording,
+- and careful forecasting-vs-PHM / digital-twin framing.
 
 ### Reproducibility first
 
-Any change must preserve or improve reproducibility of the notebooks, source modules, exported artifacts, documentation, and overall modeling pipeline.
+Contributions should avoid hidden state, undocumented local assumptions, and silent behavior that makes notebooks, scripts, exported artifacts, or documentation difficult to reproduce.
 
-Contributions should avoid hidden state, undocumented local assumptions, and silent behavior that makes the workflow difficult to reproduce.
+Prefer deterministic behavior where reproducibility matters. If a change depends on local data or generated artifacts, document the required inputs and expected outputs.
 
 ### No data leakage
 
-Temporal integrity is critical.
+Train / validation / test separation must remain strict.
 
-Train / validation / test separation must remain strictly correct. Any preprocessing statistics that could leak information downstream must be handled with train-first logic.
-
-In particular:
-
-- validation data should be used for model selection only,
-- test data should be used for final reporting only,
-- downstream diagnostics should not redefine upstream split logic,
-- graph-related stages should consume established canonical artifacts rather than silently changing benchmark assumptions.
+- Training data is used for model fitting and train-only preprocessing statistics.
+- Validation data is used for model or configuration selection.
+- Test data is used only for final reporting after selection is fixed.
+- Downstream diagnostics must not redefine upstream split logic.
+- Graph-aware and subset stages should consume established artifacts rather than silently changing benchmark assumptions.
 
 ### Forecasting-first scope discipline
 
-The implemented core of the repository remains **forecasting-first**.
+Diagnostics-aware, condition-awareness-oriented, graph-aware, and PHM-oriented interpretation is welcome only when clearly framed as downstream analysis, bounded evidence, or future research.
 
-Diagnostics-aware, condition-awareness-oriented, graph-aware, and PHM-oriented interpretation is welcome only when it is clearly framed as downstream analysis or future research direction.
-
-Contributions must not overstate the current repository as:
+Do not present the current repository as:
 
 - a completed PHM system,
 - a validated anomaly detector,
@@ -61,57 +66,24 @@ Contributions must not overstate the current repository as:
 - a deployed monitoring platform,
 - or an operational forecasting service.
 
-### Research consistency
+### Evidence separation
 
-Contributions should align with the repository roadmap and current canonical workflow:
+Keep these evidence spaces distinct:
 
-- raw validation,
-- validated-only EDA,
-- feature engineering,
-- leakage-aware temporal split,
-- baseline benchmarking,
-- advanced tabular baselines,
-- downstream residual diagnostics,
-- park-level diagnostics / thesis consolidation,
-- graph data-interface / split-to-graph contract / artifact verification,
-- graph-model input packaging / data object preparation,
-- first graph-based forecasting baseline,
-- graph ablation / spatial sensitivity analysis,
-- controlled graph refinement follow-up,
-- local thesis-facing artifact inspection / presentation support,
-- and future graph-based, sequence-based, or broader PHM-oriented research extensions only when clearly documented as future work.
+- canonical full-dataset tabular benchmark evidence,
+- downstream residual diagnostics and park-level diagnostic signals,
+- graph-aware forecasting extensions,
+- controlled four-park neural and sequence subset evidence,
+- local demo and artifact-browser outputs,
+- and future work.
 
-### Clear stage distinction
-
-Contributions should clearly distinguish between:
-
-1. **already implemented**
-2. **planned next**
-3. **future work / research extension**
-
-Do not blur these categories in issues, pull requests, notebook markdown, README text, logs, or thesis-facing documentation.
-
-### Documentation quality
-
-Important changes should be reflected in the relevant documentation when needed.
-
-Depending on the change, this may include:
-
-- notebook markdown explanations,
-- `README.md`,
-- `LOGS.md`,
-- `LOGS_ARCHIVE.md`,
-- `docs/INDEX.md`,
-- `docs/RESEARCH_SCOPE.md`,
-- `docs/BASELINE_PROTOCOL.md`,
-- `docs/PHM_ROADMAP.md`,
-- and other documentation that defines repository interpretation.
+XGBoost may be described as the **lowest-MAE model within the implemented canonical full-dataset tabular benchmark space**. Do not generalize that wording into a state-of-the-art claim or a claim about all possible models, graph experiments, subsets, or future sequence work.
 
 ---
 
-## What Kinds of Contributions Are Most Useful
+## Useful Contributions
 
-The most useful contributions are:
+Useful contributions include:
 
 - bug fixes,
 - code cleanup and refactoring,
@@ -121,95 +93,30 @@ The most useful contributions are:
 - notebook-to-module modularization,
 - diagnostics utilities,
 - visualization improvements,
-- benchmark-safe exported artifact checks,
-- additional baseline models that fit the repository roadmap,
-- graph-interface or graph-packaging improvements that do not break the current canonical pipeline,
-- local demo improvements that preserve read-only, non-production, thesis-facing behavior.
+- benchmark-safe artifact checks,
+- additional baseline models that fit the documented roadmap,
+- graph-interface or graph-packaging improvements that preserve the canonical pipeline,
+- local demo improvements that remain read-only, local-only, non-production, and thesis-facing.
 
-At this phase, please avoid contributions that:
+Please avoid contributions that:
 
 - radically redefine the repository scope,
 - break notebook reproducibility,
 - introduce hidden leakage,
 - add undocumented dependencies,
 - bypass canonical stage contracts,
-- present diagnostics outputs as validated health-state inference,
-- present graph verification or graph packaging outputs as graph-training evidence,
-- present graph baseline, graph ablation, or controlled graph-refinement outputs as validated graph superiority,
+- present residual diagnostics as validated health-state inference or confirmed faults,
+- present graph stages as validated graph superiority,
+- present controlled neural or sequence subset evidence as a replacement for the canonical benchmark,
 - present the local Django demo as a deployed digital twin, monitoring platform, PHM system, anomaly-detection system, fault-diagnosis system, or production service,
-- commit large raw or generated artifacts without a strong reason,
+- commit large raw or generated artifacts without a documented reason,
 - or mix implemented results with speculative future claims.
 
 ---
 
-## Development Guidelines
+## Workflow and Evidence Rules
 
-### Branch Naming
-
-Use clear branch names such as:
-
-- `fix/...`
-- `feat/...`
-- `docs/...`
-- `chore/...`
-
-Examples:
-
-- `feat/add-random-forest-baseline`
-- `fix/temporal-split-validation`
-- `docs/align-contributing-with-post-nb14-readme`
-- `chore/update-benchmark-artifact-notes`
-
-### Commit Style
-
-Use concise and meaningful commit messages.
-
-Recommended format:
-
-- `feat: add random forest benchmark`
-- `fix: prevent leakage in baseline feature selection`
-- `docs: align contributing with post-NB14 README state`
-- `chore: update baseline metrics artifact notes`
-
-For documentation-only governance updates, prefer:
-
-```text
-docs: align governance docs with post-NB14 README state
-```
-
-### Coding Style
-
-Please follow these rules:
-
-- prefer readable and explicit code over clever shortcuts,
-- keep variable names meaningful,
-- use comments where scientific intent matters,
-- preserve notebook narrative clarity,
-- keep English terminology for technical concepts when appropriate,
-- prefer deterministic behavior where reproducibility matters,
-- avoid silent fallbacks that hide methodological problems,
-- avoid changing scientific interpretation through code comments alone.
-
-### Notebook Policy
-
-When editing notebooks:
-
-- preserve execution order,
-- do not leave broken cells,
-- avoid hidden assumptions,
-- explain major methodological choices in markdown,
-- keep outputs informative but not excessively noisy,
-- avoid ad hoc exploratory fragments in canonical notebooks,
-- keep exported artifacts consistent with the notebook’s intended role,
-- and update relevant interpretation text if a notebook change affects results.
-
-Notebook changes that affect metrics, artifacts, model behavior, split semantics, graph contracts, or diagnostics interpretation should be handled as methodological changes, not as casual cleanup.
-
----
-
-## Canonical Workflow Contract
-
-For the current public repository state, the canonical workflow is:
+The current canonical workflow is:
 
 ```text
 NB02 raw validation
@@ -227,227 +134,133 @@ NB02 raw validation
 -> NB14 controlled graph refinement follow-up
 ```
 
-This means:
+`NB01` is historical exploratory context and is not part of the current canonical forecasting pipeline.
 
-- `02_kassel_exploration.ipynb` is the **canonical raw validation authority**.
-- `03_eda_master.ipynb` is the **canonical validated-only EDA stage**.
-- `04_feature_engineering_and_graph_construction.ipynb` is the **canonical feature-engineering and graph-ready preparation stage**.
-- `05_outliers_and_split.ipynb` is the **canonical leakage-aware split stage**.
-- `06_baseline_modeling.ipynb` and `07_advanced_baselines_and_importance.ipynb` define the **implemented tabular baseline ladder**.
-- `08_residual_diagnostics_and_operating_regimes.ipynb` is a **strict downstream diagnostics stage**, not a new predictive modeling stage.
-- `09_park_level_diagnostics_and_thesis_consolidation.ipynb` is a **strict downstream diagnostics / consolidation stage**, not a new predictive modeling stage.
-- `10_graph_readiness_and_artifact_verification.ipynb` is a **strict graph data-interface / split-to-graph contract / artifact verification stage**, not a graph-training stage.
-- `11_graph_model_input_packaging.ipynb` is a **strict graph-model input packaging / data object preparation stage**, not a training or benchmark-reporting stage.
-- `12_first_graph_based_forecasting_baseline.ipynb` is the **first actual graph-based forecasting baseline** of the repository, but it does not validate graph superiority over the canonical benchmark backbone.
-- `13_graph_ablation_and_spatial_sensitivity_analysis.ipynb` is a **strict graph ablation / spatial sensitivity follow-up** and should be interpreted as cautious graph evidence rather than superiority proof.
-- `14_controlled_graph_refinement_followup.ipynb` is a **strict controlled graph refinement follow-up** and should be interpreted as narrow-scope graph evidence consolidation, not as validated graph superiority.
+### Notebook roles
 
-### Important downstream rule
+- `NB02` is the canonical raw validation authority.
+- `NB03` is the validated-only EDA stage.
+- `NB04` builds feature-engineering and graph-ready preparation artifacts.
+- `NB05` defines leakage-aware outlier handling and temporal split artifacts.
+- `NB06` and `NB07` define the implemented tabular baseline ladder.
+- `NB08` and `NB09` are downstream diagnostics and consolidation stages, not new predictive modeling stages.
+- `NB10` and `NB11` verify graph contracts and package graph-model inputs, not graph training or benchmark reporting.
+- `NB12` through `NB14` provide cautious graph-based forecasting evidence, ablation, and controlled refinement, not validated graph superiority.
 
-After `NB02`, downstream notebooks must not perform **loose reparsing** of raw timestamps or reintroduce raw-validation logic.
+After `NB02`, downstream notebooks should consume validated outputs and canonical artifacts. They should not loosely reparse raw timestamps or reintroduce raw-validation responsibilities.
 
-Downstream stages should consume validated outputs and canonical exported artifacts rather than silently redefining upstream methodological responsibilities.
+### Benchmark authority
 
----
-
-## Operational Helper Clarification
-
-Operational helper modules may be used for loading, feature preparation, artifact reading, or downstream convenience, but they must not be documented as canonical methodological authorities unless the pipeline is explicitly redesigned.
-
-In particular, `KasselLoader` should be treated as an **operational helper** and not as the **canonical strict raw validation layer** of the project.
-
-The canonical raw validation authority remains `NB02`.
-
----
-
-## Local Demo Helper Clarification
-
-The optional `django_demo/` interface should be treated as a **local-only, read-only, non-production, thesis-facing artifact inspection and presentation helper**.
-
-It may be used to support local review of already exported artifacts, but it must not be documented or presented as:
-
-- a deployed digital twin,
-- a production monitoring platform,
-- a PHM system,
-- an anomaly-detection service,
-- a fault-diagnosis system,
-- an operational forecasting platform,
-- or a security-hardened deployed service.
-
-The local demo should not trigger model training, rerun notebooks, write benchmark results, mutate processed artifacts, or modify canonical outputs.
-
-A contribution to the local demo should preserve:
-
-- local-only execution,
-- read-only artifact inspection,
-- deterministic artifact-bundle consumption,
-- thesis-facing presentation support,
-- and non-production wording.
-
----
-
-## Research Framing Rules
-
-Because this repository is both research-facing and thesis-facing, contribution wording must remain scientifically disciplined.
-
-### 1. Implemented vs planned vs future
-
-When describing contributions, issues, PRs, markdown cells, README updates, logs, or thesis-facing text, clearly separate:
-
-- **Implemented now**
-- **Planned next**
-- **Future work / research extension**
-
-Do not blur these categories.
-
-### 2. Diagnostics boundary
-
-Residual diagnostics, operating-regime analysis, and park-level diagnostics may support:
-
-- diagnostics-aware interpretation,
-- condition-awareness-oriented discussion,
-- health-aware discussion,
-- PHM-oriented future thinking,
-- thesis-facing interpretation of forecasting behavior.
-
-However, they must not be presented as:
-
-- completed PHM functionality,
-- validated anomaly detection,
-- fault diagnosis,
-- prognostics engine,
-- RUL estimation,
-- production health monitoring,
-- or deployed digital twin service.
-
-### 3. Graph verification, packaging, and graph-experiment boundary
-
-Graph data-interface checks, split-to-graph contract validation, artifact-consistency verification, and graph-model input packaging may support:
-
-- graph-readiness claims,
-- benchmark-safe graph handoff,
-- graph-based forecasting experimentation,
-- topology-aware sensitivity analysis,
-- and controlled follow-up analysis.
-
-The implemented `NB12`–`NB14` stages may be described as:
-
-- cautious graph-based forecasting evidence,
-- topology-aware graph ablation / spatial sensitivity analysis,
-- controlled graph refinement follow-up,
-- and narrow-scope graph evidence consolidation.
-
-However, they must not be presented as:
-
-- validated graph superiority over the canonical benchmark backbone,
-- validated GNN / Graph-Mamba superiority,
-- completed graph-learning benchmark beyond the current bounded evidence,
-- production-grade graph forecasting functionality,
-- or a completed digital twin graph intelligence layer.
-
-### 4. Forecasting remains the implemented core
-
-The repository currently supports:
-
-- benchmark-safe forecasting,
-- advanced tabular baseline comparison,
-- diagnostics-aware downstream analysis,
-- park-level diagnostic consolidation,
-- graph data-interface verification,
-- graph-model input packaging,
-- first graph-based forecasting baseline evidence,
-- topology-aware graph ablation / spatial sensitivity follow-up,
-- controlled graph refinement follow-up,
-- and local thesis-facing artifact inspection through a read-only demo helper.
-
-Broader graph redesign, sequence-based modeling, Mamba / Graph-Mamba experimentation, stronger graph-based forecasting claims, deployed PHM, and deployed digital-twin functionality remain **future work** unless explicitly implemented, evaluated, documented, and justified by evidence.
-
----
-
-## Benchmark and Reporting Rules
-
-The repository uses a benchmark-safe reporting structure.
-
-### Canonical benchmark artifact
-
-For cross-model reporting, the canonical benchmark artifact is:
+The canonical benchmark artifact is:
 
 ```text
 data/processed/baseline_metrics.csv
 ```
 
-Use this artifact as the reporting authority for final test-set benchmark comparisons of the implemented tabular baseline ladder.
+Use this artifact as the reporting authority for final test-set comparisons within the implemented tabular baseline ladder.
 
-### Test-only benchmark interpretation
+Graph outputs, diagnostics outputs, tuning outputs, controlled subset outputs, local demo bundles, model binaries, and checkpoints do not replace this benchmark artifact unless explicitly promoted and documented.
 
-When reporting final benchmark performance:
+### Diagnostics boundary
 
-- validation should be used for model selection only,
-- test should be used for final reporting only,
-- benchmark summaries should remain consistent with the canonical exported artifact,
-- and final reporting should not mix validation metrics with test-set benchmark claims.
+Residual diagnostics, operating-regime analysis, and park-level diagnostics may support:
 
-### Graph and diagnostics artifacts are not automatic benchmark authority
+- candidate screening signals,
+- diagnostics-aware interpretation,
+- condition-awareness-oriented discussion,
+- health-aware discussion,
+- and PHM-oriented future research framing.
 
-Graph-verification, graph-packaging, graph-experiment, diagnostics, prediction, and local demo artifacts must not be confused with the canonical tabular benchmark authority unless explicitly promoted and documented.
+They must not be presented as confirmed faults, validated anomaly detection, fault diagnosis, maintenance prescriptions, RUL estimation, production health monitoring, or deployed PHM functionality.
 
-The graph stages may have their own bounded exports and interpretation, but they do not redefine `data/processed/baseline_metrics.csv` as a graph benchmark table.
+### Graph and subset boundaries
 
-### Historical logs are not active benchmark authority
+Graph-aware stages may be described as graph-readiness, graph input packaging, graph-based forecasting experimentation, topology-aware sensitivity analysis, and controlled refinement evidence. They must not be presented as validated graph superiority, validated GNN / Graph-Mamba superiority, production graph forecasting, or a completed digital-twin graph layer.
 
-- `LOGS.md` is the **active canonical methodological log**.
-- `LOGS_ARCHIVE.md` contains historical, exploratory, or superseded states.
+Controlled neural and sequence experiments are four-park subset evidence only. They can support discussion of experimental readiness and future full-benchmark motivation, but they do not replace `data/processed/baseline_metrics.csv` and should not be merged into the canonical full-dataset benchmark ranking.
 
-Do not treat archived notebook outputs or old log entries as the active benchmark authority when current canonical artifacts already exist.
+### Local demo boundary
 
----
+The optional `django_demo/` interface is a local-only, read-only, non-production, thesis-facing artifact inspection helper.
 
-## Data Policy
-
-This repository uses the **DaKS synthetic wind power dataset** from the University of Kassel research data repository.
-
-Contributors must:
-
-- respect the original dataset attribution requirements,
-- avoid misrepresenting the dataset as original proprietary raw data,
-- avoid redistributing raw dataset files through this repository unless explicitly permitted,
-- clearly distinguish between:
-  - source dataset files,
-  - local raw files,
-  - processed artifacts,
-  - derived benchmark outputs,
-  - diagnostics outputs,
-  - graph-ready verification artifacts,
-  - graph-model packaging artifacts,
-  - graph experiment outputs,
-  - local demo bundles,
-  - and thesis/report figures derived from reruns.
-
-If a contribution depends on dataset access, explain clearly:
-
-- which files are needed,
-- where they come from,
-- how they should be placed,
-- and how they should be prepared before execution.
-
-### Artifact discipline
-
-Please be careful with generated outputs.
-
-In general:
-
-- do not commit large raw files,
-- do not commit large rerun artifacts unless they are intentionally tracked,
-- do not assume local outputs are canonical public artifacts,
-- do not treat demo bundles as benchmark authority,
-- do not commit model binaries or checkpoints unless there is a documented reason,
-- and document any exported file that becomes part of the stable workflow.
+It should not train models, rerun notebooks, rewrite benchmark results, mutate processed artifacts, modify canonical outputs, expose raw dataset files, or be described as a deployed digital twin, monitoring system, PHM system, anomaly-detection service, fault-diagnosis system, operational forecasting platform, or public service.
 
 ---
 
-## Documentation Consistency
+## Development Guidelines
 
-When a change affects pipeline meaning, notebook roles, benchmark reporting, diagnostics interpretation, graph positioning, local demo interpretation, or forecasting-vs-PHM wording, documentation must be updated in a coordinated way where relevant.
+### Branches and commits
+
+Use clear branch names such as:
+
+- `fix/...`
+- `feat/...`
+- `docs/...`
+- `chore/...`
+
+Use concise commit messages such as:
+
+- `fix: prevent leakage in baseline feature selection`
+- `docs: align governance docs with current README state`
+- `chore: update benchmark artifact notes`
+
+For documentation-only governance updates, a good default is:
+
+```text
+docs: align governance docs with current repository scope
+```
+
+### Code style
+
+Please:
+
+- prefer readable and explicit code over clever shortcuts,
+- keep variable names meaningful,
+- use comments where scientific intent matters,
+- preserve notebook narrative clarity,
+- keep technical terminology consistent,
+- avoid silent fallbacks that hide methodological problems,
+- and avoid changing scientific interpretation through comments alone.
+
+### Notebook policy
+
+When editing notebooks:
+
+- preserve execution order,
+- do not leave broken cells,
+- avoid hidden assumptions,
+- explain major methodological choices in markdown,
+- keep outputs informative but not excessively noisy,
+- avoid ad hoc exploratory fragments in canonical notebooks,
+- keep exported artifacts consistent with the notebook's intended role,
+- and update relevant interpretation text if notebook meaning changes.
+
+Notebook changes that affect metrics, artifacts, model behavior, split semantics, graph contracts, or diagnostics interpretation should be handled as methodological changes, not casual cleanup.
+
+Operational helper modules may support loading, feature preparation, artifact reading, or downstream convenience, but they should not be documented as canonical methodological authorities unless the pipeline is explicitly redesigned. In particular, `KasselLoader` is an operational helper; `NB02` remains the canonical raw validation authority.
+
+---
+
+## Data and Artifact Policy
+
+This repository uses the **DaKS synthetic wind power dataset** from the University of Kassel research data repository. Contributors must respect dataset terms, attribution requirements, and redistribution limits.
+
+Do not commit raw dataset files unless explicitly permitted and documented.
+
+Generated outputs should be handled according to their role:
+
+- `data/processed/baseline_metrics.csv` is the canonical tracked benchmark artifact.
+- Selected thesis / report-facing figures may be tracked when intentionally promoted.
+- Local predictions, diagnostics, graph outputs, subset outputs, rerun exports, and demo bundles should remain local-only unless explicitly reviewed.
+- Model binaries, checkpoints, serialized estimators, and training-state files should remain local-only by default.
+
+If a contribution depends on dataset access, explain which files are needed, where they come from, how they should be placed, and how they should be prepared before execution.
+
+---
+
+## Documentation and PR Checklist
+
+When a change affects pipeline meaning, notebook roles, benchmark reporting, diagnostics interpretation, graph positioning, local demo behavior, artifact policy, or forecasting-vs-PHM wording, update the relevant documentation.
 
 Relevant documentation may include:
 
@@ -458,102 +271,45 @@ Relevant documentation may include:
 - `docs/RESEARCH_SCOPE.md`
 - `docs/BASELINE_PROTOCOL.md`
 - `docs/PHM_ROADMAP.md`
-- notebook markdown cells that describe methodological role or pipeline order
-- local demo documentation if the change affects `django_demo/`
+- `docs/wiki_drafts/`
+- notebook markdown cells
+- local demo documentation
 
-### Additional review requirement
+Before submitting a contribution, verify that:
 
-If a change affects any of the following, it should be reviewed explicitly for documentation realignment and scope consistency:
-
-- raw validation,
-- timestamp parsing,
-- coverage / eligibility rules,
-- split semantics,
-- feature-space definition,
-- benchmark interpretation,
-- diagnostics positioning,
-- graph-ready contracts,
-- graph-model input packaging,
-- graph-based forecasting evidence,
-- graph ablation or controlled graph refinement interpretation,
-- local Django demo behavior or wording,
-- artifact policy,
-- or forecasting vs PHM / digital-twin framing.
-
----
-
-## Before Submitting a Contribution
-
-Please verify that:
-
-- the relevant notebook(s), script(s), or documentation files are internally consistent,
+- the relevant files are internally consistent,
 - no data leakage has been introduced,
-- paths remain consistent,
+- paths remain explicit and reviewable,
 - required exported artifacts are intentional,
 - documentation has been updated where needed,
-- canonical benchmark or diagnostics wording remains consistent,
+- canonical benchmark wording remains bounded,
+- residual diagnostics remain candidate screening / diagnostic signals,
 - graph-stage wording remains bounded and precise,
+- controlled subset evidence is not promoted into the canonical benchmark,
 - local demo wording remains local-only, read-only, and non-production,
 - scope wording does not overclaim repository functionality,
 - and `git status` is clean except for intended files.
 
-If your change affects results, please also verify:
+If opening a pull request, include:
 
-- whether metrics changed,
-- whether benchmark ranking changed,
-- whether residual or park-level diagnostics interpretation changed,
-- whether graph-contract interpretation changed,
-- whether graph-experiment interpretation changed,
-- whether local demo outputs changed,
-- and whether those changes should be reflected in logs or docs.
+1. what changed,
+2. why it changed,
+3. which files are affected,
+4. whether metrics changed,
+5. whether exported artifacts changed,
+6. whether documentation was updated,
+7. whether the change is implemented work, planned-next scaffolding, or future-facing preparation,
+8. whether the change affects forecasting, diagnostics, graph stages, controlled subset evidence, local demo behavior, or PHM / digital-twin framing.
 
-For documentation-only changes, make clear in the PR that no code, notebook execution, benchmark, model, artifact, or result change is introduced.
-
----
-
-## Pull Requests
-
-If you open a pull request, please include:
-
-1. **What changed**
-2. **Why it changed**
-3. **Which notebook(s), module(s), scripts, or docs are affected**
-4. **Whether metrics changed**
-5. **Whether exported artifacts changed**
-6. **Whether markdown / README / logs / docs were updated**
-7. **Whether the change is implemented work, planned-next scaffolding, or future-facing preparation**
-8. **Whether the change affects forecasting, diagnostics, graph stages, local demo behavior, or PHM / digital-twin framing**
-
-Good PRs are:
-
-- small,
-- focused,
-- easy to review,
-- benchmark-safe,
-- artifact-safe,
-- and explicit about methodological impact.
-
-For documentation-only PRs, state explicitly that the PR does not change:
-
-- code,
-- notebooks,
-- benchmark protocol,
-- model training,
-- metrics,
-- artifacts,
-- results,
-- repository structure,
-- or scientific scope.
+For documentation-only PRs, state explicitly that the PR does not change code, notebooks, benchmark protocol, model training, metrics, artifacts, results, repository structure, or scientific scope.
 
 ---
 
 ## Academic and Research Note
 
-Because this repository supports both **academic thesis work** and a broader **research-oriented forecasting workflow**, methodological correctness is more important than feature quantity.
+Because this repository supports academic thesis work and a broader research-oriented forecasting workflow, methodological correctness is more important than feature quantity.
 
-A contribution that makes the pipeline more scientifically valid, more reproducible, more transparent, or more clearly documented is preferred over one that merely makes it larger.
-
-Academic and research-facing contributions should preserve:
+Contributions should preserve:
 
 - fair attribution,
 - honest reporting of results,

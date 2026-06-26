@@ -1,18 +1,38 @@
 # Code of Conduct
 
+## Overview
+
+This project aims to provide an open, respectful, and academically constructive environment for work on **WindPower_DigitalTwin**.
+
+The repository is a **forecasting-first research repository** for **spatio-temporal wind power forecasting** on the **DaKS / Kassel synthetic wind power dataset**. Discussion should remain focused, evidence-based, and aligned with the repository's scientific scope.
+
+The project should not be represented as a completed PHM system, anomaly detector, fault-diagnosis module, RUL estimator, deployed digital twin, production monitoring platform, or operational forecasting service.
+
+---
+
+## Quick Navigation
+
+| Area | Purpose |
+|---|---|
+| [Our Commitment](#our-commitment) | Expected tone and collaborative standard |
+| [Expected Behavior](#expected-behavior) | Good-faith participation norms |
+| [Unacceptable Behavior](#unacceptable-behavior) | Conduct that may be moderated |
+| [Academic Integrity and Scope](#academic-integrity-and-scope) | Claim-safe research discussion |
+| [Reporting and Enforcement](#reporting-and-enforcement) | How concerns are handled |
+
+---
+
 ## Our Commitment
 
-In the interest of fostering an open, respectful, and academically constructive environment, contributors and participants in this project are expected to treat each other with professionalism, courtesy, and good faith.
+Contributors and participants are expected to treat each other with professionalism, courtesy, and good faith in issues, pull requests, reviews, commit messages, documentation, and project-related communication.
 
-This repository supports research and educational work around **spatio-temporal wind power forecasting** on the **DaKS / Kassel synthetic wind power dataset**. Discussion should therefore remain focused, respectful, evidence-based, and aligned with the scientific scope of the project.
-
-The project is forecasting-first and thesis-facing. It should not be represented as a completed PHM system, anomaly-detection system, fault-diagnosis module, deployed digital twin, production monitoring platform, or operational forecasting service.
+Maintainers will aim to keep project spaces respectful, academically honest, and safe for focused technical and scientific discussion.
 
 ---
 
 ## Expected Behavior
 
-Examples of behavior that contribute to a positive and academically appropriate environment include:
+Examples of constructive behavior include:
 
 - being respectful in comments, issues, pull requests, reviews, and discussions,
 - giving constructive, specific, and evidence-based feedback,
@@ -36,18 +56,20 @@ Examples of unacceptable behavior include:
 - hostile behavior in code review, issue discussion, or academic debate,
 - deliberately misleading scientific claims,
 - presenting future work as already implemented,
-- presenting diagnostics outputs as validated health-state inference,
+- presenting residual diagnostics as confirmed faults or validated health-state inference,
 - presenting graph experiments as validated graph superiority without supporting evidence,
-- presenting the local demo as a deployed digital twin, monitoring system, PHM system, or production service,
+- presenting controlled subset evidence as a replacement for the canonical full-dataset benchmark,
+- presenting XGBoost as state-of-the-art rather than as the lowest-MAE model within the implemented canonical tabular benchmark space,
+- presenting the local demo as a deployed digital twin, monitoring system, PHM system, anomaly-detection service, fault-diagnosis system, production service, or operational forecasting platform,
 - publishing private, sensitive, or non-public information without permission,
-- misrepresenting datasets, results, authorship, or external sources,
+- misrepresenting datasets, results, authorship, citations, or external sources,
 - repeated off-topic disruption.
 
 ---
 
-## Academic Integrity Expectations
+## Academic Integrity and Scope
 
-Because this repository is part of an academic research workflow, contributors and participants are expected to respect:
+Because this repository supports academic research and thesis-facing work, participants are expected to preserve:
 
 - fair attribution,
 - honest reporting of results,
@@ -55,24 +77,20 @@ Because this repository is part of an academic research workflow, contributors a
 - appropriate citation of external datasets and prior work,
 - transparent distinction between evidence, interpretation, and future claims,
 - careful reporting of benchmark results,
-- and responsible use of research, development, and documentation tools where relevant.
+- and responsible use of research, development, and documentation tools.
 
-Research, development, or documentation support tools should not be used to misrepresent authorship, fabricate results, invent citations, or make unsupported scientific claims.
+Research, development, or documentation support tools should not be used to misrepresent authorship, fabricate results, invent citations, or make unsupported scientific claims. Where institutional policy requires disclosure of external support, contributors are expected to follow that policy.
 
-Where academic or institutional policy requires disclosure of external support, contributors are expected to follow that policy.
-
----
-
-## Research Scope Discipline
-
-This project welcomes careful research discussion, but all discussion should respect the current repository scope.
+### Claim-safe discussion
 
 The current repository may be discussed as:
 
 - a forecasting-first research pipeline,
-- a benchmark-safe wind power forecasting workflow,
+- a leakage-safe wind power forecasting workflow,
+- a benchmark-safe tabular baseline and diagnostics pipeline,
 - a diagnostics-aware downstream analysis workflow,
-- a graph-aware forecasting research extension,
+- a graph-aware methodological extension,
+- a controlled four-park neural and sequence subset evidence base,
 - and a thesis-facing research artifact.
 
 It should not be described as:
@@ -83,9 +101,10 @@ It should not be described as:
 - a remaining useful life estimation system,
 - a deployed digital twin,
 - a production monitoring service,
+- a production forecasting platform,
 - or a validated graph-superiority benchmark.
 
-Participants should avoid overclaiming and should frame limitations clearly.
+Residual diagnostics should remain framed as candidate screening / diagnostic signals, not confirmed faults. Controlled neural and sequence experiments should remain framed as four-park subset evidence, not canonical full-dataset benchmark replacements.
 
 ---
 
@@ -99,31 +118,15 @@ This Code of Conduct applies within all project spaces, including:
 - commit messages,
 - review comments,
 - documentation contributions,
-- project-related communication tied to this repository.
+- and project-related communication tied to this repository.
 
-It also applies when project-related behavior or communication directly affects the repository, its academic integrity, or its research environment.
-
----
-
-## Enforcement
-
-Project maintainers may remove, edit, or reject comments, commits, code, issues, pull requests, documentation, or other contributions that do not align with this Code of Conduct.
-
-In serious or repeated cases, contributors may be temporarily or permanently restricted from participating in the project space.
-
-Enforcement decisions should aim to protect:
-
-- respectful collaboration,
-- academic integrity,
-- scientific correctness,
-- reproducibility,
-- and the thesis-safe scope of the repository.
+It also applies when project-related behavior directly affects the repository, its academic integrity, or its research environment.
 
 ---
 
-## Reporting
+## Reporting and Enforcement
 
-If you experience or witness unacceptable behavior, please report it privately to the project maintainer.
+If you experience or witness unacceptable behavior, report it privately to the project maintainer.
 
 Reports should include:
 
@@ -132,9 +135,11 @@ Reports should include:
 - who was involved if relevant,
 - and any context that helps clarify the situation.
 
-All reports will be reviewed in good faith.
-
 Reports involving private information, sensitive research material, credentials, or security-related concerns should not be posted publicly.
+
+Project maintainers may remove, edit, or reject comments, commits, code, issues, pull requests, documentation, or other contributions that do not align with this Code of Conduct. In serious or repeated cases, contributors may be temporarily or permanently restricted from participating in project spaces.
+
+Enforcement decisions should aim to protect respectful collaboration, academic integrity, scientific correctness, reproducibility, and the thesis-safe scope of the repository.
 
 ---
 
