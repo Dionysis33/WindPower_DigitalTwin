@@ -83,6 +83,24 @@ The current implementation should be read as a **forecasting and diagnostics res
 
 ---
 
+## Documentation and Wiki Drafts
+
+The reviewer-facing wiki drafts in [`docs/wiki_drafts/`](./docs/wiki_drafts/) provide a compact navigation layer over the maintained repository documentation. Start with [`Home.md`](./docs/wiki_drafts/Home.md), then use the key pages below for claim-safe review.
+
+| Page | Role |
+|---|---|
+| [`Research-Scope-and-Claim-Boundaries.md`](./docs/wiki_drafts/Research-Scope-and-Claim-Boundaries.md) | Forecasting-first scope and non-claim boundaries |
+| [`Canonical-Forecasting-Workflow.md`](./docs/wiki_drafts/Canonical-Forecasting-Workflow.md) | Canonical workflow summary |
+| [`Canonical-Benchmark-and-Tabular-Results.md`](./docs/wiki_drafts/Canonical-Benchmark-and-Tabular-Results.md) | Tabular benchmark authority and XGBoost lowest-MAE wording within the implemented canonical benchmark |
+| [`Residual-Diagnostics-and-PHM-Oriented-Interpretation.md`](./docs/wiki_drafts/Residual-Diagnostics-and-PHM-Oriented-Interpretation.md) | Residual diagnostics as validation-calibrated candidate screening / diagnostic signals |
+| [`Graph-Aware-Methodological-Extensions.md`](./docs/wiki_drafts/Graph-Aware-Methodological-Extensions.md) | Bounded graph-aware methodology and evidence |
+| [`Controlled-Neural-and-Sequence-Subset-Evidence.md`](./docs/wiki_drafts/Controlled-Neural-and-Sequence-Subset-Evidence.md) | Controlled four-park neural and sequence subset evidence |
+| [`Local-Demo-and-Artifact-Browser.md`](./docs/wiki_drafts/Local-Demo-and-Artifact-Browser.md) | Local read-only demo and artifact-browser boundaries |
+| [`Repository-Evidence-Hygiene.md`](./docs/wiki_drafts/Repository-Evidence-Hygiene.md) | Evidence, artifact, and documentation hygiene |
+| [`Reviewer-FAQ.md`](./docs/wiki_drafts/Reviewer-FAQ.md) | Short reviewer-facing claim-boundary answers |
+
+---
+
 ## Current Status
 
 The repository currently implements a **forecasting-first benchmark and diagnostics pipeline** with a controlled graph-aware extension.
@@ -524,7 +542,7 @@ The following remain future work / research extensions:
 
 - broader graph redesign,
 - stronger graph-based forecasting claims only if supported by new evidence,
-- sequence-based forecasting models,
+- broader neural / sequence forecasting beyond the controlled four-park subset evidence,
 - Mamba / Graph-Mamba experimentation,
 - stronger digital-twin integration,
 - broader prognostics / PHM-oriented modeling,
