@@ -1,0 +1,43 @@
+name: Sync GitHub Wiki
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/wiki_mirror/**"
+      - ".github/workflows/sync-wiki.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Clone wiki repository
+        run: |
+          git clone "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git" wiki-repo
+
+      - name: Sync mirror files to wiki
+        run: |
+          find wiki-repo -maxdepth 1 -type f -name "*.md" -delete
+          cp docs/wiki_mirror/*.md wiki-repo/
+
+      - name: Commit and push wiki changes
+        working-directory: wiki-repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet; then
+            echo "Wiki is already up to date."
+            exit 0
+          fi
+          git add -A
+          git commit -m "Sync wiki mirror from repository"
+          git push
