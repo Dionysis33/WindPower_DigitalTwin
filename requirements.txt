@@ -121,7 +121,7 @@ torch-geometric==2.8.0
 torchaudio==2.11.0
 torchvision==0.25.0
 tornado==6.5.7
-tqdm==4.67.3
+tqdm==4.68.3
 traitlets==5.15.1
 typing_extensions==4.15.0
 tzdata==2026.2
