@@ -63,13 +63,13 @@ The current implementation should be read as a **forecasting and diagnostics res
 | Area | Link | Purpose |
 |---|---|---|
 | Documentation index | [`docs/INDEX.md`](./docs/INDEX.md) | Central guide to repository documentation |
-| Research scope | [`docs/RESEARCH_SCOPE.md`](./docs/RESEARCH_SCOPE.md) | Defines implemented work, planned next steps, and future work |
+| Research scope | [`docs/RESEARCH_SCOPE.md`](./docs/RESEARCH_SCOPE.md) | Defines implemented work, supplementary evidence, planned next steps, and future work |
 | Data documentation | [`docs/DATA.md`](./docs/DATA.md) | Explains DaKS data handling and artifact policy |
 | Baseline protocol | [`docs/BASELINE_PROTOCOL.md`](./docs/BASELINE_PROTOCOL.md) | Defines benchmark, split, leakage, and reporting rules |
 | PHM roadmap | [`docs/PHM_ROADMAP.md`](./docs/PHM_ROADMAP.md) | Explains the cautious transition from forecasting to PHM-oriented research |
 | Active log | [`LOGS.md`](./LOGS.md) | Current canonical methodological progress log |
 | Historical log archive | [`LOGS_ARCHIVE.md`](./LOGS_ARCHIVE.md) | Superseded or exploratory history |
-| Notebooks | [`notebooks/`](./notebooks/) | Canonical notebook workflow |
+| Notebooks | [`notebooks/`](./notebooks/) | Canonical workflow plus bounded supplementary extension notebooks |
 | Python source | [`src/`](./src/) | Reusable Python modules |
 | Python dependencies | [`requirements.txt`](./requirements.txt) | Python environment requirements |
 | Python CI workflow | [`.github/workflows/python-app.yml`](./.github/workflows/python-app.yml) | Python linting and dependency-installation workflow |
@@ -83,27 +83,27 @@ The current implementation should be read as a **forecasting and diagnostics res
 
 ---
 
-## Documentation and Wiki Drafts
+## Published Wiki and Repository Mirror
 
-The reviewer-facing wiki drafts in [`docs/wiki_drafts/`](./docs/wiki_drafts/) provide a compact navigation layer over the maintained repository documentation. Start with [`Home.md`](./docs/wiki_drafts/Home.md), then use the key pages below for claim-safe review.
+The published Wiki mirror in [`docs/wiki_mirror/`](./docs/wiki_mirror/) provides a compact repository-side navigation layer over the maintained repository documentation. Start with [`Home.md`](./docs/wiki_mirror/Home.md), then use the key pages below for claim-safe review.
 
 | Page | Role |
 |---|---|
-| [`Research-Scope-and-Claim-Boundaries.md`](./docs/wiki_drafts/Research-Scope-and-Claim-Boundaries.md) | Forecasting-first scope and non-claim boundaries |
-| [`Canonical-Forecasting-Workflow.md`](./docs/wiki_drafts/Canonical-Forecasting-Workflow.md) | Canonical workflow summary |
-| [`Canonical-Benchmark-and-Tabular-Results.md`](./docs/wiki_drafts/Canonical-Benchmark-and-Tabular-Results.md) | Tabular benchmark authority and XGBoost lowest-MAE wording within the implemented canonical benchmark |
-| [`Residual-Diagnostics-and-PHM-Oriented-Interpretation.md`](./docs/wiki_drafts/Residual-Diagnostics-and-PHM-Oriented-Interpretation.md) | Residual diagnostics as validation-calibrated candidate screening / diagnostic signals |
-| [`Graph-Aware-Methodological-Extensions.md`](./docs/wiki_drafts/Graph-Aware-Methodological-Extensions.md) | Bounded graph-aware methodology and evidence |
-| [`Controlled-Neural-and-Sequence-Subset-Evidence.md`](./docs/wiki_drafts/Controlled-Neural-and-Sequence-Subset-Evidence.md) | Controlled four-park neural and sequence subset evidence |
-| [`Local-Demo-and-Artifact-Browser.md`](./docs/wiki_drafts/Local-Demo-and-Artifact-Browser.md) | Local read-only demo and artifact-browser boundaries |
-| [`Repository-Evidence-Hygiene.md`](./docs/wiki_drafts/Repository-Evidence-Hygiene.md) | Evidence, artifact, and documentation hygiene |
-| [`Reviewer-FAQ.md`](./docs/wiki_drafts/Reviewer-FAQ.md) | Short reviewer-facing claim-boundary answers |
+| [`Research-Scope-and-Claim-Boundaries.md`](./docs/wiki_mirror/Research-Scope-and-Claim-Boundaries.md) | Forecasting-first scope and non-claim boundaries |
+| [`Canonical-Forecasting-Workflow.md`](./docs/wiki_mirror/Canonical-Forecasting-Workflow.md) | Canonical workflow summary |
+| [`Canonical-Benchmark-and-Tabular-Results.md`](./docs/wiki_mirror/Canonical-Benchmark-and-Tabular-Results.md) | Tabular benchmark authority and XGBoost lowest-MAE wording within the implemented canonical benchmark |
+| [`Residual-Diagnostics-and-PHM-Oriented-Interpretation.md`](./docs/wiki_mirror/Residual-Diagnostics-and-PHM-Oriented-Interpretation.md) | Residual diagnostics and NB20/NB21 validation-calibrated interpretation layers |
+| [`Graph-Aware-Methodological-Extensions.md`](./docs/wiki_mirror/Graph-Aware-Methodological-Extensions.md) | Bounded graph-aware methodology and evidence |
+| [`Controlled-Neural-and-Sequence-Subset-Evidence.md`](./docs/wiki_mirror/Controlled-Neural-and-Sequence-Subset-Evidence.md) | Controlled four-park neural and sequence subset evidence |
+| [`Local-Demo-and-Artifact-Browser.md`](./docs/wiki_mirror/Local-Demo-and-Artifact-Browser.md) | Local read-only demo and artifact-browser boundaries |
+| [`Repository-Evidence-Hygiene.md`](./docs/wiki_mirror/Repository-Evidence-Hygiene.md) | Evidence, artifact, and documentation hygiene |
+| [`Reviewer-FAQ.md`](./docs/wiki_mirror/Reviewer-FAQ.md) | Short reviewer-facing claim-boundary answers |
 
 ---
 
 ## Current Status
 
-The repository currently implements a **forecasting-first benchmark and diagnostics pipeline** with a controlled graph-aware extension.
+The repository currently implements a **forecasting-first benchmark and diagnostics pipeline** with a controlled graph-aware extension and bounded supplementary extension notebooks.
 
 ### Implemented operational core
 
@@ -145,6 +145,17 @@ The graph-aware extension currently includes:
 - `NB14` controlled graph refinement follow-up.
 
 These stages provide **cautious graph-based forecasting evidence**, but they do **not** establish validated graph superiority over the canonical benchmark backbone.
+
+### Supplementary extension evidence
+
+Post-`NB14` notebooks are supplementary extensions. They are not replacements for the canonical full-dataset workflow or for `data/processed/baseline_metrics.csv`.
+
+The documented supplementary evidence currently includes:
+
+- `NB15`, `NB16`, `NB18`, and `NB19` as controlled four-park neural / sequence subset evidence,
+- `NB20` and `NB21` as validation-calibrated residual diagnostic interpretation layers.
+
+`NB17` is present as an unaudited Mamba sequence scaffold. Without a completed reviewed audit document, it should not be promoted as manuscript or reviewer-facing evidence.
 
 ---
 
@@ -213,6 +224,8 @@ NB02 raw validation
 
 `NB01` is preserved as historical exploratory context and is not part of the current canonical DaKS forecasting pipeline.
 
+`NB15` through `NB21` are supplementary extensions. They do not replace the canonical `NB02` through `NB14` full-dataset workflow unless a future document explicitly changes that status.
+
 ---
 
 ## Notebook Guide
@@ -233,6 +246,15 @@ NB02 raw validation
 | `12_first_graph_based_forecasting_baseline.ipynb` | First graph-based forecasting baseline | First actual graph-based forecasting experiment |
 | `13_graph_ablation_and_spatial_sensitivity_analysis.ipynb` | Graph ablation and spatial sensitivity | Topology-aware follow-up; cautious graph evidence only |
 | `14_controlled_graph_refinement_followup.ipynb` | Controlled graph refinement follow-up | Narrow-scope graph-only follow-up; evidence consolidation, not superiority validation |
+| `15_nn_sequence_baseline_subset.ipynb` | Controlled GRU sequence subset extension | Audited controlled four-park sequence subset evidence only; not a full-dataset benchmark replacement |
+| `16_nn_lstm_sequence_subset.ipynb` | Controlled LSTM sequence subset extension | Audited controlled four-park sequence subset evidence only; not a full-dataset benchmark replacement |
+| `17_mamba_sequence_baseline_subset.ipynb` | Mamba sequence scaffold | Unaudited supplementary scaffold only; not completed reviewer-facing evidence |
+| `18_tcn_sequence_baseline_subset.ipynb` | Controlled TCN sequence subset extension | Audited controlled four-park sequence subset evidence only; not a full-dataset benchmark replacement |
+| `19_patchtst_sequence_subset.ipynb` | Controlled sequence-aligned subset extension | Audited PatchTST-Lite and flattened-window XGBoost sequence subset evidence only |
+| `20_residual_phm_diagnostics.ipynb` | Residual diagnostic interpretation extension | Validation-calibrated residual diagnostics over forecasting outputs; not validated PHM or fault diagnosis |
+| `21_strong_model_residual_phm_diagnostics.ipynb` | Strong-model residual diagnostic extension | Validation-calibrated residual diagnostics with a stronger residual source; not a canonical benchmark replacement |
+
+The `NB15` through `NB21` rows are supplementary categories. They should remain separated from the canonical full-dataset benchmark unless a future reviewed document explicitly promotes a new workflow.
 
 ---
 
@@ -266,7 +288,7 @@ See:
 
 ## Repository Structure
 
-The current public repository structure is:
+The current public repository structure is summarized below; the current `notebooks/` inventory is listed separately after the compact tree.
 
 ```text
 WindPower_DigitalTwin/
@@ -318,6 +340,32 @@ WindPower_DigitalTwin/
 ├── README.md
 ├── requirements.txt
 └── SECURITY.md
+```
+
+Current `notebooks/` inventory:
+
+```text
+01_data_acquisition.ipynb
+02_kassel_exploration.ipynb
+03_eda_master.ipynb
+04_feature_engineering_and_graph_construction.ipynb
+05_outliers_and_split.ipynb
+06_baseline_modeling.ipynb
+07_advanced_baselines_and_importance.ipynb
+08_residual_diagnostics_and_operating_regimes.ipynb
+09_park_level_diagnostics_and_thesis_consolidation.ipynb
+10_graph_readiness_and_artifact_verification.ipynb
+11_graph_model_input_packaging.ipynb
+12_first_graph_based_forecasting_baseline.ipynb
+13_graph_ablation_and_spatial_sensitivity_analysis.ipynb
+14_controlled_graph_refinement_followup.ipynb
+15_nn_sequence_baseline_subset.ipynb
+16_nn_lstm_sequence_subset.ipynb
+17_mamba_sequence_baseline_subset.ipynb
+18_tcn_sequence_baseline_subset.ipynb
+19_patchtst_sequence_subset.ipynb
+20_residual_phm_diagnostics.ipynb
+21_strong_model_residual_phm_diagnostics.ipynb
 ```
 
 ---
@@ -456,6 +504,8 @@ Important execution notes:
 - `NB03` should run only after the upstream validation outputs of `NB02` are available.
 - Downstream notebooks should preserve the established validation, split, and artifact contracts.
 - Graph-related notebooks should not overwrite the canonical tabular benchmark authority unless explicitly documented.
+- `NB15` through `NB21` are supplementary extensions and are not part of the recommended canonical execution order.
+- `NB17` should be treated as an unaudited scaffold unless a reviewed audit document is added.
 
 ---
 
@@ -508,6 +558,8 @@ forecasting benchmark backbone
 -> first graph-based forecasting baseline
 -> topology-aware graph ablation
 -> controlled graph refinement follow-up
+-> supplementary controlled neural / sequence subset evidence
+-> supplementary residual diagnostic interpretation layers
 -> future condition-awareness / PHM-oriented research
 ```
 
@@ -525,16 +577,19 @@ forecasting benchmark backbone
 - first graph-based forecasting baseline
 - graph ablation / spatial sensitivity analysis
 - controlled graph refinement follow-up
+- controlled four-park neural / sequence subset evidence for `NB15`, `NB16`, `NB18`, and `NB19`
+- validation-calibrated residual diagnostic interpretation layers for `NB20` and `NB21`
+- an unaudited supplementary Mamba sequence scaffold in `NB17`
 - local read-only Django demo interface
 
 ### Planned next
 
 The immediate planned direction is:
 
-- documentation-consistent consolidation of the post-`NB14` repository story,
 - repository-safe artifact organization,
 - thesis-facing cleanup,
-- and scope-safe planning for broader graph-related work only if justified by the available evidence.
+- maintenance of the canonical-vs-supplementary documentation boundary,
+- and scope-safe planning for broader graph, neural, sequence, or residual-diagnostic work only if justified by reviewed evidence.
 
 ### Future work
 
@@ -543,7 +598,7 @@ The following remain future work / research extensions:
 - broader graph redesign,
 - stronger graph-based forecasting claims only if supported by new evidence,
 - broader neural / sequence forecasting beyond the controlled four-park subset evidence,
-- Mamba / Graph-Mamba experimentation,
+- completed and audited Mamba / Graph-Mamba evidence beyond the unaudited `NB17` scaffold,
 - stronger digital-twin integration,
 - broader prognostics / PHM-oriented modeling,
 - deployed PHM implementation,
@@ -560,15 +615,18 @@ The current repository does **not** claim to provide:
 - a fault-diagnosis module,
 - remaining useful life estimation,
 - production-grade health monitoring,
+- validated neural / sequence model superiority,
 - validated GNN / Graph-Mamba superiority,
 - a deployed digital twin service,
 - or a production forecasting platform.
 
-The implemented diagnostics and graph-aware stages should be interpreted as:
+The implemented diagnostics, graph-aware stages, and bounded supplementary extensions should be interpreted as:
 
 - benchmark-safe extensions of the forecasting pipeline,
 - diagnostic signal candidates,
 - cautious graph-based forecasting evidence,
+- controlled four-park neural / sequence subset evidence,
+- validation-calibrated residual diagnostic interpretation layers,
 - and methodological infrastructure for future condition-awareness and PHM-oriented research.
 
 ---

@@ -18,7 +18,11 @@ XGBoost is the lowest-MAE model within the implemented canonical full-dataset ta
 
 ## Are neural and sequence models part of the canonical benchmark?
 
-No. Neural and sequence experiments are controlled four-park subset evidence only. They support bounded discussion and future-work motivation, not replacement of the canonical benchmark.
+No. `NB15`, `NB16`, `NB18`, and `NB19` are controlled four-park neural / sequence subset evidence only. They support bounded discussion and future-work motivation, not replacement of the canonical benchmark. `NB17` is an unaudited Mamba sequence scaffold unless a reviewed audit document is added.
+
+## How should NB20 and NB21 be interpreted?
+
+`NB20` and `NB21` are validation-calibrated residual diagnostic interpretation layers over forecasting outputs. They do not establish validated PHM, fault diagnosis, anomaly detection, Remaining Useful Life estimation, or deployed digital twin functionality.
 
 ## Do graph-aware stages prove graph superiority?
 

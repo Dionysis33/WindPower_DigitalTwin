@@ -13,6 +13,18 @@ The repository separates:
 
 These evidence spaces have different scopes and comparability rules.
 
+## Notebook To Audit Map
+
+| Notebook | Evidence status | Audit document |
+|---|---|---|
+| `NB15` / `15_nn_sequence_baseline_subset.ipynb` | Audited controlled GRU sequence subset evidence | `docs/NN_SEQUENCE_SUBSET_AUDIT.md` |
+| `NB16` / `16_nn_lstm_sequence_subset.ipynb` | Audited controlled LSTM sequence subset evidence | `docs/NN_LSTM_SEQUENCE_SUBSET_AUDIT.md` |
+| `NB17` / `17_mamba_sequence_baseline_subset.ipynb` | Unaudited Mamba sequence scaffold only | No completed `NB17` audit document found |
+| `NB18` / `18_tcn_sequence_baseline_subset.ipynb` | Audited controlled TCN sequence subset evidence | `docs/TCN_SEQUENCE_SUBSET_AUDIT.md` |
+| `NB19` / `19_patchtst_sequence_subset.ipynb` | Audited sequence-aligned PatchTST-Lite and flattened-window XGBoost subset evidence | `docs/PATCHTST_SEQUENCE_SUBSET_AUDIT.md` |
+
+The tabular neural subset and matched four-park baseline context are documented separately in `docs/NN_SUBSET_EXPERIMENT_AUDIT.md`, `docs/MATCHED_FOUR_PARK_BASELINE_COMPARISON_AUDIT.md`, and `docs/NEURAL_BASELINE_COMPARISON_SUMMARY.md`.
+
 ## Safe Interpretation
 
 The neural and sequence audits can support discussion of experimental readiness, leakage-aware subset protocols, matched-subset comparisons, and future full-benchmark motivation.

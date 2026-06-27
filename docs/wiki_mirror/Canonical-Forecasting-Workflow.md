@@ -24,9 +24,17 @@ NB02 raw validation
 
 `NB01` is preserved as historical exploratory context and is not part of the current canonical DaKS forecasting pipeline.
 
+## Supplementary Extension Boundary
+
+`NB15` through `NB21` are not appended to the canonical path above. They are supplementary extension notebooks:
+
+- `NB15`, `NB16`, `NB18`, and `NB19` provide controlled four-park neural / sequence subset evidence only.
+- `NB17` is an unaudited Mamba sequence scaffold and should not be promoted as completed reviewer-facing evidence.
+- `NB20` and `NB21` provide validation-calibrated residual diagnostic interpretation layers only.
+
 ## Interpretation
 
-The workflow should be presented as forecasting-first. Diagnostics and graph-aware notebooks extend interpretation and methodology, but they do not replace the canonical full-dataset tabular benchmark and do not validate PHM, fault diagnosis, or graph superiority.
+The workflow should be presented as forecasting-first. Diagnostics, graph-aware notebooks, and supplementary extension notebooks extend interpretation and methodology, but they do not replace the canonical full-dataset tabular benchmark and do not validate PHM, fault diagnosis, neural / sequence superiority, or graph superiority.
 
 ## Source Documents
 
