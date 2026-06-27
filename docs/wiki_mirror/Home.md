@@ -11,7 +11,8 @@ The project studies spatio-temporal wind power forecasting on the DaKS / Kassel 
 2. Review the dataset, artifact, and reproducibility policy.
 3. Read the canonical forecasting workflow and benchmark pages.
 4. Treat residual diagnostics, graph-aware stages, and neural/sequence subset audits as bounded extensions.
-5. Use repository hygiene pages to understand contribution and artifact-safety expectations.
+5. Keep `NB15` through `NB21` separate from the canonical `NB02` through `NB14` workflow unless a reviewed document explicitly promotes a new workflow.
+6. Use repository hygiene pages to understand contribution and artifact-safety expectations.
 
 ## Wiki Pages
 
@@ -26,6 +27,14 @@ The project studies spatio-temporal wind power forecasting on the DaKS / Kassel 
 - Local Demo and Artifact Browser
 - Repository Evidence Hygiene
 - Reviewer FAQ
+
+## Notebook Categories
+
+- `NB01`: historical exploratory context only.
+- `NB02` through `NB14`: canonical full-dataset forecasting / graph workflow.
+- `NB15`, `NB16`, `NB18`, `NB19`: controlled four-park neural / sequence subset evidence.
+- `NB17`: unaudited Mamba sequence scaffold only.
+- `NB20`, `NB21`: validation-calibrated residual diagnostic interpretation layers.
 
 ## Source Documents
 
