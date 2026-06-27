@@ -2238,3 +2238,97 @@ Cell-by-cell υλοποίηση του `NB12` με benchmark-safe evaluation κ�
 - claims to avoid
 
 και στη συνέχεια να ξεκινήσει η πραγματική συγγραφή των κεφαλαίων.
+
+
+---
+
+
+## [27/06/2026] - Repository Documentation, Wiki Mirror Sync, Dependency Hygiene & Cleanup Pass
+
+### Ολοκληρωμένες Ενέργειες:
+1. Ολοκληρώθηκε μικρό repository-maintenance και documentation-governance pass χωρίς αλλαγές στο forecasting pipeline, στα notebooks, στα benchmark artifacts ή στα manuscript-facing scientific results.
+
+2. Πραγματοποιήθηκαν και merged safe dependency-maintenance PRs για pinned Python dependencies, συμπεριλαμβανομένων updates στα:
+   - `jupyterlab`
+   - `beautifulsoup4`
+   - `ipython`
+   - `traitlets`
+   - `tqdm`
+
+3. Έγινε local environment synchronization μετά τα dependency merges και επιβεβαιώθηκε clean dependency state με:
+   - `pip install -r requirements.txt`
+   - `pip check`
+   - import/version checks για τα ενημερωμένα packages
+
+4. Ολοκληρώθηκε documentation-only alignment pass για το public repository story:
+   - το `README.md`
+   - το `docs/INDEX.md`
+   - και τα repository-side Wiki mirror pages
+   ευθυγραμμίστηκαν με το current notebook inventory μέχρι `NB21`.
+
+5. Διατηρήθηκε ρητά η διάκριση:
+   - `NB02` through `NB14` ως canonical full-dataset forecasting / graph workflow,
+   - `NB15`, `NB16`, `NB18`, `NB19` ως controlled four-park neural / sequence subset evidence only,
+   - `NB17` ως unaudited Mamba sequence scaffold only,
+   - `NB20`, `NB21` ως validation-calibrated residual diagnostic interpretation layers only.
+
+6. Το repository-side Wiki folder μετονομάστηκε από:
+   - `docs/wiki_drafts/`
+   σε:
+   - `docs/wiki_mirror/`
+   ώστε να αποτυπώνει καθαρότερα ότι λειτουργεί ως maintained mirror των published GitHub Wiki pages.
+
+7. Προστέθηκε GitHub Actions workflow:
+   - `.github/workflows/sync-wiki.yml`
+   για automatic synchronization του `docs/wiki_mirror/` προς το published GitHub Wiki μετά από merges στο `main`.
+
+8. Προστέθηκαν repository-tracked Wiki special pages:
+   - `docs/wiki_mirror/_Sidebar.md`
+   - `docs/wiki_mirror/_Footer.md`
+   ώστε το custom GitHub Wiki sidebar και footer να διατηρούνται πλέον από το repository mirror και να μη χρειάζονται manual recreation στο GitHub UI.
+
+9. Διορθώθηκε το Wiki sync workflow ώστε να κάνει `git add -A` πριν από το cached diff check. Αυτό επιτρέπει στο workflow να εντοπίζει και νέα untracked Wiki mirror files όπως `_Sidebar.md` και `_Footer.md`.
+
+10. Επιβεβαιώθηκε ότι το published GitHub Wiki ενημερώθηκε επιτυχώς:
+    - το custom sidebar εμφανίζεται ξανά,
+    - το custom footer εμφανίζεται ξανά,
+    - οι Wiki pages παραμένουν 12,
+    - και το Wiki Home διατηρεί το conservative forecasting-first / non-overclaiming framing.
+
+11. Έγινε local / remote cleanup μετά τα merges:
+    - local feature branches removed,
+    - stale remote branches pruned,
+    - working tree clean,
+    - local `main` synchronized with `origin/main`.
+
+### Scientific / Repository Interpretation:
+Η σημερινή εργασία ήταν καθαρά repository-governance, documentation-hygiene, dependency-maintenance και Wiki-infrastructure pass.
+
+Δεν έγινε:
+- νέο notebook rerun,
+- νέο model training,
+- νέο benchmark result,
+- αλλαγή στο `data/processed/baseline_metrics.csv`,
+- νέο residual diagnostic experiment,
+- νέο neural / sequence experiment,
+- νέο graph experiment,
+- ή αλλαγή στο manuscript scientific scope.
+
+Το repository παραμένει forecasting-first και leakage-safe.
+Τα residual diagnostics παραμένουν candidate screening / interpretation signals only.
+Δεν εισήχθησαν claims για validated PHM, fault diagnosis, RUL estimation, deployed monitoring system ή fully implemented digital twin.
+
+### Practical Note:
+Το `Sync GitHub Wiki` workflow πέρασε επιτυχώς και συγχρονίζει πλέον τις repository-side Wiki mirror pages με το published GitHub Wiki.
+
+Τυχόν failure στο `Automatic Dependency Submission` workflow με `socket hang up` / component-detection download issue αντιμετωπίζεται ως transient GitHub Actions / network dependency-submission failure και όχι ως repository-content or scientific-scope problem.
+
+### Current Status:
+Μετά το cleanup:
+- local branch: `main`
+- remote branch: `origin/main`
+- working tree: clean
+- Wiki mirror: synchronized
+- custom Wiki sidebar/footer: restored
+- repository documentation: aligned through `NB21`
+- canonical benchmark and notebook contracts: unchanged
