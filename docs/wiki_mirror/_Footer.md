@@ -1,0 +1,1 @@
+Forecasting-first wind-power forecasting repository. Residual diagnostics are candidate screening signals only, not confirmed faults, validated PHM, fault diagnosis, RUL estimation, or deployed digital-twin functionality. See [[Research Scope and Claim Boundaries]] and [[Reviewer FAQ]].
