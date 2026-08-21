@@ -197,14 +197,21 @@ NB13_EXPORT_MANIFEST = NB13_GRAPH_ABLATION_DIR / "nb13_export_manifest.csv"
 
 
 # -------------------------------------------------------------------
-# Canonical split boundaries
+# NB05 | Canonical split semantics
 # -------------------------------------------------------------------
-# Προσοχή:
-# - Το split εδώ παραμένει όπως είναι ήδη στο current repository.
-# - Δεν το αλλάζουμε εδώ, γιατί αυτό θα ήταν broader protocol θέμα
-#   και όχι απλό config synchronization patch.
-TRAIN_END_DATE = "2019-12-31 23:00:00"
-VAL_END_DATE = "2020-06-30 23:00:00"
+# The canonical train/validation/test split is derived in
+# notebooks/05_outliers_and_split.ipynb rather than from fixed
+# date constants in this configuration file.
+#
+# Split logic:
+# - test: rows with test_flag == 1
+# - pre-test: rows with test_flag == 0
+# - validation: the final 30-day temporal tail immediately
+#   preceding the first test timestamp
+# - training: all earlier pre-test observations
+#
+# Exact executed split boundaries are verified from the exported
+# NB05 train/validation/test artifacts and reported in the manuscript.
 
 
 # -------------------------------------------------------------------
