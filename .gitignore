@@ -146,11 +146,21 @@ cython_debug/
 # PyPI configuration
 .pypirc
 
+
 # ---------------------------------------------------------
 # LOCAL ARTIFACT POLICY
 # ---------------------------------------------------------
+# Keep generated research data and intermediate outputs
+# local-only unless explicitly approved for version control.
+#
+# These rules affect untracked files.
+# Already tracked files remain tracked.
+# ---------------------------------------------------------
 
-# 1) Keep source and temporary data local-only
+
+# 1) Raw and intermediate data
+# Keep data local, but preserve directory placeholders.
+
 data/raw/**
 !data/raw/
 !data/raw/.gitkeep
@@ -159,25 +169,57 @@ data/interim/**
 !data/interim/
 !data/interim/.gitkeep
 
-# 2) Keep generated outputs local-only by default,
-#    except for selected tracked reference files and placeholders.
+
+# 2) Processed research data
+# Ignore generated datasets, evaluation outputs,
+# predictions, metrics, and intermediate artifacts.
+
 data/processed/**
 !data/processed/
-!data/processed/baseline_metrics.csv
 
-# Local prediction outputs
+# baseline_metrics.csv is intentionally local-only.
+# Do not uncomment unless explicitly approved.
+# !data/processed/baseline_metrics.csv
+
+
+# 3) Prediction outputs
+# Keep generated predictions local.
+# Preserve only the directory placeholder.
+
 !data/processed/predictions/
+data/processed/predictions/**
 !data/processed/predictions/.gitkeep
 
-# Local diagnostic outputs
+
+# 4) Diagnostic / PHM outputs
+# Keep residual diagnostics, warning-event outputs,
+# and generated diagnostic tables local.
+
 !data/processed/diagnostics/
+data/processed/diagnostics/**
 !data/processed/diagnostics/.gitkeep
 
-# Local graph outputs
+
+# 5) Graph-related outputs
+# Keep generated graph matrices and artifacts local.
+# Preserve only the directory placeholder.
+
 !data/processed/graph/
+data/processed/graph/**
 !data/processed/graph/.gitkeep
 
-# 3) Keep local model artifacts out of version control
+
+# 6) NumPy binary artifacts
+# Do not accidentally add generated binary arrays.
+# Already tracked files are not affected.
+
+*.npy
+*.npz
+
+
+# 7) Local model artifacts
+# Preserve the existing local-model policy.
+
 models/local/**
 !models/local/
 !models/local/.gitkeep
@@ -191,12 +233,40 @@ models/*.pth
 models/*.ckpt
 models/*.onnx
 
-# 4) Keep selected report figures trackable.
-#    Avoid using this folder as a general dump location.
+
+# 8) Report figures
+# Keep selected report figures trackable.
+# Avoid using report folders as general artifact dumps.
+# No global PNG, PDF, SVG, or figure exclusion.
+
 
 # ---------------------------------------------------------
 # LOCAL-ONLY LITERATURE MATERIALS
 # ---------------------------------------------------------
-# Academic papers, PDFs, and reading notes used only as local research context.
+# Academic papers, PDFs, and reading notes used only
+# as local research context.
 # These files must stay outside GitHub.
+
 literature_local/
+
+# ---------------------------------------------------------
+# LOCAL-ONLY EXPERIMENTAL AND FRONTIERS AUDIT OUTPUTS
+# ---------------------------------------------------------
+# Preserve all files locally.
+# Exclude these untracked directories from Git.
+# No source code or files are deleted.
+
+# NB07 environment-specific verification outputs
+/data/nb07_canonical_control_currentenv/
+
+# Corrected wind-height processing outputs
+/data/processed_windheight_corrected/
+
+# Reviewer 3 sequence reproducibility outputs
+/data/reviewer3_sequence_repro_control/
+
+# Frontiers final lineage verification
+/frontiers_final_lineage_verification/
+
+# Frontiers final provenance audit
+/frontiers_final_provenance_audit/
