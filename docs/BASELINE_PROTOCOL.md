@@ -2,28 +2,28 @@
 
 ## Σκοπός
 
-Το παρόν έγγραφο ορίζει το **baseline evaluation protocol** του project.
+Το παρόν έγγραφο ορίζει το **πρωτόκολλο αξιολόγησης των baseline μοντέλων** του project.
 
-Η baseline ladder λειτουργεί ως το κοινό benchmark backbone πάνω στο οποίο στηρίζονται:
+Τα baseline μοντέλα παρέχουν το κοινό σημείο αναφοράς για:
 
-- η δίκαιη cross-model comparison,
-- η downstream residual diagnostics analysis,
-- η park-level diagnostics consolidation,
-- οι graph-ready verification και graph-packaging stages,
-- και οι cautious συγκρίσεις με implemented graph-based forecasting stages.
+- τη δίκαιη σύγκριση μοντέλων,
+- την ανάλυση residuals,
+- τη συγκέντρωση διαγνωστικών αποτελεσμάτων ανά πάρκο,
+- τους ελέγχους και την προετοιμασία δεδομένων για graph μοντέλα,
+- και την προσεκτική σύγκριση με τα υλοποιημένα graph-based forecasting μοντέλα.
 
 ## Baseline philosophy
 
 Η φιλοσοφία του baseline track είναι η εξής:
 
 - ξεκινάμε από απλά και ερμηνεύσιμα μοντέλα,
-- καθορίζουμε μια ισχυρή reference performance,
+- καθορίζουμε ένα ισχυρό επίπεδο απόδοσης αναφοράς,
 - εξετάζουμε αν τα πιο πολύπλοκα μοντέλα προσθέτουν πραγματική αξία,
-- αποφεύγουμε claims υπεροχής χωρίς σωστή σύγκριση.
+- αποφεύγουμε ισχυρισμούς υπεροχής χωρίς κατάλληλη σύγκριση.
 
 ## Current implemented baselines
 
-Στην current canonical baseline ladder περιλαμβάνονται:
+Τα υλοποιημένα tabular baselines είναι:
 
 1. **Persistence**
 2. **Linear Regression**
@@ -51,7 +51,7 @@
 - χρονικά απομονωμένα splits,
 - consistent feature space across splits,
 - train-only preprocessing statistics,
-- benchmark-safe reporting.
+- αναφορά αποτελεσμάτων σύμφωνα με το πρωτόκολλο αξιολόγησης.
 
 Τα outlier thresholds / clipping limits υπολογίζονται με βάση **train-only statistics** και εφαρμόζονται downstream χωρίς leakage προς validation ή test.
 
@@ -71,28 +71,30 @@
 
 ## Canonical benchmark artifact
 
-Για cross-model reporting, canonical artifact είναι το:
+Το αρχείο του full-dataset tabular benchmark, που περιλαμβανόταν στην προηγούμενη δημόσια έκδοση, διατηρείται τοπικά στο:
 
 `data/processed/baseline_metrics.csv`
 
-Το artifact αυτό ερμηνεύεται ως:
+Το CSV δεν διανέμεται σε αυτή την έκδοση του repository. Το αρχικό ερευνητικό αρχείο διατηρείται τοπικά, ενώ ελέγχονται η προέλευση των πειραματικών αποτελεσμάτων και η αριθμητική συμφωνία με το Author’s Proof του manuscript. Δεν έχει ακόμη εγκριθεί νέο δημόσιο CSV μετρικών αναφοράς. Η απόσυρση δεν αποτελεί εύρημα επιστημονικού σφάλματος στο CSV ή στα αποτελέσματα του manuscript· οι προηγούμενες δημόσιες εκδόσεις του αρχείου παραμένουν στο ιστορικό Git.
+
+Ο ρόλος του αρχείου στο υπάρχον πρωτόκολλο αξιολόγησης παραμένει:
 
 - **final test-set benchmark table**
-- με canonical metric naming:
+- με τις ονομασίες μετρικών:
   - **MAE**
   - **RMSE**
   - **R²**
-- και με primary ranking criterion το **MAE (ascending)**.
+- και με κύριο κριτήριο κατάταξης το **MAE (ascending)**.
 
-Τα `NB10`–`NB14` μπορούν να καταναλώνουν canonical split, graph ή benchmark artifacts downstream, αλλά **δεν** επαναορίζουν το `data/processed/baseline_metrics.csv` ως graph benchmark table.
+Τα `NB10`–`NB14` μπορούν να χρησιμοποιούν τα αρχεία αναφοράς των splits, των graphs ή του benchmark, αλλά **δεν** μετατρέπουν το `data/processed/baseline_metrics.csv` σε πίνακα αξιολόγησης graph μοντέλων.
 
-Το benchmark artifact παραμένει canonical authority μόνο για cross-model **test-set baseline reporting** και όχι για graph packaging, graph verification, graph baseline, graph ablation ή controlled graph-refinement exports.
+Το scope του benchmark artifact περιορίζεται σε cross-model **test-set baseline reporting** και όχι σε graph packaging, graph verification, graph baseline, graph ablation ή controlled graph-refinement exports. Η προσωρινή απόσυρση δεν αλλάζει το evaluation protocol και δεν προάγει supplementary four-park neural / sequence outputs σε replacement public benchmark.
 
 ## Role of diagnostics
 
-Η baseline phase δεν τελειώνει στα aggregate metrics.
+Η αξιολόγηση των baselines συνεχίζεται πέρα από τις συγκεντρωτικές μετρικές.
 
-Το benchmark stack υποστηρίζει downstream:
+Τα αποτελέσματα του benchmark υποστηρίζουν:
 
 - residual distribution analysis,
 - actual-vs-predicted comparison,
@@ -103,7 +105,7 @@
 
 ## Current downstream and graph-extension path
 
-Μετά την ολοκλήρωση της baseline πεντάδας, το current implemented downstream / graph-extension layer έχει επτά διακριτά notebooks:
+Μετά την αξιολόγηση των πέντε baselines, η ανάλυση residuals και οι graph επεκτάσεις υλοποιούνται σε επτά διακριτά notebooks:
 
 - `NB08` -> downstream residual diagnostics and operating regimes
 - `NB09` -> park-level diagnostics and thesis consolidation
@@ -113,7 +115,7 @@
 - `NB13` -> graph ablation / spatial sensitivity analysis
 - `NB14` -> controlled graph refinement follow-up
 
-Αυτό σημαίνει ότι η canonical ερμηνευτική και graph-extension φάση είναι πλέον:
+Η υλοποιημένη ροή ανάλυσης και graph επεκτάσεων είναι:
 
 > benchmarked forecasting -> downstream residual diagnostics -> park-level consolidation -> graph contract verification -> graph-model input packaging -> first graph-based forecasting baseline -> topology-aware graph ablation -> controlled graph refinement follow-up
 
@@ -123,7 +125,7 @@
 
 ## Benchmark-safe model-selection and reporting rule
 
-Σε όλο το repository, όπου υπάρχει model fitting, πρέπει να διατηρείται ο εξής κανόνας:
+Όπου εκπαιδεύεται μοντέλο στο repository, ισχύει ο εξής κανόνας:
 
 - **validation only for model selection**
 - **test only for final reporting**
@@ -140,7 +142,7 @@
 
 Το `NB13` αποτελεί strict follow-up sensitivity / ablation stage πάνω σε frozen `NB12`-compatible training configuration.
 
-Το `NB14` αποτελεί strict post-`NB13` controlled graph refinement follow-up μέσα σε benchmark-safe και narrow-scope comparison boundary.
+Το `NB14` εξετάζει ελεγχόμενες βελτιώσεις του graph μετά το `NB13`, με αυστηρά περιορισμένο πεδίο σύγκρισης και σύμφωνα με το πρωτόκολλο αξιολόγησης.
 
 Όμως:
 
@@ -181,7 +183,7 @@
 
 ## Current status
 
-Η current canonical baseline ladder έχει ολοκληρωθεί και λειτουργεί ως benchmark backbone για:
+Η αξιολόγηση των baseline μοντέλων έχει ολοκληρωθεί και αποτελεί το σημείο αναφοράς για:
 
 - `NB06` baseline modeling
 - `NB07` advanced tabular baselines
@@ -202,12 +204,14 @@
 - documentation-consistent consolidation του post-`NB14` benchmark interpretation boundary
 - και στη συνέχεια broader graph refinement ή επόμενο graph-related step μόνο αν αυτό δικαιολογείται από νέα benchmark evidence και χωρίς premature superiority claims
 
+Έχουν ήδη ολοκληρωθεί ελεγχόμενα πειράματα σε τέσσερα πάρκα: GRU (`NB15`), LSTM (`NB16`), TCN (`NB18`) και PatchTST-Lite με Flattened-window XGBoost (`NB19`). Πρόκειται για συμπληρωματικά πειράματα υποσυνόλου, όχι για full-dataset sequence benchmarks. Το `NB17` περιέχει Mamba scaffold χωρίς επαληθευμένο ολοκληρωμένο πειραματικό αποτέλεσμα.
+
 Τα παρακάτω παραμένουν future work:
 
 - broader graph redesign,
 - stronger graph-based forecasting claims μόνο αν υποστηριχθούν από νέα evidence,
-- sequence-based models,
-- GNN / Mamba / Graph-Mamba experimentation,
+- πιθανή αξιολόγηση sequence-based μοντέλων στο πλήρες dataset, πέρα από τα ελεγχόμενα πειράματα τεσσάρων πάρκων,
+- περαιτέρω GNN πειράματα πέρα από τις υλοποιημένες graph-based αξιολογήσεις, καθώς και πειραματική αξιολόγηση των μη επαληθευμένων Mamba / Graph-Mamba επεκτάσεων,
 - stronger digital-twin integration,
 - deployed PHM / digital twin implementation,
 - broader PHM-oriented modeling.

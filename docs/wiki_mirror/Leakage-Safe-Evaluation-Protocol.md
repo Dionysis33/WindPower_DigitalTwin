@@ -13,11 +13,13 @@ The repository uses leakage-safe evaluation rules to keep forecasting results re
 
 ## Benchmark Authority
 
-The canonical full-dataset tabular benchmark authority is:
+The previously tracked full-dataset tabular benchmark artifact is retained locally at:
 
 ```text
 data/processed/baseline_metrics.csv
 ```
+
+This CSV has been withdrawn from the current repository snapshot pending reconciliation of experimental provenance and numerical consistency with the manuscript. No replacement public canonical metrics CSV has been approved. The withdrawal does not change the evaluation protocol.
 
 Local diagnostics, tuning outputs, graph outputs, and controlled subset outputs do not replace this benchmark artifact.
 
