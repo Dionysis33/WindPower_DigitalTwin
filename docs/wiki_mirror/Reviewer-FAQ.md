@@ -10,11 +10,11 @@ No. Residual diagnostics are candidate screening and interpretation signals. The
 
 ## What is the canonical benchmark?
 
-`data/processed/baseline_metrics.csv` is the canonical full-dataset test-set benchmark artifact for the implemented tabular baseline ladder.
+`data/processed/baseline_metrics.csv` is the locally retained full-dataset test-set benchmark artifact for the implemented tabular baseline ladder. It has been withdrawn from the current repository snapshot pending reconciliation of its experimental provenance and numerical consistency with the manuscript. No replacement public canonical metrics CSV has been approved; this withdrawal does not establish that the CSV or manuscript results are scientifically incorrect.
 
 ## What can be said about XGBoost?
 
-XGBoost is the lowest-MAE model within the implemented canonical full-dataset tabular benchmark. This should not be generalized to all possible models, all subsets, graph experiments, or future sequence models.
+XGBoost was documented as the lowest-MAE model within the previously recorded full-dataset tabular benchmark. That result context is preserved pending provenance reconciliation and should not be generalized to all possible models, all subsets, graph experiments, or future sequence models.
 
 ## Are neural and sequence models part of the canonical benchmark?
 

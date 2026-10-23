@@ -79,12 +79,14 @@
 
 ## Future work
 
+Έχουν ήδη ολοκληρωθεί ελεγχόμενα πειράματα σε τέσσερα πάρκα: GRU (`NB15`), LSTM (`NB16`), TCN (`NB18`) και PatchTST-Lite με Flattened-window XGBoost (`NB19`). Πρόκειται για συμπληρωματικά πειράματα υποσυνόλου, όχι για full-dataset sequence benchmarks. Το `NB17` περιέχει Mamba scaffold χωρίς επαληθευμένο ολοκληρωμένο πειραματικό αποτέλεσμα.
+
 Τα παρακάτω παραμένουν future work / research extension:
 
 - broader graph redesign,
 - stronger graph-based forecasting claims μόνο αν υποστηριχθούν από νέα evidence,
-- sequence-based forecasting models,
-- GNN / Mamba / Graph-Mamba experimentation,
+- πιθανή αξιολόγηση sequence-based μοντέλων στο πλήρες dataset, πέρα από τα ελεγχόμενα πειράματα τεσσάρων πάρκων,
+- περαιτέρω GNN πειράματα πέρα από τις υλοποιημένες graph-based αξιολογήσεις, καθώς και πειραματική αξιολόγηση των μη επαληθευμένων Mamba / Graph-Mamba επεκτάσεων,
 - stronger digital-twin integration,
 - deployed PHM / digital twin implementation,
 - broader PHM-oriented modeling.

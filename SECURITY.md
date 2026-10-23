@@ -95,7 +95,7 @@ The repository prioritizes reproducibility of the pipeline, not unrestricted red
 Security and artifact-safety handling should respect these roles:
 
 - raw DaKS dataset files should remain local unless explicitly permitted and documented,
-- `data/processed/baseline_metrics.csv` is the canonical benchmark artifact, not a place for secrets or private metadata,
+- `data/processed/baseline_metrics.csv` is retained locally and withdrawn from the current repository snapshot pending reconciliation of experimental provenance and numerical consistency with the manuscript; no replacement public canonical metrics CSV has been approved, and the retained artifact must not contain secrets or private metadata,
 - selected thesis / report-facing figures should be intentionally reviewed before committing,
 - local predictions, diagnostics, graph exports, controlled subset outputs, rerun outputs, and demo bundles should not be treated as automatic public artifacts,
 - model binaries, checkpoints, serialized estimators, and training-state files should remain local-only by default,

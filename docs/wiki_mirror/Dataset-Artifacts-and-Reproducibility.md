@@ -12,10 +12,12 @@ The pipeline transforms locally available raw DaKS files into forecasting-ready 
 
 The repository separates:
 
-- canonical tracked benchmark artifact: `data/processed/baseline_metrics.csv`
+- locally retained full-dataset benchmark artifact, withdrawn from the current repository snapshot: `data/processed/baseline_metrics.csv`
 - selected thesis/report-facing figures
 - local rerun and diagnostics outputs
 - local-only model artifacts
+
+The previously tracked metrics CSV is retained locally pending reconciliation of its experimental provenance and numerical consistency with the manuscript. No replacement public canonical metrics CSV has been approved. See `Canonical-Benchmark-and-Tabular-Results.md` for its publication status and preserved result context.
 
 Local diagnostics, tuning outputs, graph outputs, subset outputs, model binaries, checkpoints, and large rerun files should not be treated as public benchmark authority.
 

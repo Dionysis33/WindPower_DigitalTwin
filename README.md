@@ -91,7 +91,7 @@ The published Wiki mirror in [`docs/wiki_mirror/`](./docs/wiki_mirror/) provides
 |---|---|
 | [`Research-Scope-and-Claim-Boundaries.md`](./docs/wiki_mirror/Research-Scope-and-Claim-Boundaries.md) | Forecasting-first scope and non-claim boundaries |
 | [`Canonical-Forecasting-Workflow.md`](./docs/wiki_mirror/Canonical-Forecasting-Workflow.md) | Canonical workflow summary |
-| [`Canonical-Benchmark-and-Tabular-Results.md`](./docs/wiki_mirror/Canonical-Benchmark-and-Tabular-Results.md) | Tabular benchmark authority and XGBoost lowest-MAE wording within the implemented canonical benchmark |
+| [`Canonical-Benchmark-and-Tabular-Results.md`](./docs/wiki_mirror/Canonical-Benchmark-and-Tabular-Results.md) | Tabular benchmark scope, publication status, and preserved result context |
 | [`Residual-Diagnostics-and-PHM-Oriented-Interpretation.md`](./docs/wiki_mirror/Residual-Diagnostics-and-PHM-Oriented-Interpretation.md) | Residual diagnostics and NB20/NB21 validation-calibrated interpretation layers |
 | [`Graph-Aware-Methodological-Extensions.md`](./docs/wiki_mirror/Graph-Aware-Methodological-Extensions.md) | Bounded graph-aware methodology and evidence |
 | [`Controlled-Neural-and-Sequence-Subset-Evidence.md`](./docs/wiki_mirror/Controlled-Neural-and-Sequence-Subset-Evidence.md) | Controlled four-park neural and sequence subset evidence |
@@ -270,13 +270,15 @@ The evaluation protocol follows these principles:
 - benchmark comparisons must use consistent feature space and consistent evaluation keys,
 - final benchmark reporting is test-only.
 
-The canonical benchmark artifact is:
+The previously tracked full-dataset tabular benchmark artifact is retained locally at:
 
 ```text
 data/processed/baseline_metrics.csv
 ```
 
-This file is the public benchmark authority for the implemented tabular baseline ladder.
+The previously public baseline metrics CSV is not distributed in this repository revision. The original research artifact is retained locally while its experimental provenance and numerical consistency with the manuscript's Author's Proof are verified. Previous public versions remain in Git history. No replacement public canonical metrics CSV has yet been approved.
+
+This publication-status change is not a finding that the CSV or manuscript results are scientifically incorrect. Historical logs, notebook outputs, and numerical audit tables preserve recorded research states; their references to a tracked CSV do not establish current public availability or approval of replacement metrics.
 
 Graph-verification, graph-packaging, diagnostics, and graph-experiment outputs must not be confused with the canonical tabular benchmark authority unless explicitly promoted and documented.
 
@@ -374,13 +376,13 @@ Current `notebooks/` inventory:
 
 The repository separates artifacts into four categories.
 
-### 1. Canonical tracked benchmark artifact
+### 1. Local benchmark artifact pending reconciliation
 
 ```text
 data/processed/baseline_metrics.csv
 ```
 
-This is the canonical public benchmark artifact for final test-set reporting of the implemented tabular baseline ladder.
+This full-dataset tabular research artifact is retained locally and is not distributed in this repository revision pending the reconciliation described above. No replacement public canonical metrics CSV has been approved. Supplementary four-park neural / sequence results remain separate evidence and do not replace it.
 
 ### 2. Selected thesis / report-facing artifacts
 
@@ -503,6 +505,7 @@ Important execution notes:
 - `NB02` is the canonical raw validation authority of the repository.
 - `NB03` should run only after the upstream validation outputs of `NB02` are available.
 - Downstream notebooks should preserve the established validation, split, and artifact contracts.
+- `NB06` and `NB07` can generate the benchmark CSV locally. `NB08`, `NB09`, and the benchmark-comparison stages of `NB12`–`NB14`, plus the demo-bundle exporter, require a local CSV; a fresh repository snapshot does not supply it. Local generation does not confer approval for public benchmark reporting.
 - Graph-related notebooks should not overwrite the canonical tabular benchmark authority unless explicitly documented.
 - `NB15` through `NB21` are supplementary extensions and are not part of the recommended canonical execution order.
 - `NB17` should be treated as an unaudited scaffold unless a reviewed audit document is added.
@@ -642,7 +645,7 @@ Please read:
 Core contribution principles:
 
 - reproducibility first,
-- no temporal leakage,
+- temporal train/validation/test partition isolation (see [Data integrity principles](./docs/DATA.md#data-integrity-principles)),
 - benchmark-safe reporting,
 - clear separation between implemented work, planned next steps, and future research,
 - documentation updates when workflow meaning changes,

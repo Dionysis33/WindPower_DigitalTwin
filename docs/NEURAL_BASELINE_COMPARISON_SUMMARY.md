@@ -2,15 +2,19 @@
 
 ## Purpose and scope
 
-This document consolidates the manuscript-facing comparison boundary between the repository's canonical tabular baseline benchmark and the controlled neural-network subset audits.
+This document summarizes how the repository's full-dataset tabular baseline benchmark relates to the controlled four-park neural experiments for manuscript reporting.
 
-It is a comparison summary, not a new experiment report. It does not merge metrics from incompatible evaluation spaces into one ranking, and it does not promote local diagnostic or neural subset outputs into canonical benchmark artifacts.
+It summarizes existing experiments. Results from different evaluation protocols are not combined into a single ranking, and local diagnostics and neural subset results remain supplementary to the full-dataset benchmark.
 
 ## Canonical baseline benchmark
 
-The tracked `data/processed/baseline_metrics.csv` artifact is the repository's canonical final test-set benchmark artifact for the implemented tabular baseline ladder. The rows below are ranked only within that canonical comparable tabular benchmark space by MAE ascending.
+The table below preserves the recorded repository results for the previous full-dataset final test-set tabular benchmark associated with `data/processed/baseline_metrics.csv`. Its numerical consistency with Table 6 of the manuscript's Author's Proof remains under review; it is not approved manuscript-reporting authority. The recorded values and MAE-ascending ranking are retained.
 
-| Rank | Model | MAE | RMSE | R2 | Evidence source | Evaluation scope | Manuscript use |
+The CSV is not distributed in this repository revision. The original research artifact is retained locally, and previous public versions remain in Git history while experimental provenance and manuscript consistency are verified. No replacement public canonical metrics CSV has yet been approved.
+
+Direct recomputation from stored NB07 test predictions has reproduced the XGBoost, MLP, and Random Forest metrics. Their correspondence to the Author's Proof remains unresolved; the withdrawal is not a finding that the CSV results are scientifically incorrect.
+
+| Rank | Model | MAE | RMSE | R2 | Evidence source | Evaluation scope | Recorded benchmark role (manuscript reconciliation pending) |
 |---:|---|---:|---:|---:|---|---|---|
 | 1 | XGBoost | 0.06574968136344334 | 0.1134941263311143 | 0.8603478411144265 | `data/processed/baseline_metrics.csv` | Canonical final test-set benchmark for the implemented tabular baseline ladder | Primary comparable benchmark row; lowest MAE within this table |
 | 2 | MLP | 0.0680078041111079 | 0.11534326087238028 | 0.8557601267189187 | `data/processed/baseline_metrics.csv` | Canonical final test-set benchmark for the implemented tabular baseline ladder | Comparable canonical benchmark row |
@@ -18,11 +22,11 @@ The tracked `data/processed/baseline_metrics.csv` artifact is the repository's c
 | 4 | Random Forest | 0.07096254721460128 | 0.118826019905796 | 0.8469180509688362 | `data/processed/baseline_metrics.csv` | Canonical final test-set benchmark for the implemented tabular baseline ladder | Comparable canonical benchmark row |
 | 5 | Linear Regression | 0.0727208735022708 | 0.120307498871806 | 0.8430771171338876 | `data/processed/baseline_metrics.csv` | Canonical final test-set benchmark for the implemented tabular baseline ladder | Comparable canonical benchmark row |
 
-XGBoost has the lowest MAE only within this canonical comparable tabular benchmark space.
+XGBoost has the lowest MAE within this recorded full-dataset tabular benchmark.
 
 ## Matched four-park row-level baseline evidence
 
-The matched four-park baseline audit now documents controlled row-level baseline evidence for the same selected parks used in the neural subset audits: `docs/MATCHED_FOUR_PARK_BASELINE_COMPARISON_AUDIT.md`.
+The row-level baseline comparison for the same four parks used in the neural experiments is documented in `docs/MATCHED_FOUR_PARK_BASELINE_COMPARISON_AUDIT.md`.
 
 The selected test metrics below provide row-level tabular context on parks `00183`, `00198`, `00303`, and `00427`. They are separate from the canonical full-dataset benchmark above and are not directly equivalent to the sequence-window setup used by the GRU, LSTM, TCN, and NB19 audits.
 
@@ -36,7 +40,7 @@ The selected test metrics below provide row-level tabular context on parks `0018
 
 ## Controlled four-park neural and sequence-aligned subset evidence
 
-The following metrics are documented controlled four-park subset evidence only. These rows are not ranked against the canonical baseline rows above.
+The following results come from controlled experiments on four parks. They are not ranked against the full-dataset baseline rows above.
 
 NB19 adds sequence-aligned evidence for parks `00183`, `00198`, `00303`, and `00427` using target `Power_Output_Normalized`, `LOOKBACK_STEPS=24`, 41 train-inferred numeric features, train-only `StandardScaler`, unscaled target, no `turbine` encoding, gap-safe windows, validation-only selection, and one final test evaluation per selected model family. Both NB19 models use the same input sequence tensor contract: `[n_windows, 24, 41]`.
 
@@ -66,21 +70,23 @@ NB19 selected model details:
 
 ## Comparability matrix
 
+Comparability depends on the actual evaluation protocol, dataset and test conditions, and metric definitions, not on whether a particular CSV is currently tracked on GitHub. The boundaries below describe the recorded experiments independently of the temporary CSV publication deferral and pending provenance reconciliation.
+
 | Comparison | Directly comparable? | Reason | Allowed wording | Disallowed wording |
 |---|---|---|---|---|
-| Canonical baseline model vs canonical baseline model | Yes | Rows share the same canonical final test-set benchmark artifact and metric definitions. | "Within `data/processed/baseline_metrics.csv`, XGBoost has the lowest MAE among the recorded canonical baseline rows." | "XGBoost is superior to all future or non-canonical models." |
+| Canonical baseline model vs canonical baseline model | Yes | Rows document the same full-dataset tabular evaluation protocol, test conditions and metric definitions. | "Within `data/processed/baseline_metrics.csv`, XGBoost has the lowest MAE among the recorded canonical baseline rows." | "XGBoost is superior to all future or non-canonical models." |
 | Matched four-park row-level baseline model vs matched four-park row-level baseline model | Yes, within the matched row-level baseline evidence space only | Rows share the same four selected parks and row-level tabular framing documented in `docs/MATCHED_FOUR_PARK_BASELINE_COMPARISON_AUDIT.md`. | "Within the matched four-park row-level baseline table, XGBoost has the lowest selected test MAE." | "The matched four-park row-level table proves model superiority across the canonical and neural sequence evaluation spaces." |
-| Matched four-park row-level baseline rows vs canonical full-dataset baseline rows | No | The matched rows are controlled four-park row-level evidence, while `baseline_metrics.csv` remains the canonical full-dataset benchmark artifact for the implemented tabular baseline ladder. | "The matched four-park baseline table provides controlled subset context without changing the canonical benchmark ranking." | "The matched four-park rows replace or revise the canonical full-dataset benchmark." |
+| Matched four-park row-level baseline rows vs canonical full-dataset baseline rows | No | The matched rows are controlled four-park row-level evidence, while the recorded `baseline_metrics.csv` rows describe the previous full-dataset tabular benchmark with a different evaluation scope. | "The matched four-park baseline table provides controlled subset context without changing the canonical benchmark ranking." | "The matched four-park rows replace or revise the canonical full-dataset benchmark." |
 | Matched four-park row-level baseline rows vs sequence subsets | Limited | The rows use the same selected parks, but the matched baseline table is row-level tabular evidence while GRU, LSTM, TCN, NB19 Flattened-window XGBoost, and NB19 PatchTST-Lite use 24-step sequence windows. | "The matched row-level baseline table gives controlled context for the same four parks but is not directly equivalent to the sequence-window setup." | "The matched row-level baseline rows and sequence subset rows form one fully equivalent ranking." |
 | GRU vs LSTM vs TCN vs NB19 controlled sequence subsets | Yes, within the controlled four-park sequence subset only | These runs use the same four parks, feature count, lookback length, sequence framing, validation-only selection, and one test evaluation, but they remain subset evidence. | "In the controlled four-park sequence subset, Flattened-window XGBoost outperformed PatchTST-Lite under the same leakage-aware sequence-window protocol, and the sequence rows can be discussed as local sequence evidence." | "The sequence subset result changes the canonical benchmark ranking or proves general XGBoost superiority/general Transformer inferiority." |
 | NB19 Flattened-window XGBoost vs NB19 PatchTST-Lite | Yes, within NB19 only | Both NB19 models use the same train-only-scaled, gap-safe `[24, 41]` windows, validation-only selection, and one final test evaluation. | "In the controlled four-park subset, Flattened-window XGBoost outperformed PatchTST-Lite on validation and test metrics under the same sequence-window protocol." | "NB19 establishes general XGBoost superiority or general Transformer inferiority." |
-| Neural and sequence subset models vs canonical full-dataset baseline rows | No | The subset audits use controlled four-park subset evidence, while `baseline_metrics.csv` is the canonical final test-set benchmark artifact for the implemented tabular baseline ladder. | "The subset audits support neural-pipeline readiness and motivate matched or full-dataset follow-up experiments." | "The subset rows outperform or underperform the canonical baseline rows in the same benchmark." |
+| Neural and sequence subset models vs canonical full-dataset baseline rows | No | The subset audits use controlled four-park evaluation protocols and test conditions distinct from the previous full-dataset tabular benchmark recorded in `baseline_metrics.csv`. | "The subset audits support neural-pipeline readiness and motivate matched or full-dataset follow-up experiments." | "The subset rows outperform or underperform the canonical baseline rows in the same benchmark." |
 | Graph/diagnostic evidence vs canonical benchmark rows | No | Graph and diagnostic outputs are supporting or local rerun evidence unless explicitly promoted; they do not redefine `data/processed/baseline_metrics.csv`. | "Graph and diagnostic evidence can inform interpretation and future work while preserving the canonical benchmark boundary." | "Graph or diagnostic outputs replace the canonical benchmark table or prove graph superiority." |
 | Tabular MLP subset vs sequence subsets | Limited | The runs share the selected parks and feature count, but the tabular MLP uses row-level tabular inputs while GRU, LSTM, TCN, NB19 Flattened-window XGBoost, and NB19 PatchTST-Lite use 24-step sequence windows. | "These audits are complementary controlled subset evidence with different input framing." | "The tabular MLP and sequence subset rows form one fully equivalent ranking." |
 
 ## Manuscript-safe interpretation
 
-"The tracked `data/processed/baseline_metrics.csv` artifact is the repository's canonical final test-set benchmark table for the implemented baseline ladder. Within that comparable benchmark space, XGBoost has the lowest MAE among the recorded rows."
+"Within the previously recorded full-dataset tabular benchmark associated with `data/processed/baseline_metrics.csv`, XGBoost has the lowest MAE among the recorded comparable baseline rows. These historical repository results are not approved for manuscript reporting while numerical consistency with Table 6 of the Author's Proof and experimental provenance remain under review."
 
 "The MLP, GRU, LSTM, TCN, and PatchTST-Lite audits provide controlled four-park neural evidence on parks `00183`, `00198`, `00303`, and `00427`, using train-only preprocessing and validation-selected model states followed by one test evaluation. NB19 also adds a sequence-aligned Flattened-window XGBoost baseline under the same leakage-aware `[24, 41]` sequence-window protocol."
 

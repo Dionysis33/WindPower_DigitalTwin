@@ -1,12 +1,12 @@
 # Canonical Benchmark and Tabular Results
 
-The canonical benchmark authority is:
+The previously tracked full-dataset tabular benchmark artifact is retained locally at:
 
 ```text
 data/processed/baseline_metrics.csv
 ```
 
-This artifact is the repository's full-dataset final test-set benchmark table for the implemented tabular baseline ladder.
+The previously tracked baseline metrics CSV has been withdrawn from the current repository snapshot pending reconciliation of its experimental provenance and numerical consistency with the manuscript. The research artifact is retained locally, and no replacement public canonical metrics CSV has yet been approved. This withdrawal does not establish that the CSV or manuscript results are scientifically incorrect.
 
 ## Implemented Benchmark Space
 
@@ -18,9 +18,11 @@ The implemented canonical tabular benchmark includes:
 - XGBoost
 - MLP
 
-Within this implemented canonical full-dataset tabular benchmark, XGBoost is documented as the lowest-MAE model. That statement should not be generalized beyond this benchmark space.
+Within the previously recorded full-dataset tabular benchmark, XGBoost was documented as the lowest-MAE model. This preserved result context is subject to the provenance reconciliation above and should not be generalized beyond that benchmark space.
 
 ## Canonical Metrics
+
+The values below preserve the previously documented research record. They are unchanged and do not constitute an approved replacement public canonical metrics artifact.
 
 | Model | MAE | RMSE | R² |
 |---|---:|---:|---:|
@@ -44,7 +46,7 @@ The following do not replace `data/processed/baseline_metrics.csv`:
 
 ## Source Documents
 
-- `data/processed/baseline_metrics.csv`
+- `data/processed/baseline_metrics.csv` (retained locally; withdrawn from the current repository snapshot)
 - `docs/BASELINE_PROTOCOL.md`
 - `docs/XGBOOST_TUNING_AUDIT.md`
 - `docs/NEURAL_BASELINE_COMPARISON_SUMMARY.md`

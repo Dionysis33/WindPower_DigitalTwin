@@ -17,12 +17,12 @@ Dataset source:
 - τον κώδικα επεξεργασίας,
 - τη μεθοδολογία,
 - τα notebooks,
-- τη documentation,
-- και επιλεγμένα artifacts που υποστηρίζουν reproducibility και benchmark-safe reporting.
+- την τεκμηρίωση,
+- και επιλεγμένα αρχεία που υποστηρίζουν την αναπαραγωγιμότητα και την τεκμηριωμένη αξιολόγηση.
 
 ## Role of the data pipeline
 
-Η data pipeline έχει σχεδιαστεί ώστε να μετασχηματίζει τα raw δεδομένα σε **forecasting-ready** σύνολα, με έμφαση σε:
+Η pipeline μετασχηματίζει τα raw δεδομένα σε **σύνολα κατάλληλα για forecasting**, με έμφαση σε:
 
 - temporal consistency,
 - validated-only downstream processing,
@@ -34,11 +34,11 @@ Dataset source:
 - και graph-ready preparation για επόμενα forecasting stages.
 
 Το project παραμένει **forecasting-first**.  
-Τα diagnostics, τα graph-ready exports και τα downstream analysis artifacts πρέπει να διαβάζονται ως υποστηρικτικά layers του forecasting pipeline και όχι ως νέο benchmark authority από μόνα τους.
+Τα diagnostics, τα graph-ready exports και τα αρχεία ανάλυσης υποστηρίζουν την forecasting pipeline· από μόνα τους δεν καθορίζουν νέο benchmark αναφοράς.
 
 ## Current repository data structure
 
-Η current βασική λογική οργάνωσης είναι η εξής:
+Τα δεδομένα οργανώνονται ως εξής:
 
 - `data/raw/`  
   Για raw ή αρχικά δεδομένα εισόδου που χρησιμοποιούνται τοπικά.
@@ -57,39 +57,36 @@ Dataset source:
 - `reports/figures/`  
   Για report-facing ή thesis-facing figures.
 
-Η current public repository structure παραμένει σχετικά απλή στα top-level paths.  
-Η πιο λεπτομερής artifact organization που περιγράφεται παρακάτω έχει πλέον materialized ως repository-visible folder / placeholder structure στο πλαίσιο του current cleanup / organization pass.
+Η βασική δομή του repository παραμένει σχετικά απλή. Η λεπτομερέστερη οργάνωση που περιγράφεται παρακάτω αποτυπώνεται ήδη στους φακέλους και τα placeholders του repository.
 
-Αυτό δεν σημαίνει ότι τα rerun outputs γίνονται tracked artifacts.  
-Σημαίνει μόνο ότι τα intended export destinations είναι πλέον σαφή, repository-visible και συνεπή με την artifact policy.
+Οι φάκελοι ορίζουν σαφείς προορισμούς εξαγωγής σύμφωνα με την πολιτική αποθήκευσης· τα αποτελέσματα επανεκτέλεσης δεν προστίθενται αυτόματα στο Git.
 
 ## Artifact storage policy
 
-Για να παραμένει το repository καθαρό, reproducible και thesis-safe, χρησιμοποιείται ο παρακάτω διαχωρισμός.
+Η παρακάτω πολιτική διαχωρίζει τα αρχεία που δημοσιεύονται από εκείνα που διατηρούνται τοπικά, ώστε να υποστηρίζονται η αναπαραγωγιμότητα και η τεκμηρίωση της εργασίας.
 
-### 1. Canonical tracked benchmark artifact
+### 1. Τοπικό benchmark artifact υπό συμφιλίωση
 
-Canonical tracked benchmark artifact είναι ένα μικρό, stable, public-facing artifact που λειτουργεί ως authority για benchmark reporting.
-
-Στο current repository state, αυτό είναι το:
+Το αρχείο του full-dataset tabular benchmark που περιλαμβανόταν στην προηγούμενη δημόσια έκδοση είναι το:
 
 - `data/processed/baseline_metrics.csv`
 
-Το συγκεκριμένο αρχείο είναι η canonical authority για final test-set benchmark reporting της implemented baseline ladder.  
-Δεν πρέπει να συγχέεται με predictions, diagnostics bundles, model binaries ή notebook-local exports.
+Το CSV δεν διανέμεται σε αυτή την έκδοση του repository. Το αρχικό ερευνητικό αρχείο διατηρείται τοπικά, ενώ ελέγχονται η προέλευση των πειραματικών αποτελεσμάτων και η αριθμητική συμφωνία με το Author’s Proof του manuscript. Δεν έχει ακόμη εγκριθεί νέο δημόσιο CSV μετρικών αναφοράς. Η απόσυρση δεν αποτελεί εύρημα επιστημονικού σφάλματος στο CSV ή στα αποτελέσματα του manuscript· οι προηγούμενες δημόσιες εκδόσεις του αρχείου παραμένουν στο ιστορικό Git.
+
+Το full-dataset benchmark παραμένει διακριτό από predictions, diagnostics bundles, model binaries, notebook-local exports και supplementary four-park neural / sequence evidence.
 
 ### 2. Tracked thesis / report-facing artifacts
 
-Tracked thesis-facing ή report-facing artifacts είναι μικρά, επιλεγμένα, σταθερά outputs που αξίζει να εμφανίζονται στο public repository επειδή:
+Στο δημόσιο repository περιλαμβάνονται μικρά, επιλεγμένα και σταθερά αρχεία για την εργασία ή τις αναφορές, επειδή:
 
 - υποστηρίζουν το thesis narrative,
 - είναι κατάλληλα για figures ή documentation,
 - και δεν αποτελούν βαριά rerun-dependent dump outputs.
 
-Αυτά πρέπει να τοποθετούνται κατά κανόνα στο `reports/figures/` και, όπου χρειάζεται πιο καθαρή οργάνωση, μπορούν να promoted σε επιλεγμένα subfolders με thesis-facing λογική.
+Τα αρχεία αυτά τοποθετούνται κατά κανόνα στο `reports/figures/` και, όπου χρειάζεται, οργανώνονται σε υποφακέλους ανάλογα με τη χρήση τους στην εργασία.
 
 Το `reports/figures/` **δεν** πρέπει να λειτουργεί ως γενικός φάκελος dump όλων των notebook plots.  
-Πρέπει να περιέχει μόνο selected, intentionally promoted figures.
+Πρέπει να περιέχει μόνο διαγράμματα που έχουν επιλεγεί ρητά για δημοσίευση.
 
 ### 3. Local rerun / diagnostics artifacts
 
@@ -97,8 +94,8 @@ Local rerun / diagnostics artifacts είναι outputs που:
 
 - παράγονται reproducibly από τα notebooks,
 - είναι χρήσιμα για inspection, diagnostics και downstream analysis,
-- αλλά δεν αποτελούν public benchmark authority,
-- και δεν χρειάζεται να tracked όλα στο repository.
+- αλλά δεν αποτελούν το δημόσιο benchmark αναφοράς,
+- και δεν χρειάζεται να καταγράφονται όλα στο Git.
 
 Τέτοια artifacts περιλαμβάνουν ενδεικτικά:
 
@@ -139,23 +136,22 @@ Local rerun / diagnostics artifacts είναι outputs που:
 - training history files
 - model-specific manifests για local inspection
 
-Τα artifacts αυτά **δεν** αποτελούν benchmark authority και **δεν** πρέπει να συγχέονται με report-facing outputs.
+Τα αρχεία αυτά **δεν** αποτελούν benchmark αναφοράς και διατηρούνται χωριστά από τα αποτελέσματα που χρησιμοποιούνται σε αναφορές.
 
 ## Materialized artifact organization for this cleanup pass
 
-Η ακόλουθη δομή είναι η **materialized thesis-safe organization** των intended artifact destinations στο πλαίσιο του current cleanup pass.
+Η ακόλουθη δομή αποτυπώνει τους **υπάρχοντες φακέλους αποθήκευσης** για αρχεία της έρευνας και της τεκμηρίωσης.
 
-Η δημιουργία των φακέλων δεν σημαίνει ότι τα rerun outputs γίνονται tracked artifacts.  
-Σημαίνει μόνο ότι τα export destinations είναι πλέον repository-visible και συνεπή με την artifact policy.
+Η δομή ορίζει τους προορισμούς εξαγωγής σύμφωνα με την πολιτική αποθήκευσης. Η δημιουργία φακέλου δεν συνεπάγεται προσθήκη των αποτελεσμάτων του στο Git.
 
 ### `data/processed/`
 
 Το `data/processed/` παραμένει ο κύριος χώρος για reproducible processed outputs της pipeline.
 
-Materialized λογική:
+Προορισμοί αρχείων:
 
 - `data/processed/baseline_metrics.csv`  
-  Canonical tracked benchmark artifact.
+  Τοπικά διατηρούμενο αρχείο του full-dataset benchmark· δεν διανέμεται σε αυτή την έκδοση του repository ενόσω εκκρεμεί η συμφιλίωση με το manuscript.
 
 - `data/processed/predictions/`  
   Intended destination για local rerun prediction exports.
@@ -178,7 +174,7 @@ Root-level processed CSVs όπως:
 
 ### `reports/figures/`
 
-Το `reports/figures/` είναι ο curated χώρος για thesis-facing / report-facing figures.
+Το `reports/figures/` περιέχει επιλεγμένα διαγράμματα για την εργασία και τις αναφορές.
 
 Materialized thesis-facing subfolders:
 
@@ -209,11 +205,13 @@ Materialized local-only subfolder:
 
 ## Current processed outputs and their interpretation
 
-Στο current pipeline, είναι σημαντικό να ξεχωρίζονται οι παρακάτω κατηγορίες.
+Στην pipeline διακρίνονται οι παρακάτω κατηγορίες αρχείων.
 
-### Public tracked benchmark authority
+### Τοπικά διατηρούμενο benchmark artifact
 
 - `data/processed/baseline_metrics.csv`
+
+Το αρχείο δεν διανέμεται σε αυτή την έκδοση του repository. Δεν έχει ακόμη εγκριθεί νέο δημόσιο CSV μετρικών αναφοράς.
 
 ### Canonical local rerun processed outputs
 
@@ -244,8 +242,7 @@ Materialized local-only subfolder:
 - notebook-local figures,
 - και άλλα thesis-supporting diagnostic outputs.
 
-Αυτό δεν σημαίνει ότι όλο το directory πρέπει να versioned / tracked δημόσια.  
-Η default αντιμετώπιση του είναι **local rerun / diagnostics bundle**.
+Ο φάκελος διατηρείται κατά κανόνα ως **τοπικό σύνολο αποτελεσμάτων επανεκτέλεσης και diagnostics**, χωρίς να απαιτείται η δημόσια καταγραφή όλου του περιεχομένου του στο Git.
 
 ### Local graph-related exports
 
@@ -267,14 +264,15 @@ Graph-related local exports μπορεί να περιλαμβάνουν:
 
 ### Should remain tracked
 
-Κατά κανόνα πρέπει να tracked μόνο:
+Κατά κανόνα καταγράφονται στο Git μόνο:
 
-- `data/processed/baseline_metrics.csv`
 - selected thesis-facing figures στο `reports/figures/`
 - μικρά manifests ή policy-facing text files όταν χρειάζονται για reproducibility
 - `.gitkeep` placeholders που κάνουν τα intended export destinations repository-visible
 
 ### Should remain local-only by default
+
+Το `data/processed/baseline_metrics.csv`, που περιλαμβανόταν σε προηγούμενες δημόσιες εκδόσεις, διατηρείται τοπικά όσο εκκρεμεί ο έλεγχος προέλευσης και αριθμητικής συμφωνίας με το manuscript. Δεν διανέμεται σε αυτή την έκδοση του repository.
 
 Κατά κανόνα πρέπει να μένουν local-only:
 
@@ -330,7 +328,7 @@ Graph-related local exports μπορεί να περιλαμβάνουν:
 
 Η pipeline ακολουθεί τις παρακάτω αρχές:
 
-- **No temporal leakage**
+- **Temporal train/validation/test partition isolation**
 - **Train-first statistics**
 - **Consistent feature space across splits**
 - **Reproducible preprocessing**
@@ -339,9 +337,11 @@ Graph-related local exports μπορεί να περιλαμβάνουν:
 
 Ιδιαίτερα σημαντικό είναι ότι ο καθαρισμός outliers και τα thresholds για clipping υπολογίζονται με στατιστικά που προέρχονται από το **train split**, ώστε να αποφεύγεται leakage προς validation / test.
 
+Οι παράμετροι preprocessing που εξαρτώνται από τα δεδομένα υπολογίζονται από το training partition όπου αυτό υλοποιείται. Η επιλογή μοντέλων και hyperparameters χρησιμοποιεί το validation, ενώ η βαθμονόμηση residual-warning thresholds βασίζεται σε validation residuals. Το test partition προορίζεται για την τελική αξιολόγηση, αφού οριστικοποιηθούν οι επιλογές. Η ευθυγράμμιση ως προς το target valid time δεν τεκμηριώνει από μόνη της τη διαθεσιμότητα κάθε feature στο issue time ούτε αυστηρό operational day-ahead forecasting setup. Η διευκρίνιση αφορά το εύρος της επαλήθευσης και δεν αποτελεί εύρημα leakage.
+
 ## Naming guidance for exported artifacts
 
-Για να διατηρείται καθαρό artifact provenance, τα non-canonical exports πρέπει να έχουν deterministic naming.
+Για να είναι σαφής η προέλευσή τους, τα exports που δεν αποτελούν αρχεία αναφοράς πρέπει να ακολουθούν σταθερούς κανόνες ονοματοδοσίας.
 
 ### Figures
 
@@ -403,7 +403,7 @@ Graph-related local exports μπορεί να περιλαμβάνουν:
 3. Έλεγξε το configuration στο `src/config.py`.
 4. Τρέξε τα notebooks με τη σωστή σειρά.
 5. Επιβεβαίωσε ότι δημιουργούνται ξανά τα canonical processed outputs.
-6. Χρησιμοποίησε το `data/processed/baseline_metrics.csv` ως canonical benchmark authority.
+6. Το `data/processed/baseline_metrics.csv` μπορεί να παραχθεί τοπικά από τα `NB06` / `NB07`, αλλά δεν διανέμεται σε αυτή την έκδοση του repository. Τα επόμενα στάδια που το απαιτούν χρειάζονται τοπικό αρχείο· η αναπαραγωγή του δεν αποτελεί έγκριση δημοσίευσης ως benchmark αναφοράς όσο εκκρεμεί η συμφιλίωση.
 7. Αν χρειάζεσαι thesis-facing figures, επίλεξε και προώθησε μόνο τις κατάλληλες figures στο `reports/figures/`.
 
 ## Data governance / reproducibility note
@@ -416,7 +416,7 @@ Graph-related local exports μπορεί να περιλαμβάνουν:
 - επιβεβαιώσει τα benchmark outputs,
 - ελέγξει τα diagnostics artifacts όπου χρειάζεται,
 - και διατηρήσει καθαρό διαχωρισμό ανάμεσα σε:
-  - canonical benchmark authority,
+  - αρχεία του benchmark αναφοράς,
   - thesis-facing selected artifacts,
   - local rerun outputs,
   - local graph / diagnostics exports,
@@ -424,7 +424,7 @@ Graph-related local exports μπορεί να περιλαμβάνουν:
 
 ## Scope boundary for this artifact-organization pass
 
-Το current artifact-organization pass είναι repository-structure και documentation-governance αλλαγή.
+Η οργάνωση των αρχείων αφορά τη δομή του repository και την πολιτική τεκμηρίωσης.
 
 Δεν εισάγει:
 
@@ -437,4 +437,4 @@ Graph-related local exports μπορεί να περιλαμβάνουν:
 - νέο graph superiority claim,
 - ή νέο PHM / digital twin claim.
 
-Η αλλαγή περιορίζεται στο να κάνει τα intended artifact destinations πιο καθαρά, thesis-safe και repository-visible χωρίς να αλλάζει το scientific meaning των υπάρχοντων artifacts.
+Η αλλαγή διευκρινίζει τους φακέλους αποθήκευσης και τη χρήση των αρχείων στην εργασία, διατηρώντας την επιστημονική ερμηνεία των υπαρχόντων αποτελεσμάτων.

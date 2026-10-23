@@ -151,13 +151,13 @@ After `NB02`, downstream notebooks should consume validated outputs and canonica
 
 ### Benchmark authority
 
-The canonical benchmark artifact is:
+The previously tracked full-dataset tabular benchmark artifact is retained locally at:
 
 ```text
 data/processed/baseline_metrics.csv
 ```
 
-Use this artifact as the reporting authority for final test-set comparisons within the implemented tabular baseline ladder.
+The previously tracked baseline metrics CSV has been withdrawn from the current repository snapshot pending reconciliation of its experimental provenance and numerical consistency with the manuscript. The research artifact is retained locally, and no replacement public canonical metrics CSV has yet been approved. This withdrawal does not establish that the CSV or manuscript results are scientifically incorrect.
 
 Graph outputs, diagnostics outputs, tuning outputs, controlled subset outputs, local demo bundles, model binaries, and checkpoints do not replace this benchmark artifact unless explicitly promoted and documented.
 
@@ -249,7 +249,7 @@ Do not commit raw dataset files unless explicitly permitted and documented.
 
 Generated outputs should be handled according to their role:
 
-- `data/processed/baseline_metrics.csv` is the canonical tracked benchmark artifact.
+- `data/processed/baseline_metrics.csv` is retained locally and withdrawn from the current repository snapshot pending provenance/manuscript reconciliation; do not republish it or a replacement as approved canonical metrics without review.
 - Selected thesis / report-facing figures may be tracked when intentionally promoted.
 - Local predictions, diagnostics, graph outputs, subset outputs, rerun exports, and demo bundles should remain local-only unless explicitly reviewed.
 - Model binaries, checkpoints, serialized estimators, and training-state files should remain local-only by default.
