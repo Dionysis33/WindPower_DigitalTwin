@@ -148,7 +148,7 @@ These stages provide **cautious graph-based forecasting evidence**, but they do 
 
 ### Supplementary extension evidence
 
-Post-`NB14` notebooks are supplementary extensions. They are not replacements for the canonical full-dataset workflow or for `data/processed/baseline_metrics.csv`.
+Post-`NB14` notebooks provide supplementary evidence and do not replace the full-dataset tabular benchmarking workflow.
 
 The documented supplementary evidence currently includes:
 
@@ -276,7 +276,7 @@ The previously tracked full-dataset tabular benchmark artifact is retained local
 data/processed/baseline_metrics.csv
 ```
 
-The previously public baseline metrics CSV is not distributed in this repository revision. The original research artifact is retained locally while its experimental provenance and numerical consistency with the manuscript's Author's Proof are verified. Previous public versions remain in Git history. No replacement public canonical metrics CSV has yet been approved.
+The previously public `baseline_metrics.csv` remains available locally but is no longer included in the current repository snapshot. Results recalculated from the corrected NB07 test predictions agree with the manuscript's reported XGBoost, MLP, and Random Forest metrics and the XGBoost–MLP park-level comparison at the stated precision. An independent paired park-level bootstrap reconstruction also agrees with the reported confidence intervals at their published precision. The original execution record for the corrected NB07 run and the bootstrap code used during manuscript preparation have not been recovered, so these numerical checks do not constitute an exact reproduction of the historical experiment. Earlier CSV versions remain in Git history, and no replacement public benchmark CSV has been approved.
 
 This publication-status change is not a finding that the CSV or manuscript results are scientifically incorrect. Historical logs, notebook outputs, and numerical audit tables preserve recorded research states; their references to a tracked CSV do not establish current public availability or approval of replacement metrics.
 
@@ -376,13 +376,13 @@ Current `notebooks/` inventory:
 
 The repository separates artifacts into four categories.
 
-### 1. Local benchmark artifact pending reconciliation
+### 1. Local benchmark artifact pending provenance reconciliation
 
 ```text
 data/processed/baseline_metrics.csv
 ```
 
-This full-dataset tabular research artifact is retained locally and is not distributed in this repository revision pending the reconciliation described above. No replacement public canonical metrics CSV has been approved. Supplementary four-park neural / sequence results remain separate evidence and do not replace it.
+The historical benchmark CSV is retained locally and is not included in the current public repository. The numerical checks and remaining provenance limitation are described in the Split and Evaluation Protocol section above. No replacement public benchmark CSV has been approved. The supplementary four-park neural and sequence experiments remain separate from the full-dataset tabular benchmark.
 
 ### 2. Selected thesis / report-facing artifacts
 
@@ -502,6 +502,7 @@ Recommended canonical execution order:
 
 Important execution notes:
 
+- Running `NB05`, `NB06`, or `NB07` can replace existing local split, benchmark, or prediction files. Use a separate working environment if you need to preserve earlier research outputs.
 - `NB02` is the canonical raw validation authority of the repository.
 - `NB03` should run only after the upstream validation outputs of `NB02` are available.
 - Downstream notebooks should preserve the established validation, split, and artifact contracts.
